@@ -127,3 +127,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+## react module
+frontend/node_modules
+
+## save_file 
+.gzip
+.parquet
