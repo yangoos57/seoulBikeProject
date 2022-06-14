@@ -131,6 +131,7 @@ dmypy.json
 
 ## react module
 frontend/node_modules
+node_modules
 
 ## save_file 
 .gzip
