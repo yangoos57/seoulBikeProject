@@ -1,29 +1,40 @@
 from utils import *
 import time
+
 start = time.time()
 
-matplotlib.use('Agg')
-plt.rc('font', family='Malgun Gothic') # For Windows
-seoul_bike_raw_data = pd.read_parquet('D:/git_local_repository/django_data_visualization/dashBoard/static/bike_record_including_datetime.parquet.gzip')
-bike_info = pd.read_csv('D:/git_local_repository/django_data_visualization/dashBoard/static/options.csv',encoding='CP949')
-station_info = pd.read_csv('D:/git_local_repository/django_data_visualization/dashBoard/static/seoul_bike_station_01_12.csv',encoding='CP949')
-near_sub =pd.read_csv('D:/git_local_repository/django_data_visualization/dashBoard/static/near_sub_station.csv',encoding='CP949')
-print('load',start-time.time())
-
+matplotlib.use("Agg")
+plt.rc("font", family="Malgun Gothic")  # For Windows
+seoul_bike_raw_data = pd.read_parquet(
+    "D:/git_local_repository/django_data_visualization/dashboard/static/bike_record_including_datetime.parquet.gzip"
+)
+bike_info = pd.read_csv(
+    "D:/git_local_repository/django_data_visualization/dashboard/static/options.csv",
+    encoding="CP949",
+)
+station_info = pd.read_csv(
+    "D:/git_local_repository/django_data_visualization/dashboard/static/seoul_bike_station_01_12.csv",
+    encoding="CP949",
+)
+near_sub = pd.read_csv(
+    "D:/git_local_repository/django_data_visualization/dashboard/static/near_sub_station.csv",
+    encoding="CP949",
+)
+print("load", start - time.time())
 
 
 # ## Class Base View Test
 # class plots() :
 
 #     def get(self) :
-#         # queryset 
+#         # queryset
 #         val = 207
 #         filter_start = "대여소"
 
 #         # dataframe
 #         filtered_data = raw_data(query_data=seoul_bike_raw_data,val=val)
 
-        
+
 #         start = time.time()
 #         recommend_sub = recommend_sub_station(filtered_data=filtered_data, stat_id=val, near_sub=near_sub, station=station_info,filter_start=filter_start)
 #         print('recommend_sub',start-time.time())
@@ -39,32 +50,35 @@ print('load',start-time.time())
 #         plotly_1 = recommend_sub.plotly_image()
 #         print('plotly_1',start-time.time())
 
-class recommend_sub_station :
 
-    def __init__(self, filtered_data, stat_id ,near_sub, station,filter_start="대여소") :
-        '''
+class recommend_sub_station:
+    def __init__(self, filtered_data, stat_id, near_sub, station, filter_start="대여소"):
+        """
 
         해당 대여소에서 자주 이용하는 지하철역과 그 주변에 있는 따릉이 대여소를 추천하는 매서드임.
         filtered_data는 원하는 대여소가 sorting 된 DataFrame이 필요함.
-        
+
         filter_start는 "대여소" 또는 "역"만 올 수 있음.
 
-        '''
+        """
         self.stat_id = stat_id
         self.near_sub = near_sub
         self.station = station
         self.filter_start = filter_start
 
-        '''
+        """
         개별 대여소별로 해당 대여소와 얼마나 교류가 있는지 확인한다.
-        '''
+        """
 
         # ex) 기준대여소 to 다른 대여소 (1to2)
-        total_num_left = filtered_data[filtered_data["st_id1"] == stat_id]["st_id2"].value_counts()  
+        total_num_left = filtered_data[filtered_data["st_id1"] == stat_id][
+            "st_id2"
+        ].value_counts()
 
         # ex) 다른 대여소 to 기준대여소 (2to1)
-        total_num_right = filtered_data[filtered_data["st_id2"] == stat_id]["st_id1"].value_counts()
-
+        total_num_right = filtered_data[filtered_data["st_id2"] == stat_id][
+            "st_id1"
+        ].value_counts()
 
         # 1to2, 2to1 합치기
         combine_values = pd.concat([total_num_left, total_num_right], axis=1)
@@ -76,9 +90,9 @@ class recommend_sub_station :
             combine_values.reset_index().groupby("index")[["1to2", "2to1"]].sum()
         )
 
-        '''
+        """
         역 주변 대여소로 특정할 경우 역과 관련된 따릉이 대여소는 제외한다. 
-        '''
+        """
         # 역 주변 대여소가 검색될 때 해당역 주변 대여소는 제거한다. | 316 대여소는 종각역과 관련됐는데, 종각과 관련된 대여소는 제거했다.
         try:
             filter_sub = near_sub.query("bi_st_id == @stat_id")["sub_name"].iloc[0]
@@ -87,13 +101,15 @@ class recommend_sub_station :
         except:
             pass
 
-        '''
+        """
         총 이동횟수를 구한 뒤 50회 미만인 대여소는 이동량이 없다고 판단.
-        '''
+        """
 
         # 이동기록 기록 50건 이하 제거
         count_rent = 50
-        result_concat = result_concat[(result_concat['1to2'] > count_rent) | (result_concat['2to1'] > count_rent) ]
+        result_concat = result_concat[
+            (result_concat["1to2"] > count_rent) | (result_concat["2to1"] > count_rent)
+        ]
 
         # 지하철역 인근 따릉이 대여소 정보와 종합
         sorted_sub = pd.merge(
@@ -102,12 +118,11 @@ class recommend_sub_station :
             how="left",
             left_on=result_concat.index,
             right_on="bi_st_id",
-        ).dropna(subset=['sub_name'])   
+        ).dropna(subset=["sub_name"])
 
-
-        '''
+        """
         대여소를 기준으로 대여소 거리 계산 
-        '''
+        """
         # 기준 대여소와 역근처 대여소 직선 거리계산
         station_lat_lon = station[station["st_id"].isin(sorted_sub["bi_st_id"])][
             ["st_id", "st_name", "latitude", "longtitude"]
@@ -126,18 +141,15 @@ class recommend_sub_station :
             sorted_sub, station_lat_lon, left_on="bi_st_id", right_on="st_id"
         ).drop(columns=["st_id"])
 
-
-
-        '''
+        """
         연산 속도를 줄이기 위해 top 10개 대여소만 선정
-        '''
-        sorted_sub['total'] = sorted_sub['1to2'] + sorted_sub['2to1']
-        sorted_sub = sorted_sub.sort_values(by='total', ascending=False)[:10]
+        """
+        sorted_sub["total"] = sorted_sub["1to2"] + sorted_sub["2to1"]
+        sorted_sub = sorted_sub.sort_values(by="total", ascending=False)[:10]
 
-
-        '''
+        """
         가는 시간 및 거리 계산
-        '''
+        """
         start = time.time()
         # 대여소별 예상 도착시간 계산
         result_station = []
@@ -162,19 +174,19 @@ class recommend_sub_station :
             mean_id2 = round(st_id2_time.index[:3].values.mean(), 1)
 
             result_station.append([mean_id1, mean_id2])
-        print('recommend_sub',start-time.time())
-
+        print("recommend_sub", start - time.time())
 
         # 예상시간정보 종합(대여소: 대여소에서 출발)
         est_time = pd.DataFrame(result_station, columns=["대여소", "역"])
 
         # return 자료 생성
-        self.nearest_sub = pd.concat([sorted_sub.reset_index(drop=True), est_time], axis=1)
+        self.nearest_sub = pd.concat(
+            [sorted_sub.reset_index(drop=True), est_time], axis=1
+        )
 
-
-        '''
+        """
         name_sub를 table과 plotly 모두 사용하므로 init으로 빼놨음.
-        '''
+        """
         # 대여소 출발을 고른 경우
         if filter_start == "대여소":
             sub_sorted_station = (
@@ -198,13 +210,13 @@ class recommend_sub_station :
         # 결과에 따라 관련 대여소 이름이 다름.
         self.name_sub = sub_sorted_station["sub_name"].tolist()
 
-
-
-    def table_info(self) :
+    def table_info(self):
 
         # 대여소 예상시간 테이블 만들기
         nearest_sub_sorted = (
-            self.nearest_sub[["bi_st_id","sub_name", self.counts, f"{self.filter_start}"]]
+            self.nearest_sub[
+                ["bi_st_id", "sub_name", self.counts, f"{self.filter_start}"]
+            ]
             .sort_values(by=f"{self.filter_start}")
             .query("sub_name == @self.name_sub")
             .reset_index(drop=True)
@@ -221,8 +233,7 @@ class recommend_sub_station :
 
         return nearest_sub_sorted
 
-
-    def plotly_image(self) : 
+    def plotly_image(self):
 
         # figure 만들기
         start = time.time()
@@ -235,7 +246,7 @@ class recommend_sub_station :
             color="sub_name",
             opacity=0.5,
             template="seaborn",
-            mapbox_style='carto-positron',
+            mapbox_style="carto-positron",
             # size='total', size_max=20,
             zoom=12,
             height=500,
@@ -243,8 +254,7 @@ class recommend_sub_station :
         # marker 정보
         fig.for_each_trace(lambda t: t.update(name="<b>" + t.name + "</b>"))
         fig.update_traces(marker={"size": 15})
-        print('load',start-time.time())
-
+        print("load", start - time.time())
 
         # 해당 따릉이 대여소 색 표시
         start = time.time()
@@ -260,15 +270,14 @@ class recommend_sub_station :
         )
 
         fig.add_trace(fig_2.data[0])
-        print('load',start-time.time())
-
+        print("load", start - time.time())
 
         fig.update_layout(
             margin=dict(l=0, r=0, t=0, b=0),
-        #     mapbox=dict(
-        #     accesstoken="pk.eyJ1IjoieWFuZ29vcyIsImEiOiJjbDNqd2tkN2IwbGdmM2pvNzF0c2M4NnZkIn0.J3IjPYg3w28cGiWkUD7bnA",
-        #     # style='mapbox://styles/yangoos/cl3jubvl7000c14llgtoev0nm'
-        # ),
+            #     mapbox=dict(
+            #     accesstoken="pk.eyJ1IjoieWFuZ29vcyIsImEiOiJjbDNqd2tkN2IwbGdmM2pvNzF0c2M4NnZkIn0.J3IjPYg3w28cGiWkUD7bnA",
+            #     # style='mapbox://styles/yangoos/cl3jubvl7000c14llgtoev0nm'
+            # ),
             legend=dict(
                 yanchor="top",
                 y=0.99,
@@ -291,8 +300,9 @@ class recommend_sub_station :
             .replace("</extra>", "")
         )
         context = {"div_data": str(div_data), "script_data": str(script_data)}
-        print('load',start-time.time())
+        print("load", start - time.time())
         return context
+
 
 if __name__ == "__main__":
     a = recommend_sub_station(seoul_bike_raw_data, 207, near_sub, station_info)

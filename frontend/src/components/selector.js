@@ -1,24 +1,29 @@
 import React, { useState, useEffect, Component } from "react";
-import Select from "react-select";
+import Select, { components } from "react-select";
 import axios from "axios";
 import { FixedSizeList as List } from "react-window";
 
-function Selector() {
-  console.clear();
+function Selector({ set_img, stationInfo, setStationInfo }) {
   //state 정보
-  const [Img, setImg] = useState(0);
   const [stations, setStations] = useState([]);
 
   // 자료 요청하는 api
-  function img_load(value) {
-    axios.post("api/testing", { values: value }).then((res) => {
-      setImg(res.data);
+  // function img_load(value) {
+  //   axios.post("http://localhost:8000/api/testing", { values: value }).then((res) => {
+  //     set_img(res.data);
+  //   });
+  // }
+
+  // list 요청하는 api station info가 바뀌면 set_img도 바뀜
+  useEffect(() => {
+    axios.post("http://localhost:8000/api/testing", { values: stationInfo.value }).then((res) => {
+      set_img(res.data);
     });
-  }
+  }, [stationInfo]);
 
   // list 요청하는 api
   useEffect(() => {
-    axios.get("/api/selector_Options/").then((response) => {
+    axios.get("http://localhost:8000/api/selector_Options/").then((response) => {
       setStations(response.data);
     });
   }, []);
@@ -33,7 +38,12 @@ function Selector() {
       const initialOffset = options.indexOf(value) * height;
 
       return (
-        <List height={maxHeight} itemCount={children.length} itemSize={height} initialScrollOffset={initialOffset}>
+        <List
+          height={maxHeight}
+          itemCount={children.length}
+          itemSize={height}
+          initialScrollOffset={initialOffset}
+        >
           {({ index, style }) => <div style={style}>{children[index]}</div>}
         </List>
       );
@@ -71,7 +81,13 @@ function Selector() {
     },
     placeholder: (styles) => ({ ...styles, color: "#F5F5F5" }),
   };
-
+  const DropdownIndicator = (props) => {
+    return (
+      <components.DropdownIndicator {...props}>
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </components.DropdownIndicator>
+    );
+  };
   return (
     <div>
       <Select
@@ -79,8 +95,9 @@ function Selector() {
         classNamePrefix="react-select"
         options={stations}
         styles={customStyles}
-        components={{ MenuList }}
-        //   onChange={(e) => img_load(e.value)}
+        components={{ MenuList, DropdownIndicator }}
+        onChange={(e) => setStationInfo(e)}
+        // onChange={(e) => img_load(e.value)}
       />
     </div>
   );

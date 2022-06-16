@@ -5,7 +5,6 @@ import plotly
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import matplotlib
-import matplotlib
 import pandas as pd
 import numpy as np
 import base64
@@ -13,12 +12,9 @@ import ast
 from io import BytesIO
 from matplotlib import font_manager, rc
 
-# 한글폰트
-font_name = [
-    f.name for f in matplotlib.font_manager.fontManager.ttflist if "Nanum" in f.name
-]
-plt.rcParams["font.family"] = "NanumGothic"
-# rc('font', family=font_name)
+matplotlib.use("Agg")
+rc("font", family="AppleGothic")
+plt.rcParams["axes.unicode_minus"] = False
 
 # def time_check(func):
 #     def wrapper():
@@ -30,7 +26,7 @@ plt.rcParams["font.family"] = "NanumGothic"
 ################## 기본 함수
 def get_graph():
     buffer = BytesIO()
-    plt.savefig(buffer, format="png", bbox_inches="tight")
+    plt.savefig(buffer, format="png", bbox_inches="tight", transparent=True)
     buffer.seek(0)
     image_png = buffer.getvalue()
     graph = base64.b64encode(image_png)
@@ -106,14 +102,14 @@ def day_rent(filtered_data):
     # 사각형 정보
     bars = []
     for num, h in enumerate(height):
-        ist = [num, 0, h, 0.9]  # x,y,h,w
+        ist = [num, 0, h, 0.82]  # x,y,h,w
         bars.append(ist)
     # 날짜
     days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     # days = ["월","화","수","목","금","토","일"]
 
     # plot
-    fig, ax = plt.subplots(figsize=(8, 8))
+    fig, ax = plt.subplots(figsize=(8, 6))
 
     # bar = rect
     for num, (bar, days) in enumerate(zip(bars, days)):
@@ -141,20 +137,20 @@ def day_rent(filtered_data):
 
         # 요일 넣기(padding고려해서 num으로 조정)
         plt.text(
-            x + 0.28, y - 0.1, days, fontdict={"fontsize": 14, "color": (0, 0, 0, 0.7)}
+            x + 0.26, y - 0.1, days, fontdict={"fontsize": 18, "color": (0, 0, 0, 0.7)}
         )
 
         # 개수 넣기
         plt.text(
-            x + 0.15,
-            h + 0.02,
+            x + 0.05,
+            h + 0.03,
             data[num],
-            fontdict={"fontsize": 14, "color": (0, 0, 0, 0.7)},
+            fontdict={"fontsize": 18, "color": (0, 0, 0, 0.7)},
         )
 
-    plt.text(2, 2.25, "요일별 이용량", fontdict={"fontsize": 28, "color": (0, 0, 0, 0.7)})
-    plt.xlim(-0.1, 7)  # 넓이가 0.8이라서 그럼
-    plt.ylim(0, 2.5)
+    # plt.text(2, 2.25, "요일별 이용량", fontdict={"fontsize": 28, "color": (0, 0, 0, 0.7)})
+    plt.xlim(-0.2, 7.1)  # 넓이가 0.8이라서 그럼
+    plt.ylim(0, 1.8)
     plt.axis("off")
     graph = get_graph()
     plt.close()
@@ -164,16 +160,17 @@ def day_rent(filtered_data):
 # 반납 : filtered_data_end(=num 1), 대여 : filtered_data_start(=num 2)
 
 
-def time_rent(filtered_data):
+def time_rent(filtered_data, days="weekday"):
     # date 나눔
     time_data = filtered_data[0]["date"]
 
     # 평일 주말 구분
-    weekday = time_data.dt.weekday.isin([0, 1, 2, 3, 4])
-    weekend = time_data.dt.weekday.isin([5, 6])
-    asd = "주말"
+    if days == "weekday":
+        days = time_data.dt.weekday.isin([0, 1, 2, 3, 4])  ##weekday
+    else:
+        days = time_data.dt.weekday.isin([5, 6])  ##weekend
 
-    a = time_data[weekend].dt.hour
+    a = time_data[days].dt.hour
     bins = [-1, 5, 8, 11, 14, 17, 20, 23]
     time = ["0-5", "6-8", "9-11", "12-14", "15-17", "18-20", "21-23"]
     data = a.groupby(pd.cut(a, bins=bins, labels=time)).size()
@@ -195,11 +192,11 @@ def time_rent(filtered_data):
 
     bars = []
     for num, h in enumerate(height):
-        ist = [num, 0, h, 0.9]  # x,y,h,w
+        ist = [num, 0, h, 0.82]  # x,y,h,w
         bars.append(ist)
 
     # plot
-    fig, ax = plt.subplots(figsize=(8, 8))
+    fig, ax = plt.subplots(figsize=(8, 6))
 
     # bar = rect
     for num, (bar, time) in enumerate(zip(bars, time)):
@@ -225,26 +222,26 @@ def time_rent(filtered_data):
         )
         ax.add_patch(bbox)
 
-        # 요일 넣기(padding고려해서 num으로 조정)
+        # 시간 넣기(padding고려해서 num으로 조정)
         plt.text(
-            x + 0.15, y - 0.1, time, fontdict={"fontsize": 14, "color": (0, 0, 0, 0.7)}
+            x + 0.12, y - 0.1, time, fontdict={"fontsize": 18, "color": (0, 0, 0, 0.7)}
         )
 
         # 개수 넣기
         plt.text(
-            x + 0.15,
+            x + 0.05,
             h + 0.02,
             data[num],
-            fontdict={"fontsize": 14, "color": (0, 0, 0, 0.7)},
+            fontdict={"fontsize": 18, "color": (0, 0, 0, 0.7)},
         )
 
         # 시간별 이용량
-    plt.text(
-        1.4, 2.25, f"시간별 이용량({asd})", fontdict={"fontsize": 28, "color": (0, 0, 0, 0.7)}
-    )
+    # plt.text(
+    #     1.4, 2.25, f"시간별 이용량({asd})", fontdict={"fontsize": 28, "color": (0, 0, 0, 0.7)}
+    # )
 
-    plt.xlim(-0.1, 7)  # 넓이가 0.8이라서 그럼
-    plt.ylim(0, 2.6)
+    plt.xlim(-0.2, 7.1)  # 넓이가 0.8이라서 그럼
+    plt.ylim(0, 1.8)
     plt.axis("off")
 
     graph = get_graph()
@@ -256,16 +253,18 @@ def total_rent(filtered_data):
     # 데이터 정제
     a = len(filtered_data[1])
     b = len(filtered_data[2])
-    percent = int(a / (a + b) * 100)
+    percent = round((a / (a + b) * 100), 1)
 
     ratio = [percent, 100 - percent]
     colors = ["#35C768", "#35c76880"]
+
+    plt.figure(figsize=(3, 8))
     plt.pie(
         ratio,
         startangle=270,
         autopct="%.1f%%",
         colors=colors,
-        textprops=dict(color="w"),
+        textprops=dict(color="w", fontsize=13),
     )
     # plt.legend(['대여','반납'], bbox_to_anchor=(1,1), borderpad=0, framealpha=0) ## 범례 표시
     texts = ["출발", "도착"]
@@ -284,10 +283,11 @@ def total_rent(filtered_data):
     ]
     plt.legend(
         handles=patches,
-        bbox_to_anchor=(1, 1),
+        bbox_to_anchor=(0.98, 0.95),
         loc="center",
         facecolor="white",
         framealpha=0,
+        fontsize=12,
     )
     graph = get_graph()
     plt.close()
@@ -441,18 +441,23 @@ class recommend_sub_station:
             lambda x: str(int(x)) + "분"
         )
 
-        return nearest_sub_sorted
+        return nearest_sub_sorted[:3]
 
     def frequent_estimation(self, num=3):
         data = self.nearest_sub.query('color == "자주가는 대여소"')[:num]
         data_index = data.bi_st_id.to_list()
+        est_time = data[["st_name", "대여소"]]
+        est_time.columns = ["대여소 이름", "예상시간"]
+        est_time["예상시간"] = est_time["예상시간"].apply(lambda x: str(int(x)) + "분")
+        return est_time
 
-        labels = self.bike_info.query("value == @data_index")
-        est_time = data[["대여소", "bi_st_id", "total"]]
-        result = pd.merge(
-            labels, est_time, how="left", left_on="value", right_on="bi_st_id"
-        ).sort_values(by="total", ascending=False)
-        return result[["label", "대여소"]]
+        ## 혹시몰라 백업용
+        # labels = self.bike_info.query("value == @data_index")
+        # est_time = data[["대여소", "bi_st_id", "total"]]
+        # result = pd.merge(
+        #     labels, est_time, how="left", left_on="value", right_on="bi_st_id"
+        # ).sort_values(by="total", ascending=False)
+        # return result[["label", "대여소"]]
 
     def plotly_image(self):
 
@@ -516,9 +521,9 @@ class recommend_sub_station:
             ),
             legend=dict(
                 yanchor="top",
-                y=0.98,
+                y=0.82,
                 xanchor="right",
-                x=0.98,
+                x=0.95,
                 bgcolor="rgba(223, 235, 223, 0.8)",
                 title={"text": None},
             ),
