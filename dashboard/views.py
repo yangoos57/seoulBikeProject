@@ -9,7 +9,8 @@ import time
 from .utils import *
 
 
-seoul_bike_raw_data = pd.read_parquet("220607_bike_record.parquet.gzip")
+seoul_bike_raw_data = pd.read_parquet("parquet/220607_bike_record.parquet.gzip")
+print("data loading complete")
 
 
 class stationInformationView(viewsets.ModelViewSet):
@@ -52,7 +53,7 @@ class plots(views.APIView):
 
         start_in = time.time()
         recommend_sub = recommend_sub_station(
-            filtered_data=seoul_bike_raw_data,
+            filtered_data=filtered_data[0],
             stat_id=val,
             near_sub=self.near_sub,
             station=self.station_info,

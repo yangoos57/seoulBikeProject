@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 
-function TimeSelect({ onChange, value }) {
+function TimeSelect({ onChange, values }) {
+  const [val, setVal] = useState("img_2");
+
+  // select options
   const customStyles = {
     option: (provided, state) => ({
       ...provided,
@@ -25,15 +28,23 @@ function TimeSelect({ onChange, value }) {
       border: 0,
       boxShadow: "none",
     }),
+
     singleValue: (provided, state) => {
       const opacity = state.isDisabled ? 0.5 : 1;
       const transition = "opacity 300ms";
       const color = "rgba(0, 0, 0, 0.615)";
-      const fontSize = 18;
+      const fontSize = 16;
       return { ...provided, opacity, transition, color, fontSize };
     },
+
     placeholder: (styles) => ({ ...styles, color: "rgba(0, 0, 0, 0.615)" }),
   };
+
+  // 자동으로 평일 불러오기
+  useEffect(() => {
+    onChange(values[val]);
+  }, [values]);
+
   return (
     <div>
       <Select
@@ -43,7 +54,8 @@ function TimeSelect({ onChange, value }) {
           { value: "img_4", label: "주말" },
         ]}
         onChange={(e) => {
-          onChange(value[e.value]);
+          onChange(values[e.value]);
+          setVal(e.value);
         }}
         defaultValue={{ value: "img_2", label: "평일" }}
       />

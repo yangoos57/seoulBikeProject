@@ -3,16 +3,14 @@
     --dash-background-color : #FFFFFF;
     --gray-background-color : #F9FAFB;
 }
-@font-face {
-    font-family: 'KoPubDotumMedium';
-     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/KoPubDotumMedium.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
+@import url(//fonts.googleapis.com/earlyaccess/kopubbatang.css);
 
+.kopubbatang * {
+ font-family: 'KoPub Batang', serif;
+}
 html,body{
 	height: 100%;
-    font-family: 'KoPubDotumMedium';
+    font-family: 'KoPub Batang';
     color : rgba(0, 0, 0, 0.615)
 }
 
@@ -104,12 +102,13 @@ html,body{
 
 
 
-/*일반 select*/
-.select {
-    color: var(--font-color);
-    font-family: inherit;  /* 폰트 상속 */
-    border: 0px
-  }
+/*일yarn add react-spinners반 select*/
+.pie_legend{
+    border-radius: 20px;
+    width: 5px;
+    height: 5px;
+    display: flex;
+}
 
 
 /* react-select */
@@ -167,5 +166,11 @@ html,body{
     .dash{
         height: 100%;
         width: 80%;
+    }
+}
+@media (min-width : 2100px){
+    .dash{
+        height: 100%;
+        width: 70%;
     }
 }

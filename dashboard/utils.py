@@ -1,3 +1,4 @@
+from tkinter import font
 from bs4 import BeautifulSoup
 import plotly.express as px
 import plotly.graph_objects as go
@@ -26,7 +27,9 @@ plt.rcParams["axes.unicode_minus"] = False
 ################## 기본 함수
 def get_graph():
     buffer = BytesIO()
-    plt.savefig(buffer, format="png", bbox_inches="tight", transparent=True)
+    plt.savefig(
+        buffer, format="png", bbox_inches="tight", transparent=True, pad_inches=0
+    )
     buffer.seek(0)
     image_png = buffer.getvalue()
     graph = base64.b64encode(image_png)
@@ -60,10 +63,9 @@ def raw_data(query_data, val):
     quert_st_id2 = query_data[query_data["st_id2"] == val]
     filtered_data = pd.concat([quert_st_id1, quert_st_id2], axis=0).drop_duplicates()
     filtered_data.drop(columns="index", inplace=True)
-
-    # st_id1 == 754 & st_id2 == 754 인 경우 제거
     bm = (filtered_data["st_id1"] == val) & (filtered_data["st_id2"] == val)
     filtered_data = filtered_data[~bm]
+    # filtered_data.reset_index(drop=True, inplace=True)
 
     # 대여
     filtered_data_start = filtered_data[
@@ -87,6 +89,7 @@ def day_rent(filtered_data):
 
     # max 요일
     max_value = np.where(data_numpy == data_numpy.max())[0][0]
+    print("max_value:", max_value)
 
     # 높이 normalize 후 0.5 더함( 0.5는 막대 길이를 의미함)
     height = list(
@@ -109,7 +112,7 @@ def day_rent(filtered_data):
     # days = ["월","화","수","목","금","토","일"]
 
     # plot
-    fig, ax = plt.subplots(figsize=(8, 6))
+    fig, ax = plt.subplots(figsize=(8, 4))
 
     # bar = rect
     for num, (bar, days) in enumerate(zip(bars, days)):
@@ -136,21 +139,48 @@ def day_rent(filtered_data):
         ax.add_patch(bbox)
 
         # 요일 넣기(padding고려해서 num으로 조정)
-        plt.text(
-            x + 0.26, y - 0.1, days, fontdict={"fontsize": 18, "color": (0, 0, 0, 0.7)}
-        )
+        if days == "Fri":
+            plt.text(
+                x + 0.25,
+                y - 0.1,
+                days,
+                fontdict={"fontsize": 14, "color": (0, 0, 0, 0.7)},
+            )
+        else:
+            plt.text(
+                x + 0.15,
+                y - 0.1,
+                days,
+                fontdict={"fontsize": 14, "color": (0, 0, 0, 0.7)},
+            )
 
         # 개수 넣기
-        plt.text(
-            x + 0.05,
-            h + 0.03,
-            data[num],
-            fontdict={"fontsize": 18, "color": (0, 0, 0, 0.7)},
-        )
+        if data[num] > 10000:
+            plt.text(
+                x + 0.02,
+                h + 0.02,
+                data[num],
+                fontdict={"fontsize": 14, "color": (0, 0, 0, 0.7)},
+            )
 
-    # plt.text(2, 2.25, "요일별 이용량", fontdict={"fontsize": 28, "color": (0, 0, 0, 0.7)})
-    plt.xlim(-0.2, 7.1)  # 넓이가 0.8이라서 그럼
-    plt.ylim(0, 1.8)
+        elif 10000 > data[num] > 1000:
+            plt.text(
+                x + 0.07,
+                h + 0.02,
+                data[num],
+                fontdict={"fontsize": 14, "color": (0, 0, 0, 0.7)},
+            )
+
+        else:
+            plt.text(
+                x + 0.2,
+                h + 0.02,
+                data[num],
+                fontdict={"fontsize": 14, "color": (0, 0, 0, 0.7)},
+            )
+
+    plt.xlim(-0.2, 7)  # 넓이가 0.8이라서 그럼
+    plt.ylim(-0.2, 1.5)
     plt.axis("off")
     graph = get_graph()
     plt.close()
@@ -172,7 +202,7 @@ def time_rent(filtered_data, days="weekday"):
 
     a = time_data[days].dt.hour
     bins = [-1, 5, 8, 11, 14, 17, 20, 23]
-    time = ["0-5", "6-8", "9-11", "12-14", "15-17", "18-20", "21-23"]
+    time = ["0-6", "6-9", "9-12", "12-15", "15-18", "18-21", "21-24"]
     data = a.groupby(pd.cut(a, bins=bins, labels=time)).size()
     data_numpy = data.to_numpy()
 
@@ -196,7 +226,7 @@ def time_rent(filtered_data, days="weekday"):
         bars.append(ist)
 
     # plot
-    fig, ax = plt.subplots(figsize=(8, 6))
+    fig, ax = plt.subplots(figsize=(8, 4))
 
     # bar = rect
     for num, (bar, time) in enumerate(zip(bars, time)):
@@ -222,26 +252,49 @@ def time_rent(filtered_data, days="weekday"):
         )
         ax.add_patch(bbox)
 
-        # 시간 넣기(padding고려해서 num으로 조정)
-        plt.text(
-            x + 0.12, y - 0.1, time, fontdict={"fontsize": 18, "color": (0, 0, 0, 0.7)}
-        )
+        # 요일 넣기(padding고려해서 num으로 조정)
+        if len(time) > 4:
+            plt.text(
+                x + 0.1,
+                y - 0.1,
+                time,
+                fontdict={"fontsize": 13, "color": (0, 0, 0, 0.7)},
+            )
+        else:
+            plt.text(
+                x + 0.15,
+                y - 0.1,
+                time,
+                fontdict={"fontsize": 14, "color": (0, 0, 0, 0.7)},
+            )
 
         # 개수 넣기
-        plt.text(
-            x + 0.05,
-            h + 0.02,
-            data[num],
-            fontdict={"fontsize": 18, "color": (0, 0, 0, 0.7)},
-        )
+        if data[num] > 10000:
+            plt.text(
+                x + 0.02,
+                h + 0.02,
+                data[num],
+                fontdict={"fontsize": 14, "color": (0, 0, 0, 0.7)},
+            )
 
-        # 시간별 이용량
-    # plt.text(
-    #     1.4, 2.25, f"시간별 이용량({asd})", fontdict={"fontsize": 28, "color": (0, 0, 0, 0.7)}
-    # )
+        elif 10000 > data[num] > 1000:
+            plt.text(
+                x + 0.07,
+                h + 0.02,
+                data[num],
+                fontdict={"fontsize": 14, "color": (0, 0, 0, 0.7)},
+            )
 
-    plt.xlim(-0.2, 7.1)  # 넓이가 0.8이라서 그럼
-    plt.ylim(0, 1.8)
+        else:
+            plt.text(
+                x + 0.2,
+                h + 0.02,
+                data[num],
+                fontdict={"fontsize": 14, "color": (0, 0, 0, 0.7)},
+            )
+
+    plt.xlim(-0.2, 7)  # 넓이가 0.8이라서 그럼
+    plt.ylim(-0.2, 1.5)
     plt.axis("off")
 
     graph = get_graph()
@@ -258,53 +311,49 @@ def total_rent(filtered_data):
     ratio = [percent, 100 - percent]
     colors = ["#35C768", "#35c76880"]
 
-    plt.figure(figsize=(3, 8))
+    plt.figure(figsize=(3, 3))
     plt.pie(
         ratio,
         startangle=270,
         autopct="%.1f%%",
         colors=colors,
-        textprops=dict(color="w", fontsize=13),
+        textprops=dict(color="w", fontsize=14),
     )
-    # plt.legend(['대여','반납'], bbox_to_anchor=(1,1), borderpad=0, framealpha=0) ## 범례 표시
-    texts = ["출발", "도착"]
-    patches = [
-        plt.plot(
-            [],
-            [],
-            marker="o",
-            ms=10,
-            ls="",
-            mec=None,
-            color=colors[i],
-            label="{:s}".format(texts[i]),
-        )[0]
-        for i in range(len(texts))
-    ]
-    plt.legend(
-        handles=patches,
-        bbox_to_anchor=(0.98, 0.95),
-        loc="center",
-        facecolor="white",
-        framealpha=0,
-        fontsize=12,
-    )
+    # texts = ["출발", "도착"]
+    # patches = [
+    #     plt.plot(
+    #         [],
+    #         [],
+    #         marker="o",
+    #         ms=10,
+    #         ls="",
+    #         mec=None,
+    #         color=colors[i],
+    #         label="{:s}".format(texts[i]),
+    #     )[0]
+    #     for i in range(len(texts))
+    # ]
+    # plt.legend(
+    #     handles=patches,
+    #     bbox_to_anchor=(0.98, 0.95),
+    #     loc="center",
+    #     facecolor="white",
+    #     framealpha=0,
+    #     fontsize=12,
+    # )
     graph = get_graph()
     plt.close()
     return graph
 
 
 class recommend_sub_station:
-    def __init__(self, filtered_data, stat_id, near_sub, station, bike_info, num=30):
+    def __init__(self, filtered_data, stat_id, near_sub, station, bike_info, num=20):
         """
 
         해당 대여소에서 자주 이용하는 지하철역과 그 주변에 있는 따릉이 대여소를 추천하는 매서드임.
         filtered_data는 원하는 대여소가 sorting 된 DataFrame이 필요함.
 
-        filtered_data : 가공된 데이터
-        stat_id : 대여소 번호
-        near_sub, station, bike_info : 각종 정보
-        num : 이용기준 상위 n개 대여소만 sorting
+        filter_start는 "대여소" 또는 "역"만 올 수 있음.
 
         """
         self.stat_id = stat_id
@@ -313,6 +362,7 @@ class recommend_sub_station:
         self.filtered_data = filtered_data
         self.bike_info = bike_info
 
+        print(self.bike_info.query("value == @self.stat_id").label)
         """
         개별 대여소별로 해당 대여소와 얼마나 교류가 있는지 확인한다.
         """
@@ -342,8 +392,11 @@ class recommend_sub_station:
         """
         # 역 주변 대여소가 검색될 때 해당역 주변 대여소는 제거한다. | 316 대여소는 종각역과 관련됐는데, 종각과 관련된 대여소는 제거했다.
         try:
+            # 지하철역 이름 검색
             filter_sub = near_sub.query("bi_st_id == @stat_id")["sub_name"].iloc[0]
+            # 지하철역 이름이 포함된 자전거역 검색
             filter_sub_2 = near_sub.query("sub_name ==@filter_sub")["bi_st_id"].values
+            # 관련 내용 제거
             result_concat = result_concat[~result_concat.index.isin(filter_sub_2)]
         except:
             pass
@@ -357,6 +410,17 @@ class recommend_sub_station:
         result_concat = result_concat[
             (result_concat["1to2"] > count_rent) | (result_concat["2to1"] > count_rent)
         ]
+
+        ### 지하철만 모은건데 전체 대여소를 설정하는게 더 좋다고 생각해서 아래와 같이 변경하였음.
+        # 지하철역 인근 따릉이 대여소 정보와 종합
+        # sorted_sub = pd.merge(
+        #     result_concat,
+        #     near_sub,
+        #     how="left",
+        #     left_on=result_concat.index,
+        #     right_on="bi_st_id",
+        # ).dropna(subset=["sub_name"])
+        # self.asd= sorted_sub.copy()
 
         sorted_sub = pd.merge(
             result_concat,
@@ -388,30 +452,61 @@ class recommend_sub_station:
         ).drop(columns=["st_id"])
 
         """
-        연산 속도를 줄이기 위해 top 10개 대여소만 선정
+        연산 속도를 줄이기 위해 top num개 대여소만 선정
         """
         sorted_sub["total"] = sorted_sub["1to2"] + sorted_sub["2to1"]
         sorted_sub = sorted_sub.sort_values(by="total", ascending=False)[
             :num
         ]  #####################
+        self.test_val = sorted_sub
 
         """
         가는 시간 및 거리 계산
         """
         # 대여소별 예상 도착시간 계산
-        result_station = []
-        for station_id in sorted_sub["bi_st_id"]:
 
-            # 대여소 기준 해당 역으로 가는 시간
-            BM = filtered_data["st_id2"] == station_id
+        result_station = []
+        for j in sorted_sub["bi_st_id"]:
+            BM = filtered_data["st_id2"] == j
             st_id1_time = (
                 filtered_data[BM]["riding_time"]
                 .value_counts()
                 .sort_values(ascending=False)
             )
-            mean_id1 = round(st_id1_time.index[:3].values.mean(), 1)
+            BM = filtered_data["st_id1"] == j
+            st_id2_time = (
+                filtered_data[BM]["riding_time"]
+                .value_counts()
+                .sort_values(ascending=False)
+            )
 
-            result_station.append(mean_id1)
+            ### 1to2 걸린시간 + 2to1 걸린시간 합
+            all_rent = st_id1_time.add(st_id2_time, fill_value=0)
+
+            ### 1to2 & 2to1 대여기록 합
+            total_record = all_rent.sum()
+
+            k = []
+            i = 2
+            ### 기록 많은 순만 종합
+            while len(k) < 1:
+                k = all_rent[all_rent >= (total_record / i)]
+                i = i * 1.5
+
+            ### 대여시간
+            ind = k.index
+            ### 대여기록
+            val = k.values
+            ### 대여기록 합
+            a = k.sum()
+            ### 대여시간 * 대여기록
+            asddd = sum([a * b for a, b in zip(ind, val)])
+            # 평균 시간
+            ddddd = asddd / a
+
+            # 올림
+            result = round(ddddd, 0)
+            result_station.append(result)
 
         # 예상시간정보 종합(대여소: 대여소에서 출발)
         est_time = pd.DataFrame(result_station, columns=["대여소"])
@@ -427,7 +522,7 @@ class recommend_sub_station:
 
         self.nearest_sub["color"] = var
 
-    def table_info(self):
+    def table_info(self, num=20):
 
         # 대여소 예상시간 테이블 만들기
         nearest_sub_sorted = (
@@ -441,9 +536,9 @@ class recommend_sub_station:
             lambda x: str(int(x)) + "분"
         )
 
-        return nearest_sub_sorted[:3]
+        return nearest_sub_sorted[:num]
 
-    def frequent_estimation(self, num=3):
+    def frequent_estimation(self, num=20):
         data = self.nearest_sub.query('color == "자주가는 대여소"')[:num]
         data_index = data.bi_st_id.to_list()
         est_time = data[["st_name", "대여소"]]
@@ -469,25 +564,27 @@ class recommend_sub_station:
             # hover_data={'latitude':False,'longtitude':False,'st_name':True},
             opacity=0.8,
             # size='total', size_max=20,
-            zoom=13,
+            zoom=14,
             custom_data=["st_name", "대여소", "total", "distance"],
             color="color",
-            color_discrete_sequence=["green", "brown"],
+            color_discrete_sequence=["#35C768", "#3581C7"],  # 대여소 # 자하철
         )
         # marker 정보
         # fig.for_each_trace(lambda t: t.update(name="<b>" + t.name + "</b>"))
         fig.update_traces(
-            marker={"size": 9},
+            marker={"size": 10},
             hovertemplate="대여소 : %{customdata[0]} <br>예상시간 : %{customdata[1]}분 <br>대여기록 : %{customdata[2]}건",
         )
-
+        main_lat = self.station.query("st_id==@self.stat_id")["latitude"]
+        main_long = self.station.query("st_id==@self.stat_id")["longtitude"]
+        print(main_long)
         # 해당 따릉이 대여소 색 표시
         fig_2 = go.Figure(
             go.Scattermapbox(
-                lat=self.station.query("st_id==@self.stat_id")["latitude"],
-                lon=self.station.query("st_id==@self.stat_id")["longtitude"],
+                lat=main_lat,
+                lon=main_long,
                 mode="markers",
-                marker={"size": 20, "color": "black", "opacity": 0.3},
+                marker={"size": 40, "color": "#CA1B1B", "opacity": 0.2},
                 showlegend=False,
             )
         )
@@ -498,13 +595,14 @@ class recommend_sub_station:
         fig_3 = go.Figure(
             go.Scattermapbox(
                 name="",
-                lat=self.station.query("st_id==@self.stat_id")["latitude"],
-                lon=self.station.query("st_id==@self.stat_id")["longtitude"],
+                lat=main_lat,
+                lon=main_long,
                 mode="markers",
-                marker={"size": 9, "color": "red", "opacity": 0.9},
+                marker={"size": 12, "color": "#FF1B1B", "opacity": 0.9},
                 text=self.bike_info.query("value==@self.stat_id")["label"].values,
                 hovertemplate="%{text}",
-                showlegend=False
+                showlegend=False,
+                # zoom=14
                 # text=self.station.query("st_id==@self.stat_id")["st_name"].values,
             )
         )
@@ -515,6 +613,8 @@ class recommend_sub_station:
         # fig.update_traces(hoverinfo='skip',hovertemplate=None)
         fig.update_layout(
             margin=dict(l=0, r=0, t=0, b=0),
+            mapbox_zoom=14,
+            mapbox_center={"lat": main_lat.iloc[0], "lon": main_long.iloc[0]},
             mapbox=dict(
                 accesstoken="pk.eyJ1IjoieWFuZ29vcyIsImEiOiJjbDNqd2tkN2IwbGdmM2pvNzF0c2M4NnZkIn0.J3IjPYg3w28cGiWkUD7bnA",
                 style="mapbox://styles/yangoos/cl4cljdka001o14n3cll7whrh/draft",

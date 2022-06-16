@@ -3,30 +3,31 @@ import Select, { components } from "react-select";
 import axios from "axios";
 import { FixedSizeList as List } from "react-window";
 
-function Selector({ set_img, stationInfo, setStationInfo }) {
+function Selector({ stationInfo, setStationInfo, setImg, stations }) {
   //state 정보
-  const [stations, setStations] = useState([]);
 
-  // 자료 요청하는 api
-  // function img_load(value) {
-  //   axios.post("http://localhost:8000/api/testing", { values: value }).then((res) => {
+  // // station 정보를 요청하는 api
+  // useEffect(() => {
+  //   axios.get("http://localhost:8000/api/selector_Options/").then((response) => {
+  //     setStations(response.data);
+  //   });
+  // }, []);
+
+  // // station 정보를 불러오면 default 값으로 207 여의나루역을 불러온다.
+  // useEffect(() => {
+  //   axios.post("http://localhost:8000/api/testing", { values: 207 }).then((res) => {
   //     set_img(res.data);
   //   });
-  // }
+  // }, [stations]);
 
-  // list 요청하는 api station info가 바뀌면 set_img도 바뀜
+  //
+
+  // 대여소를 선택하면 stationInfo에 저장되고 자동으로 해당 api를 실행한다.
   useEffect(() => {
-    axios.post("http://localhost:8000/api/testing", { values: stationInfo.value }).then((res) => {
-      set_img(res.data);
+    axios.post("api/testing", { values: stationInfo.value }).then((res) => {
+      setImg(res.data);
     });
   }, [stationInfo]);
-
-  // list 요청하는 api
-  useEffect(() => {
-    axios.get("http://localhost:8000/api/selector_Options/").then((response) => {
-      setStations(response.data);
-    });
-  }, []);
 
   // selector options
   const height = 35;
@@ -97,7 +98,6 @@ function Selector({ set_img, stationInfo, setStationInfo }) {
         styles={customStyles}
         components={{ MenuList, DropdownIndicator }}
         onChange={(e) => setStationInfo(e)}
-        // onChange={(e) => img_load(e.value)}
       />
     </div>
   );
