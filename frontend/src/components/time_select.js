@@ -25,7 +25,6 @@ function TimeSelect({ onChange, values }) {
       overflow: "auto",
       fontSize: "16px",
       color: "white",
-      border: 0,
       boxShadow: "none",
     }),
 
