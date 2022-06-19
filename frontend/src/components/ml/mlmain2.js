@@ -2,7 +2,9 @@ import React from "react";
 import "./assets/mlstyle.css";
 import MlMap from "./mlmap";
 import MlTitle from "./mltitle";
-import MlSearchPage from "./mlsearchpage";
+import MlSearch from "./mlsearch";
+import MlSearch2 from "./mlsearch2";
+import SearchBoxMl from "./searchboxml";
 function MLMain() {
   return (
     <>
@@ -10,7 +12,8 @@ function MLMain() {
         <div className="main-ml m-auto ">
           {/* <MlTitle /> */}
           {/* <MlMap /> */}
-          <MlSearchPage />
+          <MlSearch />
+          {/* <MlSearch2 /> */}
         </div>
       </div>
     </>
