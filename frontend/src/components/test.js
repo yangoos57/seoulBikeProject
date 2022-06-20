@@ -1,19 +1,39 @@
 import React, { useState } from "react";
-import Timeselect from "./time_select";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 
 function Test() {
-  const [val, setVal] = useState(0);
-  console.clear();
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
   return (
     <div>
-      <div class="fa-4x">
-        <span className="fa-layers fa-fw" style={{ background: "MistyRose" }}>
-          <i className="fas fa-play" data-fa-transform="rotate--90 grow-2"></i>
-          <i className="fas fa-sun fa-inverse" data-fa-transform="shrink-10 up-2"></i>
-          <i className="fas fa-moon fa-inverse" data-fa-transform="shrink-11 down-4.2 left-4"></i>
-          <i className="fas fa-star fa-inverse" data-fa-transform="shrink-11 down-4.2 right-4"></i>
-        </span>
-      </div>
+      <h2> Single Item</h2>
+      <Slider {...settings}>
+        <div>
+          <h3>1</h3>
+        </div>
+        <div>
+          <h3>2</h3>
+        </div>
+        <div>
+          <h3>3</h3>
+        </div>
+        <div>
+          <h3>4</h3>
+        </div>
+        <div>
+          <h3>5</h3>
+        </div>
+        <div>
+          <h3>6</h3>
+        </div>
+      </Slider>
     </div>
   );
 }
