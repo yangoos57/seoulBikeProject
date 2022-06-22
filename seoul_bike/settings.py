@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "dashboard",
+    "bike_moon_light",
     "rest_framework",
     "corsheaders",
     "debug_toolbar",

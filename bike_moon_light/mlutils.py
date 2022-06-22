@@ -4,6 +4,7 @@ import requests
 from urllib.request import Request, urlopen
 import pandas as pd
 import numpy as np
+import setuptools
 from tqdm import notebook
 import plotly.graph_objects as go
 import plotly.express as px
@@ -32,13 +33,14 @@ class moon_light:
             "assets/search_info.csv", encoding="CP949", index_col=0
         )
 
-    def search_infomation(self, name):
+    def search_information(self, label):
         search_list = self.search_info[
-            self.search_info["name"].str.contains(name)
-        ].drop_duplicates("name")
+            self.search_info["label"].str.contains(label)
+        ].drop_duplicates("label")
         return search_list
 
     def departure_info(self, search_id):
+        # search_id는 frontend에서 value로 보낸다.
         if search_id < 3000:
             info = self.station.iloc[search_id]
         elif search_id > 4000:
@@ -47,6 +49,67 @@ class moon_light:
             info = self.sub_info.iloc[search_id - 3000]
 
         return pd.DataFrame(info).T
+
+    def arrival_info(self, id):
+        return self.station[self.station.index == id]
+
+    def route_data(self, departure_id, arrival_id):
+        departure_info = self.departure_info(departure_id)  # dataframe
+        arrival_info = self.arrival_info(arrival_id)  # dataframe
+
+        if departure_id < 3000:
+            print("자전거")
+            bike_route_coor = self.route_coor(departure_info, arrival_info)
+            return dict(bike_route_coor=bike_route_coor)
+
+        elif departure_id > 4000:
+            print("버스")
+            # * -- 자전거 대여소 정보 추출 -- *
+            bike_recommend = self.near_bus_bike_info(
+                departure_info, arrival_info
+            ).sort_values(by="num", ascending=False)
+
+            # * -- 출도착 버스 정보-- *
+            route_info = self.finding_start_end(departure_info, arrival_info)
+
+            # * -- 경로 선택 및 경로 노선 추출 -- *
+            route_whole, waypoint, route_start_and_end = self.bus_route_info(route_info)
+
+            # * -- 좌표 받기 -- *
+            direct_bike_route = self.route_coor(bike_recommend.iloc[0], arrival_info)
+            # print("direct_bike_route", direct_bike_route)
+
+            departure_bike_station = pd.DataFrame(bike_recommend.iloc[0]).T
+            # print("departure_bike_station", departure_bike_station)
+
+            arrival_transportation = pd.DataFrame(route_start_and_end.iloc[1]).T
+            # print("arrival_transportation", arrival_transportation)
+
+            bus_route_coor = self.bus_route_coor(route_start_and_end, waypoint)
+            walk_route_coor = self.route_coor(
+                arrival_transportation, departure_bike_station
+            )
+            bike_route_coor = self.route_coor(departure_bike_station, arrival_info)
+            return dict(
+                direct_bike_route=direct_bike_route,
+                bus_route_coor=bus_route_coor,
+                walk_route_coor=walk_route_coor,
+                bike_route_coor=bike_route_coor,
+            )
+        else:
+            print("지하철")
+            # * -- 자전거 대여소 정보 추출 -- *
+            bike_recommend = self.near_bus_bike_info(
+                departure_info, arrival_info
+            ).sort_values(by="dist")
+            departure_bike_station = pd.DataFrame(bike_recommend.iloc[0]).T
+
+            # * -- 자전거 경로(사실 보행로 추천이라는 사실~)-- *
+            walk_route_coor = self.route_coor(departure_info, departure_bike_station)
+            bike_route_coor = self.route_coor(departure_bike_station, arrival_info)
+            return dict(
+                walk_route_coor=walk_route_coor, bike_route_coor=bike_route_coor
+            )
 
     def raw_data(self, val):
         quert_st_id1 = self.seoul_bike[self.seoul_bike["st_id1"] == val]
@@ -57,12 +120,13 @@ class moon_light:
         filtered_data.drop(columns="index", inplace=True)
         bm = (filtered_data["st_id1"] == val) & (filtered_data["st_id2"] == val)
         filtered_data = filtered_data[~bm]
-        # 반납
-        filtered_data_end = filtered_data[
-            (filtered_data["st_id2"] == val) & (filtered_data["st_id1"] != val)
-        ]
 
-        return filtered_data_end
+        # # 반납
+        # filtered_data_end = filtered_data[
+        #     (filtered_data["st_id2"] == val) & (filtered_data["st_id1"] != val)
+        # ]
+
+        return filtered_data
 
     def haversine_np(self, lon1, lat1, lon2, lat2):
         """
@@ -90,9 +154,6 @@ class moon_light:
     #     return self.near_bus[
     #         self.near_bus["name"].str.contains(name)
     #     ]  # 버스, 대여소, 역 모두 넣어놓는 리스트로 만들기
-
-    def arrivial_info(self, id):
-        return self.station[self.station.index == id]
 
     # -- 버스 루트 정보 -- #
     def finding_start_end(self, departure_info, arrival_info):
@@ -227,24 +288,36 @@ class moon_light:
         """
         bike_id = pick.iloc[-1]["bike_id"]  # bike_id는 무조건 리스트 형태로
         bike_station_id = arrival_info.index[0]
-        # 추천_대여소_선정 : ast : '[123,]' => [123]으로 만들어줌 --> list
-        if type(bike_id) == str:
-            bike_id = ast.literal_eval(bike_id)
+
+        # # 추천_대여소_선정 : ast : '[123,]' => [123]으로 만들어줌 --> list
+        # if type(bike_id) == str:
+        #     bike_id = ast.literal_eval(bike_id)
+
+        bike_id = ast.literal_eval(bike_id)
+
+        raw = self.raw_data(bike_station_id)
+
+        br_record = raw.groupby("st_id1").size()
+
+        ### 50건 이상만 list에 담기도록 설정
+        br_record_id = br_record[br_record > 50].index
+
+        recom_bike_id = np.intersect1d(bike_id, br_record_id).tolist()
 
         # 버스정류장 근처 대여소와 집 근처 대여소 거리 비교
         # ending point를 외부에서 받아야하네 (클래스로 함수를 만들어야하나.)
 
-        # 추천 대여소 리스트 만들기
+        # # 추천 대여소 리스트 만들기
         BM_2 = (self.seoul_bike["st_id2"] == bike_station_id) & (
-            self.seoul_bike["st_id1"].isin(bike_id)
+            self.seoul_bike["st_id1"].isin(recom_bike_id)
         )
         BM_1 = (self.seoul_bike["st_id1"] == bike_station_id) & (
-            self.seoul_bike["st_id2"].isin(bike_id)
+            self.seoul_bike["st_id2"].isin(recom_bike_id)
         )
         seoul_bike_sorting = self.seoul_bike.loc[BM_1 | BM_2]  # 거리 및 시간 계산을 위해 따로 추출
 
         bike_recommend = []
-        for starting_station in bike_id:
+        for starting_station in recom_bike_id:
             BM_1 = (seoul_bike_sorting["st_id1"] == starting_station) & (
                 seoul_bike_sorting["st_id2"] == bike_station_id
             )
@@ -303,6 +376,12 @@ class moon_light:
     # -- 자전거 추천 경로 좌표 -- #
     def route_coor(self, departure_station, arrival_station):
         """departure_station과 arrival_station은 모두 dataframe으로!"""
+        if type(departure_station) == type(pd.Series()):
+            departure_station = pd.DataFrame(departure_station).T
+
+        if type(arrival_station) == type(pd.Series()):
+            arrival_station = pd.DataFrame(arrival_station).T
+
         url = "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1"
 
         payload = {

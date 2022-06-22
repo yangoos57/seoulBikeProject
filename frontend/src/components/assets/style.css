@@ -120,6 +120,16 @@ html,body{
 }
 
 
+/* leaflet */
+.leaflet-container{
+    width: 100vw;
+    height: 100vh;
+}
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+background: #35C768;
+box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+}
 
 
 
