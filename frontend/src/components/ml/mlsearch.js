@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ReactComponent as Sub } from "./assets/icons/sub.svg";
 import { ReactComponent as Bus } from "./assets/icons/bus.svg";
 import { ReactComponent as Bike } from "./assets/icons/bike.svg";
 import SearchBoxMl from "./searchboxml";
 import SearchItem from "./searchitem";
+import axios from "axios";
 
 function MlSearch({
   pageChange,
@@ -20,24 +21,45 @@ function MlSearch({
   const bike = <Bike width="30" height="30" />;
   const options = [
     {
-      key: 0,
       value: 207,
       label: "207 여의도역 7번출구 대..",
       icon: bike,
     },
-    {
-      key: 1,
-      value: "N26",
-      label: "N26 여의도역 정류장",
-      icon: bus,
-    },
-    {
-      key: 2,
-      value: "9호선",
-      label: "9호선 여의도역",
-      icon: sub,
-    },
   ];
+
+  const [infoData, setInfoData] = useState(options);
+  const [datanew, setdatanew] = useState(options);
+
+  useEffect(() => {
+    axios.get("/api/departure_info").then((res) => setInfoData(res.data));
+  }, []);
+
+  useEffect(() => {
+    if (typeof infoData === "object") {
+      function bike_img(asd) {
+        return { ...asd, icon: bike };
+      }
+      function bus_img(asd) {
+        return { ...asd, icon: bus };
+      }
+      function sub_img(asd) {
+        return { ...asd, icon: sub };
+      }
+      const newData = [];
+      infoData.filter((val) => {
+        if (val.value < 3000) {
+          return newData.push(bike_img(val));
+        } else if (val.value > 4000) {
+          return newData.push(bus_img(val));
+        } else {
+          return newData.push(sub_img(val));
+        }
+      });
+      setdatanew(newData);
+      console.log(newData);
+    }
+  }, [infoData]);
+
   useEffect(() => {
     setSearchTermStart("");
     setDeparture("");
@@ -58,7 +80,7 @@ function MlSearch({
       <div className="d-flex flex-column " style={{ height: "80%" }}>
         <SearchItem
           searchterm={searchTermStart}
-          options={options}
+          options={datanew}
           setClickedItemName={setClickedItemName}
           setPageChange={setPageChange}
           appendDirection={setDeparture}

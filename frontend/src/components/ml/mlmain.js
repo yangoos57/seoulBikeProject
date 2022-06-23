@@ -4,6 +4,7 @@ import MlMap from "./mlmap";
 import MlTitle from "./mltitle";
 import MlSearchPage from "./mlsearchpage";
 import MlMapCard from "./mlmapcard";
+import MlMapData from "./mlmapdata";
 
 function MLMain() {
   return (
@@ -13,6 +14,7 @@ function MLMain() {
         {/* <MlMap /> */}
         {/* <MlSearchPage /> */}
         <MlMapCard />
+        {/* <MlMapData /> */}
       </div>
     </div>
   );

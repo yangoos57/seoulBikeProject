@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import MlSearch from "./mlsearch";
 import MlSearch2 from "./mlsearch2";
+import { useNavigate } from "react-router-dom";
 
 const MlSearchPage = () => {
   "pageChange : 초기값 true, mlsearch1 listitem onclick시 false 반환";
@@ -16,32 +17,36 @@ const MlSearchPage = () => {
   const [searchTermEnd, setSearchTermEnd] = useState("");
   const [departure, setDeparture] = useState("");
   const [arrival, setArrival] = useState("");
-
+  const navigate = useNavigate();
   // console.log("출발 : ", departure);
   // console.log("도착 : ", arrival);
-  if (arrival !== "" && departure !== "") console.log("hello world");
+  if (arrival !== "" && departure !== "") navigate("/ml/mapcard");
 
   return (
-    <div className="flex-container flex-column">
-      {pageChange ? (
-        <MlSearch
-          pageChange={pageChange}
-          setPageChange={setPageChange}
-          setClickedItemName={setClickedItemName}
-          setSearchTermStart={setSearchTermStart}
-          searchTermStart={searchTermStart}
-          setDeparture={setDeparture}
-        />
-      ) : (
-        <MlSearch2
-          pageChange={pageChange}
-          setPageChange={setPageChange}
-          ClickedItemName={ClickedItemName}
-          setSearchTermEnd={setSearchTermEnd}
-          searchTermEnd={searchTermEnd}
-          setArrival={setArrival}
-        />
-      )}
+    <div className="whole-ml d-flex ">
+      <div className="main-ml m-auto ">
+        <div className="flex-container flex-column">
+          {pageChange ? (
+            <MlSearch
+              pageChange={pageChange}
+              setPageChange={setPageChange}
+              setClickedItemName={setClickedItemName}
+              setSearchTermStart={setSearchTermStart}
+              searchTermStart={searchTermStart}
+              setDeparture={setDeparture}
+            />
+          ) : (
+            <MlSearch2
+              pageChange={pageChange}
+              setPageChange={setPageChange}
+              ClickedItemName={ClickedItemName}
+              setSearchTermEnd={setSearchTermEnd}
+              searchTermEnd={searchTermEnd}
+              setArrival={setArrival}
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
 };

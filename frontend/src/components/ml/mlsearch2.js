@@ -1,27 +1,47 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SearchBoxMl from "./searchboxml";
 import SearchItem from "./searchitem";
 import { ReactComponent as Bike } from "./assets/icons/bike.svg";
+import axios from "axios";
 
 const MlSearch2 = ({ pageChange, setPageChange, ClickedItemName, searchTermEnd, setSearchTermEnd, setArrival }) => {
+  // data 불러오기
   const bike = <Bike width="30" height="30" />;
   const options = [
     {
-      key: 0,
       value: 207,
       label: "207 여의도역 7번출구 대..",
       icon: bike,
     },
-    {
-      key: 1,
-      value: 208,
-      label: "208 여의도역 7번출구 대..22",
-      icon: bike,
-    },
   ];
+  // 받은 리스트
+  const [infoData, setInfoData] = useState("");
+  // img 추가
+  const [dataNew, setDataNew] = useState(options);
+
+  useEffect(() => {
+    axios.get("api/selector_Options/").then((res) => setInfoData(res.data));
+  }, []);
+
+  useEffect(() => {
+    if (typeof infoData === "object") {
+      function bike_img(asd) {
+        return { ...asd, icon: bike };
+      }
+
+      const newData = [];
+      infoData.filter((val) => {
+        newData.push(bike_img(val));
+      });
+      setDataNew(newData);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [infoData]);
+
   useEffect(() => {
     setSearchTermEnd("");
     setArrival("");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageChange]);
 
   return (
@@ -49,8 +69,8 @@ const MlSearch2 = ({ pageChange, setPageChange, ClickedItemName, searchTermEnd, 
       <div className="d-flex flex-column " style={{ height: "65%" }}>
         <SearchItem
           searchterm={searchTermEnd}
-          options={options}
-          onClick={() => console.log("이게 나와야 완성")}
+          options={dataNew}
+          onClick={() => {}}
           appendDirection={setArrival}
           setClickedItemName={() => {}}
           setPageChange={() => {}}

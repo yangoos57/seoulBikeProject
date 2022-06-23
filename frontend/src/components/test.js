@@ -1,87 +1,79 @@
-import React, { useState, useRef } from "react";
-import { MapContainer, TileLayer, Polyline, Popup, Marker, Tooltip, useMapEvent } from "react-leaflet";
-import "./assets/style.css";
-import L from "leaflet";
-
-//화면 부드럽게 이동
-function SetViewOnClick({ animateRef }) {
-  const map = useMapEvent("click", (e) => {
-    map.setView(e.latlng, map.getZoom(), {
-      animate: animateRef.current || false,
-    });
-  });
-
-  return null;
-}
+import axios from "axios";
+import React, { useState, useRef, useEffect } from "react";
+import { ReactComponent as Sub } from "./assets/icons/sub.svg";
+import { ReactComponent as Bus } from "./assets/icons/bus.svg";
+import { ReactComponent as Bike } from "./assets/icons/bike.svg";
 
 function Test() {
-  const [testclick, setTestclick] = useState(["asd", "2", "3", "asdasdads"]);
-  const animateRef = useRef(true);
-  const [clicked, setClicked] = useState(true);
-  const blackOptions = { color: "white" };
-  const asd = ["asd", "2", "3", "asdasdads"];
-  function icon() {
-    return L.icon({
-      iconUrl: require("./assets/icons/Group 25.png"),
-      iconSize: [35, 45],
-    });
-  }
-  return (
-    <div>
-      <MapContainer center={[37.541142, 126.876678]} zoom={18} scrollWheelZoom={true}>
-        <TileLayer
-          attribution='&copy; Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
-          url="https://api.mapbox.com/styles/v1/yangoos/cl4dtnra5000115qqyeabj91d/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoieWFuZ29vcyIsImEiOiJjbDNqd2tkN2IwbGdmM2pvNzF0c2M4NnZkIn0.J3IjPYg3w28cGiWkUD7bnA"
-        />
-        <Marker
-          id="123"
-          position={[37.541142, 126.876678]}
-          icon={icon()}
-          eventHandlers={{ click: (e) => setClicked(e.target.id) }}
-        >
-          <Popup direction="top" offset={[0, -10]}>
-            {testclick.map((asd) => {
-              return (
-                <div>
-                  {asd}
-                  <br />
-                </div>
-              );
-            })}
-            <div
-              style={{ background: "white", cursor: "pointer" }}
-              onClick={() => {
-                setClicked(!clicked);
-                console.log(!clicked);
-              }}
-            >
-              {" "}
-              경로 이동.
-            </div>
-          </Popup>
-        </Marker>
-        <Marker
-          position={[37.537868, 126.881409]}
-          // icon={clicked === 61 ? icon(25) : icon(22)}
-          eventHandlers={{ click: (e) => setClicked(e.target._leaflet_id) }}
-        >
-          <Popup direction="top" offset={[0, -10]}>
-            {testclick.map((asd) => {
-              return (
-                <div>
-                  {asd}
-                  <br />
-                </div>
-              );
-            })}
-          </Popup>
-        </Marker>
+  const sub = <Sub width="25" height="27" />;
+  const bus = <Bus width="30" height="30" />;
+  const bike = <Bike width="30" height="30" />;
+  const [infoData, setInfoData] = useState(["0"]);
+  const [datanew, setdatanew] = useState("");
 
-        {/* <Polyline pathOptions={blackOptions} positions={multiPolyline} /> */}
-        <SetViewOnClick animateRef={animateRef} />
-      </MapContainer>
-    </div>
-  );
+  // useEffect(() => {
+  //   axios.get("/api/departure_info").then((res) => setInfoData(res.data));
+  // }, []);
+
+  useEffect(() => {
+    if (typeof infoData === "object") {
+      function bike(asd) {
+        return { ...asd, icon: bike };
+      }
+      function bus(asd) {
+        return { ...asd, icon: bus };
+      }
+      function sub(asd) {
+        return { ...asd, icon: sub };
+      }
+      const newData = [];
+      infoData.filter((val) => {
+        if (val.value < 3000) {
+          return newData.push(bike(val));
+        } else if (val.value > 4000) {
+          return newData.push(bus(val));
+        } else {
+          return newData.push(sub(val));
+        }
+      });
+      setdatanew(newData);
+    }
+  }, [infoData]);
+
+  const options = [
+    {
+      value: 207,
+      label: "207 여의도역 7번출구 대..",
+    },
+    {
+      value: 3001,
+      label: "208 여의도역 7번출구 대..22",
+    },
+  ];
+  // console.log(infoData);
+  // .map((val) => {
+  //   newData.push(sib(val));
+  // });
+
+  // for (let num = 0; num < 2; num++) {
+  //   console.log(num);
+  // }
+
+  // useEffect(() => {
+  //   axios.get("/api/departure_info").then((res) => setInfoData(res.data));
+  // }, []);
+
+  // useEffect(() => {
+  //   if (typeof infoData !== Array) {
+  //     var a = Array.from(infoData).slice(0, 10);
+  //     setusingdata(a);
+  //     console.log("rendering");
+  //     console.log(usingdata[0]);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [infoData]);
+  console.log(datanew);
+  return <div className="fs-3"></div>;
 }
 
 export default Test;
