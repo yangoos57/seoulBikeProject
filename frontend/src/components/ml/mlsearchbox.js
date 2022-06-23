@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 
 const SearchBoxMl = ({
   icon = true,
@@ -15,21 +16,28 @@ const SearchBoxMl = ({
   "Ref : autofocus 기능. 정상작동해서 굳이 props로 넣을 필요 없을듯. 마지막에 제거하자";
   "setPageChange : 첫번째 검색창 클릭하면 true로 바뀌어서 첫번째 검색 화면으로 넘어감";
 
-  // ref는 auto focus를 위함
+  // searchclick : auto focus 목적
   const searchclick = useRef();
+  const focusing = () => searchclick.current.focus();
+
   useEffect(() => {
-    searchclick.current.focus();
+    focusing();
   }, []);
+
   return (
     <div
       style={{ position: "relative" }} //
       className="flex-container align-items-center"
-      onClick={() => change !== "" && onChange("")}
-    >
+      onClick={() => {
+        change !== "" && onChange("");
+        focusing();
+      }}>
       <div className="search-box px-4 d-flex m-auto">
         <div className="search-box-inner mx-auto py-3 px-4 flex-item justify-content-start ">
           {icon ? (
-            <i className="fa-solid fa-angle-left fa-lg  my-auto me-3"></i>
+            <Link to={"/ml"} style={{ color: "white" }} className="my-auto">
+              <i className="fa-solid fa-angle-left fa-lg my-auto me-3"></i>
+            </Link>
           ) : (
             <i className="fa-solid fa-location-dot fa-lg my-auto me-3"></i>
           )}
@@ -40,10 +48,10 @@ const SearchBoxMl = ({
             placeholder={placeholder}
             className="search-input"
             onChange={(e) => onChange(e.target.value)}
-            onClick={() => setPageChange(true)}
+            onClick={() => {
+              setPageChange(true);
+            }}
           />
-          {/* isActive는 x 표시를 넣기위해서 만든 것임. 일단 안넣기로 생각중 */}
-          {/* {isActive && <i className="fa-light fa-x fa-1x  my-auto me-3"></i>} */}
         </div>
       </div>
     </div>

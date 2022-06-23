@@ -16,14 +16,14 @@ router.register(
     "stationInformation", views.stationInformationView, "stationInformation"
 )
 router.register("selector_Options", views.selector_OptionsView, "selector_Options")
-router.register("departure_info", ml_views.departure_infoView, "departure_info")
 
 urlpatterns = [
     path("", HomeTemplateView.as_view(), name="home"),
     path("admin/", admin.site.urls),
     path("api/", include(router.urls)),
     path("api/testing", views.plots.as_view()),
-    path("api/ml/leafletMap", ml_views.leaflet_map.as_view()),
+    path("ml/api/departureInfo", ml_views.departureInfo),
+    path("ml/api/leafletMap", ml_views.leaflet_map.as_view()),
 ]
 # path('stationinfo/', views.stationToDB)  # bike_station 정보
 

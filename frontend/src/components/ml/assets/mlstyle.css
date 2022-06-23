@@ -81,6 +81,14 @@
     height: 20px;
 }
 
+/* react-slick */
+.slick-track{
+    display: flex !important;
+    align-items: flex-end;
+}
+.slick-track .slick-slide{
+    height: inherit !important;
+}
 .mlcard{
     margin: auto;
     width: 90%;

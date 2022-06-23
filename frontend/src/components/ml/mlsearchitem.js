@@ -13,19 +13,24 @@ const SearchItem = ({
   "appendDirection : 최종 결과를 저장함";
   "setPageChange : item을 click하면 page 이동하도록 설정(첫번째 검색창에서만 활용)";
   "setactive(사라졌지만 혹시나) : searchbox와 함께 사용됨. 클릭 해제하거나 글자수 초기화되면 x 사라지게하는 용도 ";
+
   const [isActive, setIsActive] = useState("");
   const nextPage = () => {
     setPageChange(false);
   };
   return (
     <div className="items-box flex-item flex-column">
-      {/* 아래 div는 경계 표시 */}
-
-      <div className="mx-auto my-2" style={{ height: "5%", width: "85%", borderTop: "3px solid #ffffff1a" }}></div>
+      {/* 경계 표시용 Div */}
+      <div
+        className="mx-auto my-2"
+        style={{
+          height: "5%", //
+          width: "85%",
+          borderTop: "3px solid #ffffff1a",
+        }}></div>
       {options
         .filter((val) => {
           if (searchterm === "") {
-            // setActive(false);
             return null;
           }
           if (val.label.toLocaleLowerCase().includes(searchterm.toLowerCase())) {
@@ -45,16 +50,11 @@ const SearchItem = ({
                 // 선택한 리스트 이름 추출
                 appendDirection(e.currentTarget.textContent);
                 setClickedItemName(e.currentTarget.textContent);
-                // 선택한 리스트 index 추출
-                console.log(index);
                 // 색 변하게 하는 function
                 isActive === index ? setIsActive("") : setIsActive(index);
-                //   isActive === index ? setActive(false) : setActive(true);
+                // searchBottom으로 이동
                 nextPage();
-
-                //   setIsClicked((current) => !current);                                   cxc
-              }}
-            >
+              }}>
               <div className="d-flex" style={{ width: "40px" }}>
                 <div className="m-auto">{value.icon}</div>
               </div>
