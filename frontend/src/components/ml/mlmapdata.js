@@ -39,8 +39,9 @@ function sub_icon() {
     iconAnchor: [10, 35],
   });
 }
+
 //main
-const MlMapData = ({ mapdata, change }) => {
+const MlMapData = ({ mapdata, change, children }) => {
   //marker 출발도착지 변수설정
   var bike_route = mapdata["bike"];
   if (bike_route !== undefined) {
@@ -93,23 +94,27 @@ const MlMapData = ({ mapdata, change }) => {
     <div className="flex-container m-auto">
       <div className="map-ml">
         <MapContainer
-          center={[37.541142, 126.876678]}
-          zoom={14}
+          center={[37.12345, 126.876678]}
+          zoom={12}
           scrollWheelZoom={true}
           attributionControl={false}
           zoomControl={false}>
           <SetViewOnClick animateRef={true} />
           {bike_route !== undefined && ( //
             <ChangeView
-              center={change ? bikeDepStation : bike2DepStation} //
-              zoom={14}
+              center={change ? mapdata["center"] : mapdata["center2"]} //
+              zoom={12}
             />
           )}
+
+          {/* 현재위치 marker */}
+          {bike_route === undefined ? children : ""}
 
           <TileLayer
             attribution='&copy; Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
             url="https://api.mapbox.com/styles/v1/yangoos/cl4dtnra5000115qqyeabj91d/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoieWFuZ29vcyIsImEiOiJjbDNqd2tkN2IwbGdmM2pvNzF0c2M4NnZkIn0.J3IjPYg3w28cGiWkUD7bnA"
           />
+
           {result.map((marker, index) => {
             var type = Object.keys(marker)[0];
             if (type === "bus") {
@@ -125,7 +130,10 @@ const MlMapData = ({ mapdata, change }) => {
               </div>
             );
           })}
-          {/* 경로 */}
+          {/* 
+          경로 
+          change = bike2 선택
+           */}
 
           {mapdata["sub"] !== undefined && (
             <Polyline
@@ -162,9 +170,8 @@ const MlMapData = ({ mapdata, change }) => {
           {!change && mapdata["bike2"] !== undefined && (
             <Polyline
               pathOptions={{ color: "yellow" }} //
-              positions={mapdata["bike2"]}>
-              <Popup>hi</Popup>
-            </Polyline>
+              positions={mapdata["bike2"]}
+            />
           )}
         </MapContainer>
       </div>

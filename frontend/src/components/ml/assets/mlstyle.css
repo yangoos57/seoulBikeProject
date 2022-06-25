@@ -39,9 +39,9 @@
 }
 .search-box{
     position: absolute;
-    /* top: 10%; */
     z-index: 100;
     width:100%;
+    color: var(--text-ml-color);
 }
 .search-box-inner{
     background-color: var(--search-ml-color);
@@ -100,7 +100,7 @@ box-shadow: 0 3px 14px rgba(0,0,0,0.4);
 
 }.mlcard{
     margin: auto;
-    width: 80%;
+    width: 95%;
     display: flex;
     flex-direction: column;
     padding: 10px;
@@ -112,11 +112,15 @@ box-shadow: 0 3px 14px rgba(0,0,0,0.4);
 }
 .card-recom{
     color: var(--title-ml-color);
-    width: 90%;
+    width: 95%;
     font-size: 16px;
     text-align: right;
     padding-right: 10px;
     letter-spacing: 2px;
+}
+/* react-modal */
+.ReactModal__Content--after-open{
+    width: 100vw
 }
 
 
@@ -129,6 +133,10 @@ box-shadow: 0 3px 14px rgba(0,0,0,0.4);
     .mlcard{
         font-size: 16px;
     }
+    .ReactModal__Content--after-open{
+        width: 50vw
+    }
+    
 }
 
 @media (min-width : 1000px) {
@@ -136,10 +144,14 @@ box-shadow: 0 3px 14px rgba(0,0,0,0.4);
         width: 45vw;
         height: 100vh;
     }
+    .ReactModal__Content--after-open{
+        width: 25vw
+    }
+    
     
 @media (min-width: 1440px) {
     .main-ml{
-        width: 30vw;
+        width: 32vw;
         height: 100vh;
     }
     

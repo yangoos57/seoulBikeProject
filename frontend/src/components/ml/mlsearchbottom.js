@@ -38,7 +38,7 @@ function MlSearch2({
   return (
     <div className="flex-container flex-column">
       <div className="d-flex" style={{ height: "10%" }}></div>
-      <div className="d-flex flex-column" style={{ height: "22%" }}>
+      <div className="d-flex flex-column" style={{ minHeight: "20%" }}>
         <SearchBoxMl
           icon={false} //
           placeholder={ClickedItemName}
@@ -54,9 +54,10 @@ function MlSearch2({
       <div
         className="d-flex fs-6 align-items-center justify-content-center"
         style={{
-          height: "5%", //
+          maxHeight: "5%", //
           color: "#10E8C1B3",
           letterSpacing: "1px",
+          margin: "5px 0",
         }}>
         도착장소는 따릉이 대여소만 검색 가능합니다.
       </div>

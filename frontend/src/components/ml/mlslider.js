@@ -3,7 +3,6 @@ import Slider from "react-slick";
 import { ReactComponent as Sub } from "./assets/icons/sub.svg";
 import { ReactComponent as Bus } from "./assets/icons/bus.svg";
 import { ReactComponent as Bike } from "./assets/icons/bike.svg";
-import { map } from "leaflet";
 const MlSlider = ({ mapdata, changeFunc, change }) => {
   const settings = {
     dots: false,
@@ -11,7 +10,6 @@ const MlSlider = ({ mapdata, changeFunc, change }) => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    arrows: false,
     onSwipe: () => {
       changeFunc(!change);
     },
@@ -70,13 +68,13 @@ const MlSlider = ({ mapdata, changeFunc, change }) => {
   }
 
   return (
-    <div>
+    <div style={{ width: "80%", margin: "auto" }}>
       <Slider {...settings}>
         {options.map((main_value, main_index) => {
           return (
             // card 반복문
             <div key={main_index}>
-              <div className="card-recom">{main_index === 0 ? "야간버스 이용 " : "따릉이만 이용"}</div>
+              <div className="card-recom">{main_index === 0 ? "추천 경로" : "자전거 추천 경로"}</div>
               <div className="mlcard m-auto">
                 <div className="p-2">
                   {/* 대여소 시각화 */}
@@ -92,7 +90,8 @@ const MlSlider = ({ mapdata, changeFunc, change }) => {
                             {item.icon}
                           </div>
                           <div className="m-auto" style={{ width: "80%", overflow: "hidden" }}>
-                            {item.label.length > 20 ? item.label.substring(0, 20) + "..." : item.label}
+                            {/* {item.label.length > 20 ? item.label.substring(0, 20) + "..." : item.label} */}
+                            {item.label}
                           </div>
                         </div>
                         {/* dots 넣기 위한 삼항 연산자 */}
@@ -111,9 +110,13 @@ const MlSlider = ({ mapdata, changeFunc, change }) => {
                             </div>
                             <div style={{ fontSize: "16px" }}>
                               {item.time === 0 ? (
-                                <p className="pt-2 m-0">해당 경로는 대여기록이 50건 미만이므로 추천하지 않습니다</p>
+                                item.record === 1 ? (
+                                  <p className="pt-2 m-0">추천 대여소와 도착 대여소가 동일합니다.(도보이동)</p>
+                                ) : (
+                                  <p className="pt-2 m-0">해당 경로는 대여기록이 50건 미만이므로 추천하지 않습니다</p>
+                                )
                               ) : (
-                                "대여기록" + item.record + "건"
+                                "대여기록 " + item.record + "건"
                               )}
                             </div>
                           </div>

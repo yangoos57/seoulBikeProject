@@ -1,4 +1,10 @@
 import React, { useState } from "react";
+function MouseOverUserMenu(e) {
+  e.currentTarget.style.background = "#DFDFDD80";
+}
+function MouseOutUserMenu(e) {
+  e.currentTarget.style.background = "#56667B";
+}
 
 const SearchItem = ({
   searchterm,
@@ -14,7 +20,6 @@ const SearchItem = ({
   "setPageChange : item을 click하면 page 이동하도록 설정(첫번째 검색창에서만 활용)";
   "setactive(사라졌지만 혹시나) : searchbox와 함께 사용됨. 클릭 해제하거나 글자수 초기화되면 x 사라지게하는 용도 ";
 
-  const [isActive, setIsActive] = useState("");
   const nextPage = () => {
     setPageChange(false);
   };
@@ -22,7 +27,7 @@ const SearchItem = ({
     <div className="items-box flex-item flex-column">
       {/* 경계 표시용 Div */}
       <div
-        className="mx-auto my-2"
+        className="mx-auto py-2"
         style={{
           height: "5%", //
           width: "85%",
@@ -42,16 +47,17 @@ const SearchItem = ({
             <div
               key={index}
               className="d-flex justify-content-center py-3 w-100"
-              style={{
-                backgroundColor: index === isActive ? "#DFDFDD80" : "",
-                color: index === isActive ? "#56667B" : "",
+              onMouseOver={(e) => {
+                MouseOverUserMenu(e);
+              }}
+              onMouseOut={(e) => {
+                MouseOutUserMenu(e);
               }}
               onClick={(e) => {
                 // 선택한 리스트 이름 추출
                 appendDirection(e.currentTarget.textContent);
                 setClickedItemName(e.currentTarget.textContent);
                 // 색 변하게 하는 function
-                isActive === index ? setIsActive("") : setIsActive(index);
                 // searchBottom으로 이동
                 nextPage();
               }}>

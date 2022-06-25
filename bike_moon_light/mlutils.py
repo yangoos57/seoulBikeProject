@@ -48,10 +48,8 @@ class moon_light:
         if dep_id < 3000:
             print("자전거")
             bike = self.route_coor(dep_info, arr_info)
+            center = self.center_data(bike)
             record_info = self.record_info(dep_info.index[0], arr_info.index[0], 50)
-
-            if record_info == [0]:
-                return {"error": "출발 대여소와 목적 대여소가 동일합니다."}
 
             # [{"bike": ["당산 육갑문", "목동1단지아파트 118동 앞"]}]
             route_info = [
@@ -65,7 +63,7 @@ class moon_light:
                 }
             ]
 
-            return dict(bike=bike, route_info=route_info)
+            return dict(bike=bike, center=center, route_info=route_info)
 
         elif dep_id > 4000:
             print("버스")
@@ -86,24 +84,27 @@ class moon_light:
             arr_bike_info = self.near_bus_bike_info(arr_trans, arr_info)
 
             if arr_bike_info.empty:
-                return {"error": "이용가능한 따릉이 대여소가 없거나, 대여기록이 50건 미만입니다."}
+                return {"error": "이용가능한 따릉이 대여소가 없거나, 목적지와 도착지간 대여기록이 50건 미만입니다."}
 
             arr_bike_info = arr_bike_info.sort_values(by="num", ascending=False)
 
             bus = self.bus_route_coor(bus_start_end, waypoint)
+            center = self.center_data(bus)
             walk = self.route_coor(arr_trans, arr_bike_info.iloc[[0]])
             bike = self.route_coor(arr_bike_info.iloc[[0]], arr_info)
             record_info = self.record_info(
                 arr_bike_info["st_id"].iloc[0], arr_info.index[0], 50
             )
-            if record_info == [0]:
-                return {"error": "출발 대여소와 목적 대여소가 동일합니다."}
 
             # # -- 자전거 길 네이버 지도로도 표현 -- #
             # a = arr_bike_info.iloc[[0]][["latitude", "longtitude"]]
             # b = arr_info.reset_index()[["latitude", "longtitude"]]
             # start_end = pd.concat([a, b], axis=0)
             # bus # bus_direct
+
+            # if record_info == [0]:
+            #     return {"error": "출발 대여소와 도착 대여소가 동일합니다.(2)"}
+
             route_info = [
                 {
                     "bus": [
@@ -120,11 +121,12 @@ class moon_light:
             ]
             dep_bike_info = self.near_bus_bike_info(bus_start_end.iloc[[0]], arr_info)
             if dep_bike_info.empty:
-                return {"error": "이용가능한 따릉이 대여소가 없거나, 대여기록이 50건 미만입니다."}
+                return {"error": "이용가능한 따릉이 대여소가 없거나, 목적지와 도착지간 대여기록이 50건 미만입니다."}
 
             dep_bike_info = dep_bike_info.sort_values(by="num", ascending=False)
             if dep_bike_info.empty == False:
                 bike2 = self.route_coor(dep_bike_info, arr_info)
+                center2 = self.center_data(bike2)
                 record_info2 = self.record_info(
                     dep_bike_info["st_id"].iloc[0], arr_info.index[0], 50
                 )
@@ -139,14 +141,18 @@ class moon_light:
                     },
                 )
                 route_info.extend(bike2_info)
+
             else:
                 bike2 = [""]
+                center2 = [""]
 
             return dict(
                 bus=bus,
                 walk=walk,
                 bike=bike,
+                center=center,
                 bike2=bike2,
+                center2=center2,
                 route_info=route_info,
             )
 
@@ -155,7 +161,7 @@ class moon_light:
             # * -- 자전거 대여소 정보 추출 -- *
             near_bike_info = self.near_bus_bike_info(dep_info, arr_info)
             if near_bike_info.empty:
-                return {"error": "이용가능한 따릉이 대여소가 없거나, 대여기록이 50건 미만입니다."}
+                return {"error": "이용가능한 따릉이 대여소가 없거나, 목적지와 도착지간 대여기록이 50건 미만입니다."}
 
             near_bike_info = near_bike_info.sort_values(by="dist")
 
@@ -164,11 +170,10 @@ class moon_light:
             # * -- 자전거 경로(사실 보행로 추천이라는 사실~)-- *
             sub = self.route_coor(dep_info, departure_bike_station)
             bike = self.route_coor(departure_bike_station, arr_info)
+            center = self.center_data(bike)
             record_info = self.record_info(
                 departure_bike_station["st_id"].iloc[0], arr_info.index[0], 50
             )
-            if record_info == [0]:
-                return {"error": "출발 대여소와 목적 대여소가 동일합니다."}
             # sub
             # [{"sub": ["당산역"], "bike": ["당산 육갑문", "목동1단지아파트 118동 앞"]}]
             route_info = [
@@ -182,7 +187,7 @@ class moon_light:
                     ],
                 }
             ]
-            return dict(sub=sub, bike=bike, route_info=route_info)
+            return dict(sub=sub, bike=bike, center=center, route_info=route_info)
 
     def raw_data(self, val: int) -> pd.DataFrame:
         quert_st_id1 = self.seoul_bike[self.seoul_bike["st_id1"] == val]
@@ -553,7 +558,8 @@ class moon_light:
 
     def record_info(self, dep_id: int, arr_id: int, count: int = 50) -> List:
         if dep_id == arr_id:
-            return [0]
+            print("출발 대여소와 도착 대여소가 동일합니다.")
+            return [0, 1]
 
         BM = (self.seoul_bike["st_id1"] == dep_id) & (
             self.seoul_bike["st_id2"] == arr_id
@@ -601,3 +607,7 @@ class moon_light:
         result = round(avg_time, 0)
 
         return [result, total_borrow]
+
+    def center_data(self, rawdata: List) -> List:
+        divd = int(len(rawdata) / 2)
+        return rawdata[divd]

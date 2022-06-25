@@ -24,10 +24,10 @@ function MlSearch({
 
   return (
     <div className="flex-container flex-column">
-      <div className="d-flex" style={{ height: "10%" }}></div>
+      <div className="d-flex" style={{ height: "11%" }}></div>
       <div className="d-flex" style={{ height: "11%" }}>
         <SearchBoxMl
-          placeholder={"출발 대여소 검색"}
+          placeholder={"출발장소 검색"}
           onChange={setSearchTermStart} //
           change={searchTermStart}
           setPageChange={() => {}} //에러방지용

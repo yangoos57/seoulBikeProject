@@ -28,30 +28,41 @@ const SearchBoxMl = ({
     <div
       style={{ position: "relative" }} //
       className="flex-container align-items-center"
+      // style={{ maxHeight: "50%" }}
       onClick={() => {
         change !== "" && onChange("");
         focusing();
       }}>
       <div className="search-box px-4 d-flex m-auto">
         <div className="search-box-inner mx-auto py-3 px-4 flex-item justify-content-start ">
-          {icon ? (
-            <Link to={"/ml"} style={{ color: "white" }} className="my-auto">
-              <i className="fa-solid fa-angle-left fa-lg my-auto me-3"></i>
-            </Link>
-          ) : (
-            <i className="fa-solid fa-location-dot fa-lg my-auto me-3"></i>
-          )}
-          <input
-            value={change}
-            ref={Ref && searchclick}
-            type="text"
-            placeholder={placeholder}
-            className="search-input"
-            onChange={(e) => onChange(e.target.value)}
-            onClick={() => {
-              setPageChange(true);
-            }}
-          />
+          <div className="d-flex">
+            <div className="my-auto">
+              {icon ? (
+                <Link to={"/ml"} style={{ color: "white", textDecoration: "none" }} className="d-flex">
+                  <div className="d-flex">
+                    <i className="fa-solid fa-angle-left fa-lg my-auto"></i>
+                  </div>
+                </Link>
+              ) : (
+                <div className="d-flex">
+                  <i className="fa-solid fa-location-dot fa-lg my-auto"></i>
+                </div>
+              )}
+            </div>
+            <div className="my-auto">
+              <input
+                value={change}
+                ref={Ref && searchclick}
+                type="text"
+                placeholder={placeholder}
+                className="search-input ms-3"
+                onChange={(e) => onChange(e.target.value)}
+                onClick={() => {
+                  setPageChange(true);
+                }}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>

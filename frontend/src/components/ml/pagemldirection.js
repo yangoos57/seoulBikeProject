@@ -35,6 +35,7 @@ function MlDirection() {
       border: "0px",
       borderRadius: "18px",
       padding: "30px",
+      // width: "25vw",
     },
   };
 
@@ -50,9 +51,6 @@ function MlDirection() {
     if (mapData["error"] !== undefined) {
       setModal(true);
     }
-
-    console.log(mapData["error"]);
-    console.log(modal);
   }, [mapData]);
 
   // if (mapData["error"] !== undefined) {
@@ -73,8 +71,7 @@ function MlDirection() {
               position: "absolute",
               zIndex: 1000,
               width: "100%",
-              top: "60%",
-              height: "30%",
+              bottom: "5%",
             }}>
             <MlSlider mapdata={mapData} changeFunc={setchangeDirection} change={changeDirection} />
           </div>
