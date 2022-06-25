@@ -23,7 +23,7 @@ const MlSearchButton = ({ name = "" }) => {
               <Search width="25px" height="25px" />
             </div>
             {/* <div className="my-auto ms-3 fs-5" style={{ wordSpacing: "3px", letterSpacing: "2px" }}> */}
-            <input type="text" placeholder={name} className="search-input ms-2" />
+            <input type="text" placeholder={name} className="search-button ms-2" disabled={true} />
             {/* {name} */}
             {/* </div> */}
           </div>

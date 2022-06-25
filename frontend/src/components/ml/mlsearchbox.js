@@ -8,6 +8,7 @@ const SearchBoxMl = ({
   change,
   Ref = true,
   setPageChange = () => {},
+  disabled = false,
 }) => {
   "icon : true 화살표 아이콘 false 목적지 아이콘 화살표 아이콘은 이전 페이지 이동용";
   "placholder : placholder";
@@ -38,11 +39,15 @@ const SearchBoxMl = ({
           <div className="d-flex">
             <div className="my-auto">
               {icon ? (
-                <Link to={"/ml"} style={{ color: "white", textDecoration: "none" }} className="d-flex">
-                  <div className="d-flex">
-                    <i className="fa-solid fa-angle-left fa-lg my-auto"></i>
-                  </div>
-                </Link>
+                disabled === false ? (
+                  <Link to={"/ml"} style={{ color: "white", textDecoration: "none" }} className="d-flex">
+                    <div className="d-flex">
+                      <i className="fa-solid fa-angle-left fa-lg my-auto"></i>
+                    </div>
+                  </Link>
+                ) : (
+                  ""
+                )
               ) : (
                 <div className="d-flex">
                   <i className="fa-solid fa-location-dot fa-lg my-auto"></i>
@@ -60,6 +65,7 @@ const SearchBoxMl = ({
                 onClick={() => {
                   setPageChange(true);
                 }}
+                disabled={disabled}
               />
             </div>
           </div>

@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 function MouseOverUserMenu(e) {
-  e.currentTarget.style.background = "#DFDFDD80";
+  e.target.style.color = "#DFDFDD";
+  e.target.style.fontWeight = 400;
+  //background는 currenttarget으로 해야 먹힘
+  // e.currentTarget.style.background = "#DFDFDD";
 }
 function MouseOutUserMenu(e) {
-  e.currentTarget.style.background = "#56667B";
+  e.target.style.color = "#DFDFDDB3";
+  // e.target.style.color = "green";
 }
 
 const SearchItem = ({
@@ -64,7 +68,7 @@ const SearchItem = ({
               <div className="d-flex" style={{ width: "40px" }}>
                 <div className="m-auto">{value.icon}</div>
               </div>
-              <div className="ms-3 fs-5 d-flex" style={{ width: "75%" }}>
+              <div className="ms-3 fs-5 d-flex" style={{ width: "75%", color: "#DFDFDDB3" }}>
                 {value.label}
               </div>
             </div>

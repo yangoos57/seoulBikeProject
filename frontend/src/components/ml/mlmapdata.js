@@ -20,23 +20,20 @@ function SetViewOnClick({ animateRef }) {
 // marker
 function bike_icon() {
   return L.icon({
-    iconUrl: require("./assets/icons/Group 25.png"),
-    iconSize: [25, 35],
-    iconAnchor: [10, 35],
+    iconUrl: require("./assets/icons/bike.png"),
+    iconSize: [25, 25],
   });
 }
 function bus_icon() {
   return L.icon({
-    iconUrl: require("./assets/icons/Group 22.png"),
-    iconSize: [25, 35],
-    iconAnchor: [10, 35],
+    iconUrl: require("./assets/icons/bus.png"),
+    iconSize: [25, 25],
   });
 }
 function sub_icon() {
   return L.icon({
-    iconUrl: require("./assets/icons/Group 22.png"),
-    iconSize: [25, 35],
-    iconAnchor: [10, 35],
+    iconUrl: require("./assets/icons/sub.png"),
+    iconSize: [25, 25],
   });
 }
 
@@ -77,7 +74,7 @@ const MlMapData = ({ mapdata, change, children }) => {
     { bus: busArrStation },
     { bus: busDepStation },
     { sub: subArrStation },
-    { sub: subDepStation },
+    // { sub: subDepStation },
   ];
   var filteredmarkers = markers //
     .filter((marker) => {
@@ -94,8 +91,8 @@ const MlMapData = ({ mapdata, change, children }) => {
     <div className="flex-container m-auto">
       <div className="map-ml">
         <MapContainer
-          center={[37.12345, 126.876678]}
-          zoom={12}
+          center={[37.534863, 126.90241]}
+          zoom={13}
           scrollWheelZoom={true}
           attributionControl={false}
           zoomControl={false}>
@@ -103,18 +100,15 @@ const MlMapData = ({ mapdata, change, children }) => {
           {bike_route !== undefined && ( //
             <ChangeView
               center={change ? mapdata["center"] : mapdata["center2"]} //
-              zoom={12}
+              zoom={13}
             />
           )}
-
           {/* 현재위치 marker */}
           {bike_route === undefined ? children : ""}
-
           <TileLayer
             attribution='&copy; Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>'
             url="https://api.mapbox.com/styles/v1/yangoos/cl4dtnra5000115qqyeabj91d/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoieWFuZ29vcyIsImEiOiJjbDNqd2tkN2IwbGdmM2pvNzF0c2M4NnZkIn0.J3IjPYg3w28cGiWkUD7bnA"
           />
-
           {result.map((marker, index) => {
             var type = Object.keys(marker)[0];
             if (type === "bus") {
@@ -126,7 +120,7 @@ const MlMapData = ({ mapdata, change, children }) => {
             }
             return (
               <div key={index}>
-                <Marker position={marker[type]} icon={icon()}></Marker>
+                <Marker position={marker[type]} icon={icon()} zIndexOffset={2000}></Marker>
               </div>
             );
           })}
@@ -134,42 +128,35 @@ const MlMapData = ({ mapdata, change, children }) => {
           경로 
           change = bike2 선택
            */}
-
           {mapdata["sub"] !== undefined && (
             <Polyline
-              pathOptions={{ color: "purple" }} //
+              pathOptions={{ color: "var(--sub-ml-color)" }} //
               positions={mapdata["sub"]}
+              dashArray={[5, 10]}
             />
           )}
-          {change && mapdata["sub"] !== undefined && (
-            <Polyline
-              pathOptions={{ color: "purple" }} //
-              positions={mapdata["sub"]}
-            />
-          )}
-
           {change && mapdata["bus"] !== undefined && (
             <Polyline //
-              pathOptions={{ color: "white" }} //
+              pathOptions={{ color: "var(--bus-ml-color)" }} //
               positions={mapdata["bus"]}
             />
           )}
           {change && mapdata["walk"] !== undefined && (
             <Polyline
-              pathOptions={{ color: "red" }} //
+              pathOptions={{ color: "var(--walk-ml-color)" }} //
               positions={mapdata["walk"]}
+              dashArray={[5, 10]}
             />
           )}
-
           {change && mapdata["bike"] !== undefined && (
             <Polyline
-              pathOptions={{ color: "green" }} //
+              pathOptions={{ color: "var(--bike-ml-color)" }} //
               positions={mapdata["bike"]}
             />
           )}
           {!change && mapdata["bike2"] !== undefined && (
             <Polyline
-              pathOptions={{ color: "yellow" }} //
+              pathOptions={{ color: "var(--bike-ml-color)" }} //
               positions={mapdata["bike2"]}
             />
           )}

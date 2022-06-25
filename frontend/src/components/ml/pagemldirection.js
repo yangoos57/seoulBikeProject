@@ -71,7 +71,7 @@ function MlDirection() {
               position: "absolute",
               zIndex: 1000,
               width: "100%",
-              bottom: "5%",
+              bottom: "7%",
             }}>
             <MlSlider mapdata={mapData} changeFunc={setchangeDirection} change={changeDirection} />
           </div>

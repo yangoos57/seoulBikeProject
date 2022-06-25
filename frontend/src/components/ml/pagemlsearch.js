@@ -54,7 +54,7 @@ const MlSearchPage = () => {
   }, []);
 
   useEffect(() => {
-    const sub = <Sub width="25" height="27" />;
+    const sub = <Sub width="30" height="30" />;
     const bus = <Bus width="30" height="30" />;
     const bike = <Bike width="30" height="30" />;
 

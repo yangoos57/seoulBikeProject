@@ -1,9 +1,19 @@
 :root{
-    --background-ml-color : #56667B;
-    --title-ml-color : #DFDFDD;
+    --background-ml-color : #252525;
+    /* --title-ml-color : #DFDFDD; */
     --search-ml-color : #f9fdff62;
-    --text-ml-color : #ffffffb5;
+    --text-ml-color : #DFDFDD;
+    --bike-ml-color : #F3DB03;
+    --walk-ml-color : #4FC276;
+    --sub-ml-color : #F3033D;
+    --bus-ml-color : #C60ABE;
+}
 
+@font-face {
+    font-family: 'NEXON Lighter';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
 @font-face {
@@ -14,7 +24,7 @@
 }
 
 .whole-ml{
-    background-color: burlywood;
+    background-color: rgba(32, 32, 35, 1);
     font-family: 'NEXON';
     height: 100%;
 }
@@ -23,6 +33,7 @@
     width: 100vw;
     height: 100vh;
 }
+
 .title-ml{
     width: 100%;
     height: 100%;
@@ -41,10 +52,10 @@
     position: absolute;
     z-index: 100;
     width:100%;
-    color: var(--text-ml-color);
+
 }
 .search-box-inner{
-    background-color: var(--search-ml-color);
+    background-color: #DFDFDD33;
     border-radius: 20px;
     color: var(--text-ml-color);
 
@@ -55,15 +66,28 @@
     width: 100%;
     border: none;
     box-shadow: none;
-    color: var(--text-ml-color);
+    color: #DFDFDDB3;
     font-size: 20px;
 }
 .search-box-inner .search-input::placeholder{
-    color: var(--text-ml-color);
+    color: #DFDFDDB3;
     font-size: 20px;
 }
 .search-box-inner .search-input:focus {
     outline-width: 0;
+}
+.search-button{
+    background-color : transparent;
+    padding: 2px;
+    width: 100%;
+    border: none;
+    box-shadow: none;
+    color: #DFDFDD;
+    font-size: 20px;
+}
+.search-button::placeholder{
+    color: #DFDFDD;
+    font-size: 20px;
 }
 
 .map-ml{
@@ -75,11 +99,31 @@
 .items-box{
     color : var(--text-ml-color);
     width: 100%;
+    overflow: hidden;
+    /* transition: all .2s ease-in-out; */
+}
+.items-box::-webkit-scrollbar {
+    width: 10px;
+    
+}
+.items-box::-webkit-scrollbar-track {
+    background-color: #DFDFDD33;
+    border-radius: 10px;
+}
+.items-box::-webkit-scrollbar-thumb {
+    background-color: #DFDFDD;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px white;
+}
+.items-box:hover{
+    overflow-y: scroll;
+
 }
 .items-box .items-icons{
     width: 20px;
     height: 20px;
 }
+
 
 
 /* leaflet */
@@ -102,9 +146,9 @@ box-shadow: 0 3px 14px rgba(0,0,0,0.4);
     margin: auto;
     width: 95%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     padding: 10px;
-    background-color: #0000006c;
+    background-color: #DFDFDDB3;
     border-radius: 20px;
     font-size: 14px;
     color : var(--title-ml-color);
@@ -151,7 +195,7 @@ box-shadow: 0 3px 14px rgba(0,0,0,0.4);
     
 @media (min-width: 1440px) {
     .main-ml{
-        width: 32vw;
+        width: 27vw;
         height: 100vh;
     }
     

@@ -19,7 +19,8 @@ function current_icon() {
   });
 }
 function MlMain() {
-  const [curLoca, setCurLoca] = useState([37.1234, 126.1234]);
+  // 현재좌표 불러오기
+  const [curLoca, setCurLoca] = useState([37.534863, 126.90241]);
   const options = {
     enableHighAccuracy: true,
     timeout: 5000,
@@ -38,8 +39,7 @@ function MlMain() {
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(success, error, options);
   }, []);
-
-  console.log(curLoca);
+  // 여기까지
 
   return (
     <>

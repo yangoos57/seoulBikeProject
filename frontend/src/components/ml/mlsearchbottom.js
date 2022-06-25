@@ -38,7 +38,7 @@ function MlSearch2({
   return (
     <div className="flex-container flex-column">
       <div className="d-flex" style={{ height: "10%" }}></div>
-      <div className="d-flex flex-column" style={{ minHeight: "20%" }}>
+      <div className="d-flex flex-column" style={{ minHeight: "22%" }}>
         <SearchBoxMl
           icon={false} //
           placeholder={ClickedItemName}

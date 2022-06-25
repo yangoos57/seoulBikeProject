@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import SearchBoxMl from "./mlsearchbox";
+import MlSearchButton from "./mlsearchbutton";
 import SearchItem from "./mlsearchitem";
 
 function MlSearch({
@@ -24,13 +25,18 @@ function MlSearch({
 
   return (
     <div className="flex-container flex-column">
-      <div className="d-flex" style={{ height: "11%" }}></div>
-      <div className="d-flex" style={{ height: "11%" }}>
+      <div className="d-flex" style={{ height: "10%" }}></div>
+      <div className="d-flex flex-column" style={{ minHeight: "22%" }}>
         <SearchBoxMl
           placeholder={"출발장소 검색"}
           onChange={setSearchTermStart} //
           change={searchTermStart}
           setPageChange={() => {}} //에러방지용
+        />
+        <SearchBoxMl
+          placeholder={"도착 대여소 검색"} //
+          setPageChange={() => {}}
+          disabled={true}
         />
       </div>
 

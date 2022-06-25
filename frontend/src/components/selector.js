@@ -39,12 +39,7 @@ function Selector({ stationInfo, setStationInfo, setImg, stations }) {
       const initialOffset = options.indexOf(value) * height;
 
       return (
-        <List
-          height={maxHeight}
-          itemCount={children.length}
-          itemSize={height}
-          initialScrollOffset={initialOffset}
-        >
+        <List height={maxHeight} itemCount={children.length} itemSize={height} initialScrollOffset={initialOffset}>
           {({ index, style }) => <div style={style}>{children[index]}</div>}
         </List>
       );

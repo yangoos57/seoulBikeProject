@@ -6,6 +6,7 @@ import { ReactComponent as Bike } from "./assets/icons/bike.svg";
 const MlSlider = ({ mapdata, changeFunc, change }) => {
   const settings = {
     dots: false,
+    arrows: false,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
@@ -16,7 +17,7 @@ const MlSlider = ({ mapdata, changeFunc, change }) => {
   };
 
   const bus = <Bus width="25" height="25" className="m-auto" />;
-  const sub = <Sub width="22" height="22" className="m-auto" />;
+  const sub = <Sub width="25" height="25" className="m-auto" />;
   const bike = <Bike width="25" height="25" className="m-auto" />;
 
   var options = [];
@@ -66,7 +67,6 @@ const MlSlider = ({ mapdata, changeFunc, change }) => {
       options.push(item);
     });
   }
-
   return (
     <div style={{ width: "80%", margin: "auto" }}>
       <Slider {...settings}>
@@ -74,9 +74,11 @@ const MlSlider = ({ mapdata, changeFunc, change }) => {
           return (
             // card 반복문
             <div key={main_index}>
-              <div className="card-recom">{main_index === 0 ? "추천 경로" : "자전거 추천 경로"}</div>
+              <div className="card-recom" style={{ color: "#10E8C1B3" }}>
+                {main_index === 0 ? "추천 경로" : "자전거 추천 경로"}
+              </div>
               <div className="mlcard m-auto">
-                <div className="p-2">
+                <div className="my-auto p-2" style={{ flexBasis: "95%" }}>
                   {/* 대여소 시각화 */}
                   {main_value.map((item, index) => {
                     return (
@@ -85,13 +87,15 @@ const MlSlider = ({ mapdata, changeFunc, change }) => {
                         {console.log("index:", index)}
                         {console.log("label:", item.label)}
                         {console.log("time:", item.time)} */}
-                        <div className="d-flex px-2">
-                          <div className="m-auto d-flex" style={{ width: "10%" }}>
+                        <div className="d-flex px-2 align-items-start">
+                          <div className="mx-auto d-flex" style={{ width: "10%", backgroundColor: "#000000" }}>
                             {item.icon}
                           </div>
-                          <div className="m-auto" style={{ width: "80%", overflow: "hidden" }}>
-                            {/* {item.label.length > 20 ? item.label.substring(0, 20) + "..." : item.label} */}
-                            {item.label}
+                          <div
+                            className="m-auto"
+                            style={{ width: "80%", overflow: "hidden", color: "var(--background-ml-color)" }}>
+                            {item.label.length > 20 ? item.label.substring(0, 14) + "..." : item.label}
+                            {/* {item.label} */}
                           </div>
                         </div>
                         {/* dots 넣기 위한 삼항 연산자 */}
@@ -104,11 +108,13 @@ const MlSlider = ({ mapdata, changeFunc, change }) => {
                           </div>
                         ) : (
                           <div className="d-flex w-100 pt-2 px-3 align-items-center">
-                            <div className="me-2" style={{ fontSize: "22px" }}>
+                            <div
+                              className="me-2"
+                              style={{ fontSize: "22px", color: "var(--background-ml-color)", fontWeight: "lighter" }}>
                               {/* {item.time}분 */}
                               {item.time === 0 ? "" : item.time + "분"}
                             </div>
-                            <div style={{ fontSize: "16px" }}>
+                            <div style={{ fontSize: "16px", color: "var(--background-ml-color)" }}>
                               {item.time === 0 ? (
                                 item.record === 1 ? (
                                   <p className="pt-2 m-0">추천 대여소와 도착 대여소가 동일합니다.(도보이동)</p>
@@ -125,7 +131,11 @@ const MlSlider = ({ mapdata, changeFunc, change }) => {
                     );
                   })}
                 </div>
+                <div className="my-auto" style={{ flexBasis: "5%" }}>
+                  {mapdata["bus"] !== undefined && <i class="fa-solid fa-angle-right fa-lg"></i>}
+                </div>
               </div>
+              {/* mlcard /div */}
             </div>
           );
         })}
