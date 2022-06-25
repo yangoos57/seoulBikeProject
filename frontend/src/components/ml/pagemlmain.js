@@ -16,7 +16,7 @@ function MlMain() {
             <div style={{ position: "relative" }} className="flex-container">
               <MlSearchButton />
               <div className="flex-item">
-                <MlMapData mapdata={""} />
+                <MlMapData mapdata={""} change={true} />
               </div>
             </div>
           </div>

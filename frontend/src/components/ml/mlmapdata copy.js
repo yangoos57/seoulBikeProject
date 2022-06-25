@@ -1,6 +1,7 @@
 import React from "react";
 import { MapContainer, TileLayer, Polyline, Popup, Marker, useMapEvent, useMap, Tooltip } from "react-leaflet";
 import L from "leaflet";
+
 function ChangeView({ center, zoom }) {
   const map = useMap();
   map.setView(center, zoom);
@@ -17,6 +18,7 @@ function SetViewOnClick({ animateRef }) {
 
   return null;
 }
+
 // marker
 function bike_icon() {
   return L.icon({
@@ -39,6 +41,7 @@ function sub_icon() {
     iconAnchor: [10, 35],
   });
 }
+
 //main
 const MlMapData = ({ mapdata, change }) => {
   //marker 출발도착지 변수설정
@@ -65,11 +68,6 @@ const MlMapData = ({ mapdata, change }) => {
     var bike2ArrStation = bike_route_2[bike_route_2.length - 1];
   }
 
-  // 복잡하지만 bike2 때문에 어쩔 수 없다.
-  // bus인 경우만 bike2가 있고 bus만 slide swipe이 가능하다.
-  // slide swipe 변화는 change 라는 변수로 통제됨
-  // chane on인 경우 filteredmarkers가, off인 경우 bike2markers가 선택된다.
-
   var markers = [
     { bike: bikeArrStation }, //
     { bike: bikeDepStation },
@@ -77,18 +75,17 @@ const MlMapData = ({ mapdata, change }) => {
     { bus: busDepStation },
     { sub: subArrStation },
     { sub: subDepStation },
+    { bike2: bike2ArrStation }, //
+    { bike2: bike2DepStation },
   ];
-  var filteredmarkers = markers //
+
+  const result = markers //
     .filter((marker) => {
       if (Object.values(marker)[0] !== undefined)
         //
         return marker;
     });
-  var bike2markers = [
-    { bike2: bike2ArrStation }, //
-    { bike2: bike2DepStation },
-  ];
-  var result = change ? filteredmarkers : bike2markers;
+
   return (
     <div className="flex-container m-auto">
       <div className="map-ml">
@@ -121,10 +118,20 @@ const MlMapData = ({ mapdata, change }) => {
             }
             return (
               <div key={index}>
-                <Marker position={marker[type]} icon={icon()}></Marker>
+                <Marker position={marker[type]} icon={icon()}>
+                  <Popup direction="top" offset={[0, -10]}>
+                    <div
+                      style={{ background: "white", cursor: "pointer" }} //
+                      onClick={() => {}}>
+                      {" "}
+                      경로 이동.
+                    </div>
+                  </Popup>
+                </Marker>
               </div>
             );
           })}
+
           {/* 경로 */}
 
           {mapdata["sub"] !== undefined && (
@@ -133,33 +140,27 @@ const MlMapData = ({ mapdata, change }) => {
               positions={mapdata["sub"]}
             />
           )}
-          {change && mapdata["sub"] !== undefined && (
-            <Polyline
-              pathOptions={{ color: "purple" }} //
-              positions={mapdata["sub"]}
-            />
-          )}
 
-          {change && mapdata["bus"] !== undefined && (
+          {mapdata["bus"] !== undefined && (
             <Polyline //
               pathOptions={{ color: "white" }} //
               positions={mapdata["bus"]}
             />
           )}
-          {change && mapdata["walk"] !== undefined && (
+          {mapdata["walk"] !== undefined && (
             <Polyline
               pathOptions={{ color: "red" }} //
               positions={mapdata["walk"]}
             />
           )}
 
-          {change && mapdata["bike"] !== undefined && (
+          {mapdata["bike"] !== undefined && (
             <Polyline
               pathOptions={{ color: "green" }} //
               positions={mapdata["bike"]}
             />
           )}
-          {!change && mapdata["bike2"] !== undefined && (
+          {mapdata["bike2"] !== undefined && (
             <Polyline
               pathOptions={{ color: "yellow" }} //
               positions={mapdata["bike2"]}>

@@ -33,7 +33,11 @@ DEBUG = int(os.environ.get("DEBUG", 1))
 if os.environ.get("DJANGO_ALLOWED_HOSTS"):
     ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 else:
-    ALLOWED_HOSTS = ["cute-falcons-ring-121-190-214-76.loca.lt", "localhost"]
+    ALLOWED_HOSTS = [
+        "295f-121-190-214-76.jp.ngrok.io",
+        "localhost",
+        "127.0.0.1:8000",
+    ]
 
 
 # Application definition

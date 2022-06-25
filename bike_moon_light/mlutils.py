@@ -4,18 +4,19 @@ import requests
 from urllib.request import Request, urlopen
 import pandas as pd
 import numpy as np
-import setuptools
-import plotly.graph_objects as go
-import plotly.express as px
 import ast
 import time
-from typing import Dict, List, Union
+from typing import Dict, List
 
 ## 데이터 불러오기
 
-
+# label 정보를 value 정보로 바꿔줌.(검색용으로 불가)
 def label_to_value(search_info: pd.DataFrame, search_name: str) -> int:
     return search_info[search_info["label"] == search_name].value.iloc[0]
+
+
+def search_by_text(search_info: pd.DataFrame, search_name: str) -> pd.DataFrame:
+    return search_info[search_info["label"].str.contains(search_name)]
 
 
 class moon_light:
@@ -46,15 +47,35 @@ class moon_light:
 
         if dep_id < 3000:
             print("자전거")
-            bike_coor = self.route_coor(dep_info, arr_info)
-            return dict(bike_coor=bike_coor)
+            bike = self.route_coor(dep_info, arr_info)
+            record_info = self.record_info(dep_info.index[0], arr_info.index[0], 50)
+
+            if record_info == [0]:
+                return {"error": "출발 대여소와 목적 대여소가 동일합니다."}
+
+            # [{"bike": ["당산 육갑문", "목동1단지아파트 118동 앞"]}]
+            route_info = [
+                {
+                    "bike": [
+                        dep_info["st_name"].iloc[0],
+                        arr_info["st_name"].iloc[0],
+                        record_info[0],
+                        record_info[1],
+                    ]
+                }
+            ]
+
+            return dict(bike=bike, route_info=route_info)
 
         elif dep_id > 4000:
             print("버스")
-            # * -- 자전거 대여소 정보 추출 -- *
 
             # * -- 출도착 버스 정보-- *
             dep_arr_bus_info = self.finding_start_end(dep_info, arr_info)
+
+            if dep_arr_bus_info.empty:
+                print("해당 목적지로 이동가능한 야간버스가 없습니다.")
+                return {"error": "해당 목적지로 이동가능한 야간버스가 없습니다."}
 
             # * -- 경로 선택 및 경로 노선 추출 -- *
             bus_whole, waypoint, bus_start_end = self.bus_route_info(dep_arr_bus_info)
@@ -62,53 +83,106 @@ class moon_light:
             # * -- 좌표 받기 -- *
             arr_trans = bus_start_end.iloc[[1]]
 
-            dep_bike_info = self.near_bus_bike_info(
-                bus_start_end.iloc[[0]], arr_info
-            ).sort_values(by="num", ascending=False)
+            arr_bike_info = self.near_bus_bike_info(arr_trans, arr_info)
 
-            arr_bike_info = self.near_bus_bike_info(arr_trans, arr_info).sort_values(
-                by="num", ascending=False
+            if arr_bike_info.empty:
+                return {"error": "이용가능한 따릉이 대여소가 없거나, 대여기록이 50건 미만입니다."}
+
+            arr_bike_info = arr_bike_info.sort_values(by="num", ascending=False)
+
+            bus = self.bus_route_coor(bus_start_end, waypoint)
+            walk = self.route_coor(arr_trans, arr_bike_info.iloc[[0]])
+            bike = self.route_coor(arr_bike_info.iloc[[0]], arr_info)
+            record_info = self.record_info(
+                arr_bike_info["st_id"].iloc[0], arr_info.index[0], 50
             )
+            if record_info == [0]:
+                return {"error": "출발 대여소와 목적 대여소가 동일합니다."}
 
-            dep_arr_bike = self.route_coor(dep_bike_info, arr_info)
+            # # -- 자전거 길 네이버 지도로도 표현 -- #
+            # a = arr_bike_info.iloc[[0]][["latitude", "longtitude"]]
+            # b = arr_info.reset_index()[["latitude", "longtitude"]]
+            # start_end = pd.concat([a, b], axis=0)
+            # bus # bus_direct
+            route_info = [
+                {
+                    "bus": [
+                        bus_start_end["name"].iloc[0],
+                        bus_start_end["name"].iloc[1],
+                    ],
+                    "bike": [
+                        arr_bike_info["st_name"].iloc[0],
+                        arr_info["st_name"].iloc[0],
+                        record_info[0],
+                        record_info[1],
+                    ],
+                },
+            ]
+            dep_bike_info = self.near_bus_bike_info(bus_start_end.iloc[[0]], arr_info)
+            if dep_bike_info.empty:
+                return {"error": "이용가능한 따릉이 대여소가 없거나, 대여기록이 50건 미만입니다."}
 
-            bus_coor = self.bus_route_coor(bus_start_end, waypoint)
-            walk_coor = self.route_coor(arr_trans, arr_bike_info.iloc[[0]])
-            bike_coor = self.route_coor(arr_bike_info.iloc[[0]], arr_info)
+            dep_bike_info = dep_bike_info.sort_values(by="num", ascending=False)
+            if dep_bike_info.empty == False:
+                bike2 = self.route_coor(dep_bike_info, arr_info)
+                record_info2 = self.record_info(
+                    dep_bike_info["st_id"].iloc[0], arr_info.index[0], 50
+                )
+                bike2_info = (
+                    {
+                        "bike2": [
+                            dep_bike_info["st_name"].iloc[0],
+                            arr_info["st_name"].iloc[0],
+                            record_info2[0],
+                            record_info2[1],
+                        ]
+                    },
+                )
+                route_info.extend(bike2_info)
+            else:
+                bike2 = [""]
 
-            # -- 자전거 길 네이버 지도로도 표현 -- #
-            a = arr_bike_info.iloc[[0]][["latitude", "longtitude"]]
-            b = arr_info.reset_index()[["latitude", "longtitude"]]
-            start_end = pd.concat([a, b], axis=0)
-
-            # "trafast	실시간 빠른길",
-            # "tracomfort	실시간 편한길",
-            # "traoptimal	실시간 최적",
-            # "traavoidtoll	무료 우선",
-            # "traavoidcaronly	자동차 전용도로 회피 우선",
-
-            bike_coor_2 = self.bus_route_coor(
-                start_end, waypoint_false=True, option="tracomfort"
-            )
             return dict(
-                dep_arr_bike=dep_arr_bike,
-                bus_coor=bus_coor,
-                walk_coor=walk_coor,
-                bike_coor=bike_coor,
-                bike_coor_2=bike_coor_2,
+                bus=bus,
+                walk=walk,
+                bike=bike,
+                bike2=bike2,
+                route_info=route_info,
             )
+
         else:
             print("지하철")
             # * -- 자전거 대여소 정보 추출 -- *
-            near_bus_bike_info = self.near_bus_bike_info(
-                dep_info, arr_info
-            ).sort_values(by="dist")
-            departure_bike_station = pd.DataFrame(near_bus_bike_info.iloc[0]).T
+            near_bike_info = self.near_bus_bike_info(dep_info, arr_info)
+            if near_bike_info.empty:
+                return {"error": "이용가능한 따릉이 대여소가 없거나, 대여기록이 50건 미만입니다."}
+
+            near_bike_info = near_bike_info.sort_values(by="dist")
+
+            departure_bike_station = pd.DataFrame(near_bike_info.iloc[0]).T
 
             # * -- 자전거 경로(사실 보행로 추천이라는 사실~)-- *
-            sub_coor = self.route_coor(dep_info, departure_bike_station)
-            bike_coor = self.route_coor(departure_bike_station, arr_info)
-            return dict(sub_coor=sub_coor, bike_coor=bike_coor)
+            sub = self.route_coor(dep_info, departure_bike_station)
+            bike = self.route_coor(departure_bike_station, arr_info)
+            record_info = self.record_info(
+                departure_bike_station["st_id"].iloc[0], arr_info.index[0], 50
+            )
+            if record_info == [0]:
+                return {"error": "출발 대여소와 목적 대여소가 동일합니다."}
+            # sub
+            # [{"sub": ["당산역"], "bike": ["당산 육갑문", "목동1단지아파트 118동 앞"]}]
+            route_info = [
+                {
+                    "sub": [dep_info["sub_name"].iloc[0]],
+                    "bike": [
+                        departure_bike_station["st_name"].iloc[0],
+                        arr_info["st_name"].iloc[0],
+                        record_info[0],
+                        record_info[1],
+                    ],
+                }
+            ]
+            return dict(sub=sub, bike=bike, route_info=route_info)
 
     def raw_data(self, val: int) -> pd.DataFrame:
         quert_st_id1 = self.seoul_bike[self.seoul_bike["st_id1"] == val]
@@ -191,12 +265,12 @@ class moon_light:
             bus_route_near_bike["bus"].unique(), departure_info["bus"]
         ).tolist()
 
-        # 주변에 겹치는 결과가 없으면 검색 종료(검색 반경을 늘려서 검색하도록 유도할 수도 있겠다. 기능 추가할때 구현고민해보자.)
+        # 주변에 겹치는 결과가 없으면 검색 종료
         if bus_route_inter == []:
-            print("검색결과 없음")
+            print("목적지와 연결된 검색노선 없음.")
 
             # 정류장,지하철역, 대여소 등 관련 내용이 없으면 station => station 검색 함수로 옮김
-            return print("station_to_station")
+            return pd.DataFrame([])
 
         # 겹치는 노선에 대한 정보만 불러온더
         # 합정의 경우 N26,N62외에도 다양한 야간 버스가 지나친다. 그중 N26,N62버스 만 불러온다.
@@ -304,6 +378,9 @@ class moon_light:
         ### 50건 이상만 list에 담기도록 설정
         br_record_id = br_record[br_record > 50].index
 
+        if br_record_id.empty:
+            return br_record_id
+
         recom_bike_id = np.intersect1d(bike_id, br_record_id).tolist()
 
         # 버스정류장 근처 대여소와 집 근처 대여소 거리 비교
@@ -387,6 +464,8 @@ class moon_light:
 
         if isinstance(arrival_station, pd.Series):
             arrival_station = pd.DataFrame(arrival_station).T
+        if departure_station.empty or arrival_station.empty:
+            return [""]
 
         for i in range(3):
             url = "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1"
@@ -471,3 +550,54 @@ class moon_light:
 
         else:
             print("ERROR")
+
+    def record_info(self, dep_id: int, arr_id: int, count: int = 50) -> List:
+        if dep_id == arr_id:
+            return [0]
+
+        BM = (self.seoul_bike["st_id1"] == dep_id) & (
+            self.seoul_bike["st_id2"] == arr_id
+        )
+        raw_data_1 = self.seoul_bike[BM]
+
+        BM = (self.seoul_bike["st_id1"] == arr_id) & (
+            self.seoul_bike["st_id2"] == dep_id
+        )
+        raw_data_2 = self.seoul_bike[BM]
+
+        concat_data = pd.concat([raw_data_1, raw_data_2], axis=0)
+
+        # 정해진 개수 미만 경고창 띄우기
+        if len(concat_data) <= count:
+            return [0, 0]
+
+        all_time = (
+            concat_data["riding_time"].value_counts().sort_values(ascending=False)
+        )  # 도달한 시간대
+        total_borrow = len(concat_data)
+
+        k = []
+        i = 2
+        # 일정 비율 이상인 시간대만 구하기
+        while len(k) < 1:
+            k = all_time[all_time >= (total_borrow / i)]
+            i = i * 1.5
+
+        ### 대여시간대
+        time_line = k.index
+
+        ### 대여기록
+        counts = k.values
+
+        total_counts = k.sum()
+
+        ### 대여시간 * 대여기록
+        total_time = sum([a * b for a, b in zip(time_line, counts)])
+
+        # 평균 시간
+        avg_time = total_time / total_counts
+
+        # 올림
+        result = round(avg_time, 0)
+
+        return [result, total_borrow]

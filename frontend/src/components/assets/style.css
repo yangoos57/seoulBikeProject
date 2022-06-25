@@ -102,7 +102,7 @@ html,body{
 
 
 
-/*일yarn add react-spinners반 select*/
+/*yarn add react-spinners select*/
 .pie_legend{
     border-radius: 20px;
     width: 5px;
@@ -120,16 +120,6 @@ html,body{
 }
 
 
-/* leaflet */
-.leaflet-container{
-    width: 100%;
-    height: 100%;
-}
-.leaflet-popup-content-wrapper,
-.leaflet-popup-tip {
-background: #35C768;
-box-shadow: 0 3px 14px rgba(0,0,0,0.4);
-}
 
 
 
