@@ -57,13 +57,22 @@ function BkTemplate() {
                   <div className="m-auto border border-2">날씨정보 API 넣기 </div>
                 </div>
               </div>
-              <div className="d-flex mx-auto" style={{ flexBasis: "30%", border: "0.9px dashed black", width: "90%" }}>
-                <div className="m-auto" style={{ flexBasis: "100%" }}>
-                  <BkSelect />
+              <div className="flex-container pb-2" style={{ flexBasis: "40%" }}>
+                <div
+                  className="m-auto bg-white flex-container p-1"
+                  style={{ width: "90%", height: "80%", border: "1px dashed black" }}>
+                  <div className="my-auto mx-3 d-flex" style={{ flexBasis: "10%" }}>
+                    <i className=" m-auto fa-solid fa-magnifying-glass fa-lg"></i>{" "}
+                  </div>
+                  {/* Selector Component */}
+                  <div className="my-auto" style={{ flexBasis: "90%" }}>
+                    <BkSelect />
+                    {/* 출발대여소 검색하기 <br />
+                    (Selector component) */}
+                  </div>
                 </div>
               </div>
             </div>
-
             {/* 지도부분 */}
             <div className="bg-success flex-container" style={{ flexBasis: "70%" }}>
               <BkMapData>

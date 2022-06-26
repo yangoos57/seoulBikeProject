@@ -18,8 +18,8 @@ function App() {
       <Routes>
         <Route path="/test" element={<Test />}></Route>
         <Route path="/dash" element={<Main />}></Route>
-        {/* <Route path="/" element={<BkTitle />}></Route>
-        <Route path="/bk" element={<BkTemplate />}></Route> */}
+        {/* <Route path="/" element={<BkTitle />}></Route> */}
+        <Route path="/bk" element={<BkTemplate />}></Route>
         <Route path="/" element={<MlTitle />}></Route>
         <Route path="/ml" element={<MlMain />}></Route>
         <Route path="/ml/search" element={<MlSearchPage />}></Route>

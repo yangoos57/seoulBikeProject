@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
-import { ReactComponent as Sub } from "./assets/icons/sub.svg";
-import { ReactComponent as Bus } from "./assets/icons/bus.svg";
-import { ReactComponent as Bike } from "./assets/icons/bike.svg";
+import { ReactComponent as Sub } from "./assets/icons/sub_sl.svg";
+import { ReactComponent as Bus } from "./assets/icons/bus_sl.svg";
+import { ReactComponent as Bike } from "./assets/icons/bike_sl.svg";
 const MlSlider = ({ mapdata, changeFunc, change }) => {
   const settings = {
     dots: false,
@@ -16,49 +16,49 @@ const MlSlider = ({ mapdata, changeFunc, change }) => {
     },
   };
 
-  const bus = <Bus width="25" height="25" className="m-auto" />;
-  const sub = <Sub width="25" height="25" className="m-auto" />;
-  const bike = <Bike width="25" height="25" className="m-auto" />;
+  const busIcon = <Bus width="25" height="25" className="m-auto" />;
+  const subIcon = <Sub width="25" height="25" className="m-auto" />;
+  const bikeIcon = <Bike width="25" height="25" className="m-auto" />;
 
   var options = [];
   if (mapdata["route_info"] !== undefined) {
     mapdata["route_info"].map((val) => {
       var item = [];
       if (Object.keys(val)[0] === "bus") {
-        let a = { label: Object.values(val)[0][0], icon: bus };
-        let b = { label: Object.values(val)[0][1], icon: bus };
-        let c = { label: Object.values(val)[1][0], icon: bike };
+        let a = { label: Object.values(val)[0][0], icon: busIcon };
+        let b = { label: Object.values(val)[0][1], icon: busIcon };
+        let c = { label: Object.values(val)[1][0], icon: bikeIcon };
         let d = {
           label: Object.values(val)[1][1],
-          icon: bike,
+          icon: bikeIcon,
           time: Object.values(val)[1][2],
           record: Object.values(val)[1][3],
         };
         item = [a, b, c, d];
       } else if (Object.keys(val)[0] === "bike") {
-        let a = { label: Object.values(val)[0][0], icon: bike };
+        let a = { label: Object.values(val)[0][0], icon: bikeIcon };
         let b = {
           label: Object.values(val)[0][1],
-          icon: bike,
+          icon: bikeIcon,
           time: Object.values(val)[0][2],
           record: Object.values(val)[0][3],
         };
         item = [a, b];
       } else if (Object.keys(val)[0] === "bike2") {
-        let a = { label: Object.values(val)[0][0], icon: bike };
+        let a = { label: Object.values(val)[0][0], icon: bikeIcon };
         let b = {
           label: Object.values(val)[0][1],
-          icon: bike,
+          icon: bikeIcon,
           time: Object.values(val)[0][2],
           record: Object.values(val)[0][3],
         };
         item = [a, b];
       } else {
-        let a = { label: Object.values(val)[0], icon: sub };
-        let b = { label: Object.values(val)[1][0], icon: bike };
+        let a = { label: Object.values(val)[0], icon: subIcon };
+        let b = { label: Object.values(val)[1][0], icon: bikeIcon };
         let c = {
           label: Object.values(val)[1][1],
-          icon: bike,
+          icon: bikeIcon,
           time: Object.values(val)[1][2],
           record: Object.values(val)[1][3],
         };
@@ -75,7 +75,8 @@ const MlSlider = ({ mapdata, changeFunc, change }) => {
             // card 반복문
             <div key={main_index}>
               <div className="card-recom" style={{ color: "#10E8C1B3" }}>
-                {main_index === 0 ? "추천 경로" : "자전거 추천 경로"}
+                {/* {main_index === 0 ? " 따릉이 경로" : "따릉이 경로"} */}
+                {mapdata["bus"] === undefined ? "따릉이 경로" : main_index === 0 ? " 대중교통 경로" : "따릉이 경로"}
               </div>
               <div className="mlcard m-auto">
                 <div className="my-auto p-2" style={{ flexBasis: "95%" }}>
@@ -88,7 +89,9 @@ const MlSlider = ({ mapdata, changeFunc, change }) => {
                         {console.log("label:", item.label)}
                         {console.log("time:", item.time)} */}
                         <div className="d-flex px-2 align-items-start">
-                          <div className="mx-auto d-flex" style={{ width: "10%", backgroundColor: "#000000" }}>
+                          <div
+                            className="mx-auto d-flex"
+                            style={{ width: "10%", backgroundColor: "#252525", borderRadius: "5px" }}>
                             {item.icon}
                           </div>
                           <div

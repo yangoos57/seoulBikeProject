@@ -74,52 +74,64 @@ class moon_light:
             if dep_arr_bus_info.empty:
                 print("해당 목적지로 이동가능한 야간버스가 없습니다.")
                 return {"error": "해당 목적지로 이동가능한 야간버스가 없습니다."}
-
             # * -- 경로 선택 및 경로 노선 추출 -- *
             bus_whole, waypoint, bus_start_end = self.bus_route_info(dep_arr_bus_info)
 
-            # * -- 좌표 받기 -- *
-            arr_trans = bus_start_end.iloc[[1]]
+            if bus_whole.empty == False:
+                # * -- 좌표 받기 -- *
+                arr_trans = bus_start_end.iloc[[1]]
 
-            arr_bike_info = self.near_bus_bike_info(arr_trans, arr_info)
+                arr_bike_info = self.near_bus_bike_info(arr_trans, arr_info)
 
-            if arr_bike_info.empty:
-                return {"error": "이용가능한 따릉이 대여소가 없거나, 목적지와 도착지간 대여기록이 50건 미만입니다."}
+                if arr_bike_info.empty:
+                    return {"error": "이용가능한 따릉이 대여소가 없거나, 목적지와 도착지간 대여기록이 50건 미만입니다."}
 
-            arr_bike_info = arr_bike_info.sort_values(by="num", ascending=False)
+                arr_bike_info = arr_bike_info.sort_values(by="num", ascending=False)
 
-            bus = self.bus_route_coor(bus_start_end, waypoint)
-            center = self.center_data(bus)
-            walk = self.route_coor(arr_trans, arr_bike_info.iloc[[0]])
-            bike = self.route_coor(arr_bike_info.iloc[[0]], arr_info)
-            record_info = self.record_info(
-                arr_bike_info["st_id"].iloc[0], arr_info.index[0], 50
-            )
+                bus = self.bus_route_coor(bus_start_end, waypoint)
+                center = self.center_data(bus)
+                walk = self.route_coor(arr_trans, arr_bike_info.iloc[[0]])
+                bike = self.route_coor(arr_bike_info.iloc[[0]], arr_info)
+                record_info = self.record_info(
+                    arr_bike_info["st_id"].iloc[0], arr_info.index[0], 50
+                )
 
-            # # -- 자전거 길 네이버 지도로도 표현 -- #
-            # a = arr_bike_info.iloc[[0]][["latitude", "longtitude"]]
-            # b = arr_info.reset_index()[["latitude", "longtitude"]]
-            # start_end = pd.concat([a, b], axis=0)
-            # bus # bus_direct
+                # # -- 자전거 길 네이버 지도로도 표현 -- #
+                # a = arr_bike_info.iloc[[0]][["latitude", "longtitude"]]
+                # b = arr_info.reset_index()[["latitude", "longtitude"]]
+                # start_end = pd.concat([a, b], axis=0)
+                # bus # bus_direct
 
-            # if record_info == [0]:
-            #     return {"error": "출발 대여소와 도착 대여소가 동일합니다.(2)"}
+                # if record_info == [0]:
+                #     return {"error": "출발 대여소와 도착 대여소가 동일합니다.(2)"}
 
-            route_info = [
-                {
-                    "bus": [
-                        bus_start_end["name"].iloc[0],
-                        bus_start_end["name"].iloc[1],
-                    ],
-                    "bike": [
-                        arr_bike_info["st_name"].iloc[0],
-                        arr_info["st_name"].iloc[0],
-                        record_info[0],
-                        record_info[1],
-                    ],
-                },
-            ]
+                route_info = [
+                    {
+                        "bus": [
+                            bus_start_end["name"].iloc[0],
+                            bus_start_end["name"].iloc[1],
+                        ],
+                        "bike": [
+                            arr_bike_info["st_name"].iloc[0],
+                            arr_info["st_name"].iloc[0],
+                            record_info[0],
+                            record_info[1],
+                        ],
+                    },
+                ]
+
+            #
+            else:
+                bus = [""]
+                walk = [""]
+                bike = [""]
+                center = [""]
+                route_info = [""]
+
+            #
+
             dep_bike_info = self.near_bus_bike_info(bus_start_end.iloc[[0]], arr_info)
+
             if dep_bike_info.empty:
                 return {"error": "이용가능한 따릉이 대여소가 없거나, 목적지와 도착지간 대여기록이 50건 미만입니다."}
 
@@ -168,7 +180,7 @@ class moon_light:
             departure_bike_station = pd.DataFrame(near_bike_info.iloc[0]).T
 
             # * -- 자전거 경로(사실 보행로 추천이라는 사실~)-- *
-            sub = self.route_coor(dep_info, departure_bike_station)
+            Sub = self.route_coor(dep_info, departure_bike_station)
             bike = self.route_coor(departure_bike_station, arr_info)
             center = self.center_data(bike)
             record_info = self.record_info(
@@ -178,7 +190,7 @@ class moon_light:
             # [{"sub": ["당산역"], "bike": ["당산 육갑문", "목동1단지아파트 118동 앞"]}]
             route_info = [
                 {
-                    "sub": [dep_info["sub_name"].iloc[0]],
+                    "Sub": [dep_info["sub_name"].iloc[0]],
                     "bike": [
                         departure_bike_station["st_name"].iloc[0],
                         arr_info["st_name"].iloc[0],
@@ -187,7 +199,7 @@ class moon_light:
                     ],
                 }
             ]
-            return dict(sub=sub, bike=bike, center=center, route_info=route_info)
+            return dict(Sub=Sub, bike=bike, center=center, route_info=route_info)
 
     def raw_data(self, val: int) -> pd.DataFrame:
         quert_st_id1 = self.seoul_bike[self.seoul_bike["st_id1"] == val]
@@ -263,7 +275,6 @@ class moon_light:
             .dropna()
             .sort_values(by="id")
         )
-
         # departure_info와 arrival_info 인근 버스 정류장과 겹치는 버스 번호 찾기
         # ex) 합정역 => 754 자전거 대여소 인 경우 754 근처를 지나가는 버스 N26과 N62를 결과로 제공함.
         bus_route_inter = np.intersect1d(
@@ -289,6 +300,7 @@ class moon_light:
         # 상행과 하행을 찾는 방법에 대한 방법이다.
 
         bus_df = pd.DataFrame(columns=ending_bus.columns)
+
         # bus_route_inter : A->B갈때 여러 N버스를 타고 갈 수 있음
         # 합정 => 754인 경우 N26과 N62 둘 다 가능
         for num in bus_route_inter:
@@ -296,6 +308,9 @@ class moon_light:
             ending_order = ending_bus.sort_values(by=["dist", "order"]).query(
                 "bus==@num"
             )[:2]
+            # ending_order = ending_bus.sort_values(by=["dist", "order"]).query(
+            #     "bus==@num"
+            # )[:2]
 
             # 상행(A->B)인 경우 B가 A보다 bus 정류장 번호(column : bus_order)가 더 크다.
             # 하행(B->A)인 경우 A가 B보다 ""
@@ -325,7 +340,8 @@ class moon_light:
         # 출발지 위치가 목적지 1.5km이내에 있는 경우 버스 경로검색 안하도록 조치
         if starting_order["id"].iloc[0] in bus_route_near_bike["id"].tolist():
             bus_df = starting_order.sort_values(by="order", ascending=False)[:1]
-            # print("목적지와 정류장이 직선거리 1.5km 이내에 있습니다.")
+            print("도착대여소와 정류장이 직선거리 1.5km 이내에 있습니다.")
+            print(bus_df)
             # 아래 함수랑 연동시켜보자
             return bus_df
 
@@ -335,14 +351,24 @@ class moon_light:
     # -- 버스 이동 경로 좌표 -- #
     def bus_route_info(self, bus_route: pd.DataFrame) -> pd.DataFrame:
         if bus_route.iloc[-1]["id"] == bus_route.iloc[0]["id"]:
-            print("버스를 타지 않았네")
-            return [], [], []
+            print("버스를 이용하지 않아도 되는 동선입니다.")
+            return (
+                pd.Series([]),
+                pd.Series([]),
+                bus_route,
+            )  ## 세번째에 bus_route를 넣은 이유는 bike2를 이용하기 위함임.
         else:
             # 범위선택
-            bus_order_start = bus_route["order"].iloc[0]
-            bus_order_end = bus_route["order"].iloc[-1]
+            route1 = bus_route["order"].iloc[0]
+            route2 = bus_route["order"].iloc[-1]
             bus_name = bus_route["bus"].iloc[0]
 
+            if route1 < route2:
+                bus_order_start = route1
+                bus_order_end = route2
+            else:
+                bus_order_start = route2
+                bus_order_end = route1
             # 자료 sorting
             route_whole = self.near_bus.query(
                 "@bus_order_start <= order <= @bus_order_end & bus == @bus_name"
@@ -378,15 +404,12 @@ class moon_light:
 
         raw = self.raw_data(bike_station_id)
 
-        br_record = raw.groupby("st_id1").size()
-
-        ### 50건 이상만 list에 담기도록 설정
-        br_record_id = br_record[br_record > 50].index
-
-        if br_record_id.empty:
-            return br_record_id
+        br_record_id = raw.groupby("st_id1").size().index
 
         recom_bike_id = np.intersect1d(bike_id, br_record_id).tolist()
+
+        if pd.Series(recom_bike_id).empty:
+            return pd.Series([])  # empty
 
         # 버스정류장 근처 대여소와 집 근처 대여소 거리 비교
         # ending point를 외부에서 받아야하네 (클래스로 함수를 만들어야하나.)
@@ -454,6 +477,8 @@ class moon_light:
                 "dist",
             ],
         )
+
+        bike_recommend = bike_recommend[bike_recommend["num"] > 50]
 
         return bike_recommend
 

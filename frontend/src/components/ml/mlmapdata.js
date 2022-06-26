@@ -36,6 +36,13 @@ function sub_icon() {
     iconSize: [25, 25],
   });
 }
+function walk_icon() {
+  return L.icon({
+    iconUrl: require("./assets/icons/walkMan.png"),
+    iconSize: [25, 25],
+    // iconAnchor: [2, 5],
+  });
+}
 
 //main
 const MlMapData = ({ mapdata, change, children }) => {
@@ -52,7 +59,7 @@ const MlMapData = ({ mapdata, change, children }) => {
     var busDepStation = bus_route[bus_route.length - 1];
   }
 
-  var sub_route = mapdata["sub"];
+  var sub_route = mapdata["Sub"];
   if (sub_route !== undefined) {
     var subArrStation = sub_route[0];
     var subDepStation = sub_route[sub_route.length - 1];
@@ -86,7 +93,18 @@ const MlMapData = ({ mapdata, change, children }) => {
     { bike2: bike2ArrStation }, //
     { bike2: bike2DepStation },
   ];
-  var result = change ? filteredmarkers : bike2markers;
+  var result = change ? filteredmarkers : bike2markers; // 이건 뭐지.. 암튼..
+
+  if (mapdata["walk"] !== undefined) {
+    var asd = Math.round(mapdata["walk"].length / 2);
+    var walkMan = mapdata["walk"][asd];
+  } else if (mapdata["Sub"] !== undefined) {
+    var asd = Math.round(mapdata["Sub"].length / 2);
+    var walkMan = mapdata["Sub"][asd];
+  }
+  console.log(mapdata["Sub"]);
+  console.log("? : ", mapdata["Sub"]);
+  // console.log(asd);
   return (
     <div className="flex-container m-auto">
       <div className="map-ml">
@@ -124,39 +142,45 @@ const MlMapData = ({ mapdata, change, children }) => {
               </div>
             );
           })}
+          {mapdata["walk"] !== undefined || mapdata["Sub"] !== undefined ? (
+            <Marker position={walkMan} icon={walk_icon()} zIndexOffset={2000}></Marker>
+          ) : (
+            ""
+          )}
+
           {/* 
           경로 
           change = bike2 선택
            */}
-          {mapdata["sub"] !== undefined && (
+          {mapdata["Sub"] !== undefined && (
             <Polyline
-              pathOptions={{ color: "var(--sub-ml-color)" }} //
-              positions={mapdata["sub"]}
+              pathOptions={{ color: "var(--walk-ml-color)", opacity: 0.6 }} //
+              positions={mapdata["Sub"]}
               dashArray={[5, 10]}
             />
           )}
           {change && mapdata["bus"] !== undefined && (
             <Polyline //
-              pathOptions={{ color: "var(--bus-ml-color)" }} //
+              pathOptions={{ color: "var(--bus-ml-color)", opacity: 0.6 }} //
               positions={mapdata["bus"]}
             />
           )}
           {change && mapdata["walk"] !== undefined && (
             <Polyline
-              pathOptions={{ color: "var(--walk-ml-color)" }} //
+              pathOptions={{ color: "var(--walk-ml-color)", opacity: 0.6 }} //
               positions={mapdata["walk"]}
               dashArray={[5, 10]}
             />
           )}
           {change && mapdata["bike"] !== undefined && (
             <Polyline
-              pathOptions={{ color: "var(--bike-ml-color)" }} //
+              pathOptions={{ color: "var(--bike-ml-color)", opacity: 0.6 }} //
               positions={mapdata["bike"]}
             />
           )}
           {!change && mapdata["bike2"] !== undefined && (
             <Polyline
-              pathOptions={{ color: "var(--bike-ml-color)" }} //
+              pathOptions={{ color: "var(--bike-ml-color)", opacity: 0.6 }} //
               positions={mapdata["bike2"]}
             />
           )}
