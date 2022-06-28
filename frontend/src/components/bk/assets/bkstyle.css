@@ -1,5 +1,58 @@
 :root{
-    --black-color : #191a3dcd;
+    --black-color : #474863;
+    --silver-color : #F4F4F4;
     --green-color : #4FC276;
     --green-color-70 : #4FC276B3;
+    --green-color-30 : #4fc2753e;
+    --beige-color : #D8CCAD;
+}
+
+@font-face {
+    font-family: 'NEXON Lighter';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.whole-bk{
+    background-color: rgb(249, 243, 233);
+    font-family: 'NEXON Lighter';
+    height: 100%;
+}
+
+
+.filterBox{
+    position: absolute;
+    top: 0%;
+    z-index: 1000;
+    height: 20%;
+    width: 100%;
+    background-color: var(--black-color);
+    /* display: none; */
+    display:flex
+}
+.filterBox .slider{
+    position: absolute;
+    top: 30%;
+    left: 10%;
+    width: 100%;
+}
+
+/* leaflet */
+.leaflet-popup-tip {
+    background-color: var(--black-color);
+}
+.leaflet-popup-content-wrapper{
+    background-color: var(--black-color);
+    color: var(--silver-color);
+    
+}
+.leaflet-tooltip {
+    background-color: var(--black-color);
+    color: var(--silver-color);
+    border: 0px;
+}
+.leaflet-tooltip-right:before{
+    background-color: var(--black-color);
+    border: 0px;
 }

@@ -3,6 +3,7 @@ import React from "react";
 const BkTitleName = ({ fontValue = "40px" }) => {
   const style = {
     fontSize: fontValue,
+    fontFamily: "NEXON",
   };
 
   return (
