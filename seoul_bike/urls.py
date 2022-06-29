@@ -24,6 +24,8 @@ urlpatterns = [
     path("api/testing", views.plots.as_view()),
     path("ml/api/departureInfo", ml_views.departureInfo),
     path("ml/api/leafletMap", ml_views.leaflet_map.as_view()),
+    path("bk/api/departureInfo", ml_views.BkdepartureInfo),
+    path("bk/bk/api/departureInfo", ml_views.BkdepartureInfo),
 ]
 # path('stationinfo/', views.stationToDB)  # bike_station 정보
 

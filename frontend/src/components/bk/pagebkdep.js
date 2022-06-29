@@ -24,7 +24,7 @@ function current_icon() {
 }
 
 // main function
-function BkTemplate() {
+function BkDeparture() {
   // 현재좌표 불러오기
   const [curLoca, setCurLoca] = useState([37.534863, 126.90241]);
   const options = {
@@ -67,13 +67,17 @@ function BkTemplate() {
 
   // 경로 검색 이후 다시 정보 받아서 /bk arrival로 쏘아주기
   const location = useLocation();
-  console.log(location.state);
+  console.log("??? :", location.state);
   if (location.state !== null) {
     var item = location.state;
   }
   useEffect(() => {
     setStationInfo(item);
   }, [item]);
+
+  useEffect(() => {
+    if (stationInfo !== undefined) console.log(JSON.parse(stationInfo["coor"]));
+  }, [stationInfo]);
   return (
     <>
       <div className="whole-bk d-flex ">
@@ -129,7 +133,7 @@ function BkTemplate() {
                   recordName={"대여소 이용기록"}
                   numOfRecord={stationInfo["num"]}
                   title={stationInfo["label"]}
-                  numOfBike={stationInfo["time"]}
+                  numOfBike={stationInfo["time"]} //따릉이 API
                   ButtonTitle={"출발 대여소 지정"}
                 />
               )}
@@ -138,7 +142,7 @@ function BkTemplate() {
                 {stationInfo === undefined ? (
                   <Marker position={curLoca} icon={current_icon()} />
                 ) : (
-                  <Marker position={[37.534863, 126.90241]} icon={bikeIcon()} />
+                  <Marker position={JSON.parse(stationInfo["coor"])} icon={bikeIcon()} />
                 )}
                 {stationInfo === undefined ? (
                   <ChangeView
@@ -147,7 +151,7 @@ function BkTemplate() {
                   />
                 ) : (
                   <ChangeView
-                    center={[37.534863, 126.90241]} //
+                    center={JSON.parse(stationInfo["coor"])} //
                     zoom={14}
                   />
                 )}
@@ -159,4 +163,4 @@ function BkTemplate() {
     </>
   );
 }
-export default BkTemplate;
+export default BkDeparture;

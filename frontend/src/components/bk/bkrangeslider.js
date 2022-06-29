@@ -8,7 +8,7 @@ function valuetext(value) {
 }
 
 //main
-export default function RangeSlider({ max = 2, onChange, unit }) {
+export default function RangeSlider({ min = 0, max = 2, onChange, unit }) {
   const middle = Math.round(max / 2);
   const [value, setValue] = React.useState([0, max]);
 
@@ -18,8 +18,8 @@ export default function RangeSlider({ max = 2, onChange, unit }) {
   };
   const marks = [
     {
-      value: 0,
-      label: 0 + unit,
+      value: min,
+      label: min + unit,
     },
     {
       value: middle,
@@ -35,7 +35,7 @@ export default function RangeSlider({ max = 2, onChange, unit }) {
     <div className="m-auto w-100">
       <Box sx={{ width: 300 }}>
         <Slider
-          min={0}
+          min={min}
           max={max}
           getAriaLabel={() => "Temperature range"}
           value={value}

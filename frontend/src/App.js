@@ -8,10 +8,9 @@ import MlSearchPage from "./components/ml/pagemlsearch";
 import MlDirection from "./components/ml/pagemldirection";
 import MlTitle from "./components/ml/mltitle";
 // import BkTitle from "./components/bk/bktitle";
-import BkTemplate from "./components/bk/bktemplate";
-import BkArrival from "./components/bk/bkarrival";
-import BkRangeSlider from "./components/bk/bkrangeslider";
-import BkDirection from "./components/bk/bkdirection";
+import BkTemplate from "./components/bk/pagebkdep";
+import BkArrival from "./components/bk/pagebkarrival";
+import BkDirection from "./components/bk/pagebkdirection";
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -19,9 +18,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/test" element={<BkRangeSlider />}></Route>
+        <Route path="/test" element={<Test />}></Route>
         <Route path="/dash" element={<Main />}></Route>
-        {/* <Route path="/" element={<BkTitle />}></Route> */}
         <Route path="/bk" element={<BkTemplate />}></Route>
         <Route path="/bk/arrival" element={<BkArrival />}></Route>
         <Route path="/bk/direction" element={<BkDirection />}></Route>

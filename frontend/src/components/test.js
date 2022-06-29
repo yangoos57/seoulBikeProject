@@ -1,16 +1,30 @@
 import axios from "axios";
 import React, { useState, useRef, useEffect } from "react";
-import { ReactComponent as Sub } from "./assets/icons/sub.svg";
-import { ReactComponent as Bus } from "./assets/icons/bus.svg";
-import { ReactComponent as Bike } from "./assets/icons/bike.svg";
 
 function Test() {
-  const [InfoData, setInfoData] = useState("");
-  useEffect(() => {
-    axios.get("/api/ml/departureInfo").then((res) => setInfoData(res.data));
-  }, []);
-  console.log(InfoData);
-  return <div className="fs-3"></div>;
+  const initialMarker = [
+    {
+      label: "여의도역 ", //
+      index: "0",
+      coor: [37.524563, 126.90541],
+      record: 100,
+      time: 20,
+    },
+    {
+      label: "당산역 ", //
+      index: "1",
+      coor: [37.544563, 126.92541],
+      record: 101230,
+      time: 21230,
+    },
+  ];
+  // Object.keys(initialMarker).map((e, b) => console.log(b));
+  var a = initialMarker.map(({ record }) => record);
+  var asd = Math.max(...a);
+  var asd = Math.min(...a);
+  console.log(asd);
+
+  return;
 }
 
 export default Test;

@@ -12,6 +12,7 @@ import arrmarkerclick from "./assets/icons/arrmarkerclick.svg";
 import bikegreen from "./assets/icons/bikegreen.svg";
 import BkInfoBox from "./bkinfobox";
 import { useNavigate } from "react-router-dom";
+import BkMainFrame from "./bkmainframe";
 function ChangeView({ center, zoom }) {
   const map = useMap();
   map.setView(center, zoom);
@@ -159,6 +160,7 @@ function BkArrival() {
                   <BkRangeSlider max={10} onChange={setOnDistance} unit={"km"} />
                 </div>
               </div>
+
               {markerClicked !== undefined && (
                 <BkInfoBox
                   setIsMouseOn={setIsMouseOn} //

@@ -9,7 +9,7 @@ const BkInfoBox = ({
   recordName,
   title,
   numOfRecord,
-  numOfBike,
+  // numOfBike,
   ButtonTitle,
 }) => {
   return (
@@ -43,7 +43,7 @@ const BkInfoBox = ({
         </div>
       </div>
       <div className="d-flex flex-column" style={{ flexBasis: "40%", color: "var(--silver-color)" }}>
-        <div className="m-auto">대여가능 따릉이 수 : {numOfBike}</div>
+        {/* <div className="m-auto">대여가능 따릉이 수 : {numOfBike}</div> */}
         <div className="m-auto">
           {recordName} : {numOfRecord}건
         </div>

@@ -6,7 +6,7 @@ from django.core.files import File
 from .serializers import *
 from .models import *
 import time
-from .mlutils import *
+from .bkutils import *
 import os
 
 
@@ -15,43 +15,23 @@ import os
 #     queryset = departure_info.objects.all()
 
 
-station = pd.read_csv(
-    "bike_moon_light/assets/seoul_bike_station_01_12.csv", encoding="CP949", index_col=0
-)
-
-near_bus = pd.read_csv(
-    "bike_moon_light/assets/near_bus_500m.csv", encoding="CP949", index_col=0
+bkstation = pd.read_csv(
+    "bike_recommendation/assets/bkstation_info.csv", encoding="CP949", index_col=0
 )
 
 seoul_bike = pd.read_parquet("parquet/220607_bike_record.parquet.gzip")
 
-sub_info = pd.read_csv(
-    "bike_moon_light/assets/sub_and_bike_info.csv", encoding="CP949", index_col=0
-)
-
-search_info = pd.read_csv(
-    "bike_moon_light/assets/search_info.csv", encoding="CP949", index_col=0
-)
-
 
 print("!! 로드 완료 !!")
 
-###### Bike Recommendation
-@api_view(["Get"])
-def BkdepartureInfo(request) -> Dict:
-    bkstation = pd.read_csv(
-        "bike_moon_light/assets/bkstation_info.csv", encoding="CP949", index_col=0
-    )
-    return Response(bkstation.to_dict("records"))
 
-
-###### Moon Light
 @api_view(["Get"])
-def departureInfo(request) -> Dict[int, str]:
+def departureInfo(request) -> Dict[int:str]:
     search_info = pd.read_csv(
         "bike_moon_light/assets/search_info.csv", encoding="CP949", index_col=0
     )
-    return Response(search_info.drop_duplicates(subset="label").to_dict("records"))
+    bike_search_info = search_info[search_info["value"] < 3000]
+    return Response(bike_search_info.to_dict("records"))
 
 
 class leaflet_map(views.APIView):

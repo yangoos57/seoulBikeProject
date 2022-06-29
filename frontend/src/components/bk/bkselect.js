@@ -26,11 +26,11 @@ const BkSelect = ({ setStationInfo }) => {
     { label: "여의나루 1번 출구 ", value: "0" },
     { label: "여의나루 2번 출구 ", value: "1" },
   ]);
-  // useEffect(() => {
-  //   axios.get("api/testing").then((res) => {
-  //     setBikeStation(res.data);
-  //   });
-  // }, []);
+  useEffect(() => {
+    axios.get("bk/api/departureInfo").then((res) => {
+      setBikeStation(res.data);
+    });
+  }, []);
 
   const style = {
     option: (provided, state) => ({
