@@ -115,28 +115,39 @@ class bike_recommendation:
             result_station.append([val, total_record, (round(avg_dist / 1000, 2))])
 
         df = pd.DataFrame(result_station)
-        finish = pd.concat([result, df], axis=1)
-        finish.columns = ["value", "label", "coor", "num", "time", "record", "dist"]
+        data = pd.concat([result, df], axis=1)
+        data.columns = ["value", "label", "coor", "num", "time", "record", "dist"]
 
-        return finish  # min과 max를 설정할 수 있도록 순번 잊지말기
+        minmax = dict(
+            mintime=data["time"].min(),
+            maxtime=data["time"].max(),
+            minrecord=data["record"].min(),
+            maxrecord=data["record"].max(),
+            mindist=data["dist"].min(),
+            maxdist=data["dist"].max(),
+        )
 
-    def route_coor(
+        return data, minmax
+
+    def bkroute_coor(
         self,
-        departure_station,
-        arrival_station,
-    ):
-        # ) -> List :
+        departure_station: list,
+        arrival_station: list,
+    ) -> List:
+
         """departure_station과 arrival_station은 모두 dataframe으로!"""
-        if isinstance(departure_station, pd.Series):
-            raise TypeError(f"DataFrame만 가능 현재 : {type(departure_station)}")
+        # if isinstance(departure_station, pd.Series):
+        #     raise TypeError(f"DataFrame만 가능 현재 : {type(departure_station)}")
 
-        if isinstance(arrival_station, pd.Series):
-            raise TypeError(f"DataFrame만 가능 현재 : {type(arrival_station)}")
-        if departure_station.empty or arrival_station.empty:
-            raise ValueError("Value is Empty!")
+        # if isinstance(arrival_station, pd.Series):
+        #     raise TypeError(f"DataFrame만 가능 현재 : {type(arrival_station)}")
 
-        departure = ast.literal_eval(departure_station["coor"].values[0])
-        arrival = ast.literal_eval(arrival_station["coor"].values[0])
+        # if departure_station.empty or arrival_station.empty:
+        #     raise ValueError("Value is Empty!")
+        if type(departure_station) == str:
+            departure_station = ast.literal_eval(departure_station)
+        if type(arrival_station) == str:
+            arrival_station = ast.literal_eval(arrival_station)
 
         for i in range(3):
             url = "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1"
@@ -148,10 +159,10 @@ class bike_recommendation:
                 "searchOption": "0",
                 "resCoordType": "WGS84GEO",
                 "sort": "index",
-                "startX": departure[1],
-                "startY": departure[0],
-                "endX": arrival[1],
-                "endY": arrival[0],
+                "startX": departure_station[1],
+                "startY": departure_station[0],
+                "endX": arrival_station[1],
+                "endY": arrival_station[0],
                 "startName": "출발",
                 "endName": "도착",
             }

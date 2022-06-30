@@ -21,29 +21,36 @@ const BkDirctionInfo = ({ dep, arr }) => {
         <div style={{ flexBasis: "5%" }}> </div>
         {/* 2 */}
         <div className="d-flex" style={{ flexBasis: "15%" }}>
-          <div className="my-auto" style={{ fontFamily: "NEXON" }}>
-            출발 :
+          <div className="my-auto" style={{ fontFamily: "NEXON", flexBasis: "15%" }}>
+            출발
           </div>
-          <div className="my-auto ms-2">{dep["label"]}</div>
-        </div>
-        <div style={{ flexBasis: "15%", marginLeft: "5px" }}>
-          <i className="fa-solid fa-arrow-down"></i>
+          <div className="my-auto ms-2" style={{ flexBasis: "80%" }}>
+            {dep["label"]}
+          </div>
         </div>
         {/* 3 */}
-        <div className="d-flex" style={{ flexBasis: "15%" }}>
-          <div className="my-auto" style={{ fontFamily: "NEXON" }}>
-            도착 :
-          </div>
-          <div className="my-auto ms-2">{arr["label"]}</div>
+        <div className="my-2" style={{ flexBasis: "5%", marginLeft: "5px" }}>
+          <i className="fa-solid fa-arrow-down"></i>
         </div>
         {/* 4 */}
-        <div className="p-1" style={{ flexBasis: "10%" }}></div>
+        <div className="d-flex" style={{ flexBasis: "15%" }}>
+          <div className="my-auto" style={{ fontFamily: "NEXON", flexBasis: "15%" }}>
+            도착
+          </div>
+          <div className="my-auto ms-2" style={{ flexBasis: "80%" }}>
+            {arr["label"]}
+          </div>
+        </div>
         {/* 5 */}
+        <div className="p-1" style={{ flexBasis: "10%" }}></div>
+        {/* 6 */}
         <div className="d-flex" style={{ flexBasis: "20%" }}>
           <div className="my-auto" style={{ fontFamily: "NEXON" }}>
-            예상도착시간 :
+            예상도착시간
           </div>
-          <div className="my-auto ms-2">{arr["time"]} 분</div>
+          <div className="my-auto ms-2" style={{ fontSize: "18px" }}>
+            {arr["time"]} 분
+          </div>
         </div>
       </div>
     </div>

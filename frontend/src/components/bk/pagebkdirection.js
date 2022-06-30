@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Marker } from "react-leaflet";
+import { Marker, Polyline, useMap } from "react-leaflet";
 import { useLocation } from "react-router-dom";
 import BkMainFrame from "./bkmainframe";
 import BkMapData from "./bkmapdata";
@@ -9,6 +9,13 @@ import arricon from "./assets/icons/arricon.svg";
 import L from "leaflet";
 import { useNavigate } from "react-router-dom";
 import BkDirctionInfo from "./bkdirectioninfo";
+import axios from "axios";
+
+function ChangeView({ center, zoom }) {
+  const map = useMap();
+  map.setView(center, zoom);
+  return null;
+}
 
 function bikeIcon() {
   return L.icon({
@@ -20,41 +27,37 @@ function bikeIcon() {
 function arrIcon() {
   return L.icon({
     iconUrl: arricon,
-    iconSize: [30, 30],
+    iconSize: [35, 35],
   });
 }
 
 //main
 const BkDirection = () => {
   const navigate = useNavigate();
+
+  // 대여소 재검색 기능
   const [stationInfo, setStationInfo] = useState(undefined);
 
   if (stationInfo !== undefined) {
-    navigate("/bk", { state: stationInfo });
+    navigate("/bk/departure", { state: stationInfo });
   }
 
   const location = useLocation();
   const params = location.state;
   const dep = params["dep"]; // coor, label, value,
   const arr = params["arr"]; // coor, label, value, min
-  // console.log("dep", dep);
-  //   console.log("arr", arr);
+
+  // 경로추천
+  const [direction, setDirection] = useState([[0, 0]]);
+  useEffect(() => {
+    axios.post("api/direction", { dep: dep, arr: arr }).then((res) => {
+      setDirection(res.data);
+    });
+  }, [dep, arr]);
 
   //child1
   function child1() {
-    return (
-      <div
-        className="d-flex mx-auto"
-        style={{
-          flexBasis: "30%", //
-          border: "0.9px dashed black",
-          width: "90%",
-        }}>
-        <div className="m-auto" style={{ flexBasis: "100%" }}>
-          <BkSelect setStationInfo={setStationInfo} />
-        </div>
-      </div>
-    );
+    return <BkSelect setStationInfo={setStationInfo} />;
   }
 
   //child2
@@ -63,10 +66,16 @@ const BkDirection = () => {
       <div className="w-100 h-100">
         <BkDirctionInfo dep={dep} arr={arr} />
         <BkMapData>
-          {/* <Marker position={dep["coor"]} icon={bikeIcon()} /> */}
-          <Marker position={[37.534863, 126.90241]} icon={bikeIcon()} />
-
-          <Marker position={arr["coor"]} icon={arrIcon()}></Marker>
+          <ChangeView
+            center={direction !== undefined ? direction[Math.round(direction.length / 3)] : ""} //
+            zoom={arr["dist"] > 5 ? 11 : arr["dist"] > 3 ? 12 : arr["dist"] > 1 ? 13 : 14}
+          />
+          <Marker position={JSON.parse(dep["coor"])} icon={bikeIcon()} />
+          <Polyline
+            pathOptions={{ color: "var(--black-color)", opacity: 0.6 }} //
+            positions={direction}
+          />
+          <Marker position={JSON.parse(arr["coor"])} icon={arrIcon()}></Marker>
         </BkMapData>
       </div>
     );

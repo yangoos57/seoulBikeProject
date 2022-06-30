@@ -9,7 +9,8 @@ const BkInfoBox = ({
   recordName,
   title,
   numOfRecord,
-  // numOfBike,
+  estTime,
+  estOn,
   ButtonTitle,
 }) => {
   return (
@@ -23,17 +24,17 @@ const BkInfoBox = ({
         zIndex: 1000,
         backgroundColor: "var(--black-color)",
         left: "10%",
-        borderRadius: "10px",
+        borderRadius: "5px",
       }}>
       <div className="d-flex justify-content-end" style={{ flexBasis: "25%" }}>
         <div
-          className="m-auto"
+          className="m-auto px-4 py-2"
           style={{
             color: isMouseOn ? "var(--green-color)" : "var(--silver-color)",
             fontSize: "18px",
           }}>
           {title}
-          <div style={{ position: "absolute", right: "3%", top: "3%" }}>
+          <div style={{ position: "absolute", right: "3%", top: "3%", cursor: "pointer" }}>
             <Xbox
               onClick={() => {
                 setReset(undefined);
@@ -43,15 +44,15 @@ const BkInfoBox = ({
         </div>
       </div>
       <div className="d-flex flex-column" style={{ flexBasis: "40%", color: "var(--silver-color)" }}>
-        {/* <div className="m-auto">대여가능 따릉이 수 : {numOfBike}</div> */}
-        <div className="m-auto">
-          {recordName} : {numOfRecord}건
+        {estOn && <div className="m-auto py-1">예상시간 : {estTime} 분</div>}
+        <div className="m-auto py-1">
+          {recordName} : {numOfRecord.toLocaleString("en-US")} 건
         </div>
       </div>
       <div className="d-flex" style={{ flexBasis: "35%" }}>
         <div className="d-flex m-auto" style={{ flexBasis: "100%" }}>
           <div
-            className="p-2 m-auto d-flex"
+            className="p-2 mb-1 mx-auto d-flex"
             style={{
               flexBasis: "50%",
               borderRadius: "5px",

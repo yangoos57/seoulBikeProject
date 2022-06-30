@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Marker, useMap } from "react-leaflet";
 import BkTitleName from "./bktitlename";
 import L from "leaflet";
@@ -9,6 +9,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import BkInfoBox from "./bkinfobox";
 import bikegreen from "./assets/icons/bikegreen.svg";
 import bikewhite from "./assets/icons/bikewhite.svg";
+
 function ChangeView({ center, zoom }) {
   const map = useMap();
   map.setView(center, zoom);
@@ -67,7 +68,7 @@ function BkDeparture() {
 
   // 경로 검색 이후 다시 정보 받아서 /bk arrival로 쏘아주기
   const location = useLocation();
-  console.log("??? :", location.state);
+
   if (location.state !== null) {
     var item = location.state;
   }
@@ -75,39 +76,43 @@ function BkDeparture() {
     setStationInfo(item);
   }, [item]);
 
+  const focusSelect = useRef();
+
   useEffect(() => {
-    if (stationInfo !== undefined) console.log(JSON.parse(stationInfo["coor"]));
+    if (stationInfo === undefined) {
+      focusSelect.current.focus();
+    }
   }, [stationInfo]);
+
   return (
     <>
       <div className="whole-bk d-flex ">
         <div className="main-ml m-auto ">
           <div className="bg-white flex-column flex-container">
             <div className="flex-container flex-column" style={{ flexBasis: "30%" }}>
-              <div className=" flex-container justify-content-between" style={{ flexBasis: "65%" }}>
-                <div className="mx-2" style={{ flexBasis: "30%" }}>
-                  <BkTitleName fontValue="30px" />
+              <div
+                className="d-flex justify-content-between mx-auto"
+                style={{ flexBasis: "60%", width: "80%", height: "100%" }}>
+                <div className="" style={{}}>
+                  <BkTitleName fontValue="28px" />
                 </div>
-                <div className=" flex-container mx-3" style={{ flexBasis: "30%" }}>
+                <div className="flex-container " style={{ flexBasis: "30%" }}>
                   {/* weather Component */}
-                  <div className="m-auto border border-2">날씨정보 API 넣기 </div>
+                  <div className="m-auto w-100 weather text-center">날씨정보 API 넣기</div>
                 </div>
               </div>
               {stationInfo === undefined ? (
-                <div
-                  className="d-flex mx-auto"
-                  style={{ flexBasis: "30%", border: "0.9px dashed black", width: "90%" }}>
-                  <div className="m-auto" style={{ flexBasis: "100%" }}>
-                    <BkSelect setStationInfo={setStationInfo} />
-                  </div>
-                </div>
+                <BkSelect setStationInfo={setStationInfo} reference={focusSelect} />
               ) : (
                 <div
+                  onClick={() => setStationInfo(undefined)}
                   className="d-flex mx-auto"
                   style={{
                     flexBasis: "30%",
                     backgroundColor: isMouseOn ? "var(--green-color)" : "var(--silver-color)",
                     width: "80%",
+                    cursor: "pointer",
+                    borderRadius: "5px",
                   }}>
                   <div
                     className="d-flex m-auto"

@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-const BkFiltering = ({ setIsBoxOn, isBoxOn, setClickedName, clickedName }) => {
+const BkFiltering = ({ setClickedName, clickedName }) => {
   const boxStyle = {
     flexBasis: "30%",
     backgroundColor: "var(--silver-color)",
     fontSize: "16px",
     borderRadius: "5px",
     cursor: "pointer",
+    marginBottom: "10px",
   };
   function MouseOn(e) {
     e.currentTarget.style.backgroundColor = "var(--green-color)";
@@ -17,22 +18,16 @@ const BkFiltering = ({ setIsBoxOn, isBoxOn, setClickedName, clickedName }) => {
   }
 
   function mouseClick(e) {
-    clickedName === undefined && setIsBoxOn(!isBoxOn);
-    setClickedName(e.target.innerText);
-    e.target.innerText === clickedName && setIsBoxOn(!isBoxOn);
+    e.target.innerText !== clickedName ? setClickedName(e.target.innerText) : setClickedName(undefined);
   }
-
   return (
-    <div className="d-flex flex-column w-100">
-      <div style={{ color: "var(--black-color)", fontSize: "22px" }}>도착대여소 선택하기</div>
-      <div className="d-flex justify-content-between my-2">
-        <div
-          className="d-flex px-2 py-1"
-          style={boxStyle}
-          onMouseOver={MouseOn}
-          onMouseOut={mouseOut}
-          onClick={mouseClick}>
-          <div className="m-auto">도착시간</div>
+    <div className="flex-container flex-column w-100">
+      <div style={{ color: "var(--black-color)", fontSize: "20px", fontFamily: "NEXON", flexBasis: "50%" }}>
+        도착대여소 선택하기
+      </div>
+      <div className="d-flex justify-content-between" style={{ flexBasis: "50%" }}>
+        <div className="d-flex px-2" style={boxStyle} onMouseOver={MouseOn} onMouseOut={mouseOut} onClick={mouseClick}>
+          <div className="m-auto">이동시간</div>
         </div>
         <div
           className="d-flex px-2 py-1 "

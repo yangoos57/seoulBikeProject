@@ -12,9 +12,15 @@ import arrmarkerclick from "./assets/icons/arrmarkerclick.svg";
 import bikegreen from "./assets/icons/bikegreen.svg";
 import BkInfoBox from "./bkinfobox";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import MarkerClusterGroup from "react-leaflet-cluster";
+
 function ChangeView({ center, zoom }) {
   const map = useMap();
-  map.setView(center, zoom);
+  useEffect(() => {
+    map.setView(center, zoom);
+  }, []);
+
   return null;
 }
 
@@ -28,7 +34,7 @@ const initialMarker = [
   {
     label: "여의도역 ", //
     index: "0",
-    coor: [37.524563, 126.90541],
+    coor: "[0, 0]",
     record: 100,
     time: 20,
     dist: 16,
@@ -36,19 +42,19 @@ const initialMarker = [
   {
     label: "당산역 ", //
     index: "1",
-    coor: [37.544563, 126.92541],
+    coor: "[0, 0]",
     record: 101230,
     time: 21230,
     dist: 20,
   },
 ];
 const initalfilter = {
-  mintime: 0,
-  maxtime: 0,
-  minrecord: 0,
-  maxrecord: 0,
-  mindist: 0,
-  maxdist: 0,
+  mintime: undefined,
+  maxtime: undefined,
+  minrecord: undefined,
+  maxrecord: undefined,
+  mindist: undefined,
+  maxdist: undefined,
 };
 
 //main
@@ -56,14 +62,22 @@ function BkArrival() {
   const [isBoxOn, setIsBoxOn] = useState(false); // silder box on off
   const [isMouseOn, setIsMouseOn] = useState(false); // infobox color
   const [isClicked, setIsClicked] = useState(false); // infobox click
-  const [clickedName, setClickedName] = useState(false); // filter name
-  const [onTimes, setOnRecord] = useState(undefined); // rangeslider value
-  const [onTime, setOnTime] = useState(undefined); // rangeslider value
-  const [onDistance, setOnDistance] = useState(undefined); // rangeslider value
+  const [clickedName, setClickedName] = useState(undefined); // filter name
   const [clickedItem, setClickedItem] = useState(undefined); // marker info
   const [markerClicked, setMarkerClicked] = useState(undefined); // marker index for clicked
   const [markerHoveredIndex, setMarkerHoveredIndex] = useState(undefined); // marker index for hover
   const [arrMarkers, setArrMarkers] = useState(initialMarker); // items
+  const [filterItem, setFilterItem] = useState(initalfilter); // items
+  const [onRecord, setOnRecord] = useState([undefined, undefined]); // rangeslider value
+  const [onTime, setOnTime] = useState([undefined, undefined]); // rangeslider value
+  const [onDistance, setOnDistance] = useState([undefined, undefined]); // rangeslider value
+
+  //filter default value
+  useEffect(() => {
+    setOnRecord([filterItem["minrecord"], filterItem["maxrecord"]]);
+    setOnTime([filterItem["mintime"], filterItem["maxtime"]]);
+    setOnDistance([filterItem["mindist"], filterItem["maxdist"]]);
+  }, [filterItem]);
 
   const location = useLocation();
   const depParams = location.state;
@@ -72,6 +86,7 @@ function BkArrival() {
     return L.icon({
       iconUrl: arrmarker,
       iconSize: [15, 15],
+      className: "svgTest",
     });
   }
 
@@ -82,24 +97,34 @@ function BkArrival() {
     });
   }
 
+  useEffect(() => {
+    axios.post("api/info", { value: depParams["value"] }).then((res) => {
+      setArrMarkers(res.data.data);
+      setFilterItem(res.data.minmax);
+    });
+  }, []);
+
   const navigate = useNavigate();
 
   useEffect(() => {
     if (isClicked === true) {
-      navigate("/bk/direction", { state: { dep: depParams, arr: clickedItem } }); //출*도착정보 모두 넣어주기
+      navigate("/bk/direction", { state: { dep: depParams, arr: clickedItem } }); //출도착정보 모두 넣어주기
     }
   }, [isClicked]);
+
   return (
     <>
       <div className="whole-bk d-flex ">
         <div className="main-ml m-auto ">
           <div className="bg-white flex-column flex-container">
             <div className="flex-container flex-column" style={{ flexBasis: "30%" }}>
-              <div className=" flex-container justify-content-between" style={{ flexBasis: "60%" }}>
-                <div className="mx-2" style={{ flexBasis: "30%" }}>
-                  <BkTitleName fontValue="30px" />
+              <div
+                className="d-flex justify-content-between mx-auto"
+                style={{ flexBasis: "60%", width: "80%", height: "100%" }}>
+                <div className="">
+                  <BkTitleName fontValue="28px" />
                 </div>
-                <div className=" flex-container mx-3" style={{ flexBasis: "30%" }}>
+                <div className="flex-container " style={{ flexBasis: "30%" }}>
                   {/* weather Component */}
                   <div className="m-auto border border-2">날씨정보 API 넣기 </div>
                 </div>
@@ -107,7 +132,7 @@ function BkArrival() {
               <div
                 className="d-flex mx-auto"
                 style={{
-                  flexBasis: "30%",
+                  flexBasis: "40%",
                   width: "80%",
                 }}>
                 <div
@@ -118,12 +143,7 @@ function BkArrival() {
                     color: "var(--black-color)",
                   }}>
                   {/* filteringBox */}
-                  <BkFiltering
-                    setIsBoxOn={setIsBoxOn}
-                    isBoxOn={isBoxOn}
-                    setClickedName={setClickedName}
-                    clickedName={clickedName}
-                  />
+                  <BkFiltering setClickedName={setClickedName} clickedName={clickedName} />
                 </div>
               </div>
             </div>
@@ -134,40 +154,52 @@ function BkArrival() {
               <div
                 className="filterBox"
                 style={{
-                  display: isBoxOn ? "inline" : "none", //
+                  display: clickedName !== undefined ? "block" : "none", //
                 }}>
                 <div
                   className="slider"
                   style={{
-                    visibility: isBoxOn
-                      ? clickedName === "도착시간" //
+                    visibility:
+                      clickedName === "이동시간" //
                         ? "visible"
-                        : "hidden"
-                      : "hidden",
+                        : "hidden",
                   }}>
-                  <BkRangeSlider min={0} max={20} onChange={setOnTime} unit={"분"} />
+                  <BkRangeSlider
+                    min={filterItem["mintime"]}
+                    max={filterItem["maxtime"]}
+                    onChange={setOnTime}
+                    unit={"분"}
+                  />
                 </div>
                 <div
                   className="slider"
                   style={{
-                    visibility: isBoxOn
-                      ? clickedName === "대여기록" //
+                    visibility:
+                      clickedName === "대여기록" //
                         ? "visible"
-                        : "hidden"
-                      : "hidden",
+                        : "hidden",
                   }}>
-                  <BkRangeSlider min={30} max={2222} onChange={setOnRecord} unit={"건"} />
+                  <BkRangeSlider
+                    min={filterItem["minrecord"]}
+                    max={filterItem["maxrecord"]}
+                    onChange={setOnRecord}
+                    unit={"건"}
+                  />
                 </div>
                 <div
                   className="slider"
                   style={{
-                    visibility: isBoxOn
-                      ? clickedName === "이동거리" //
+                    visibility:
+                      clickedName === "이동거리" //
                         ? "visible"
-                        : "hidden"
-                      : "hidden",
+                        : "hidden",
                   }}>
-                  <BkRangeSlider min={111} max={11111} onChange={setOnDistance} unit={"km"} />
+                  <BkRangeSlider
+                    min={filterItem["mindist"]}
+                    max={filterItem["maxdist"]}
+                    onChange={setOnDistance}
+                    unit={"km"}
+                  />
                 </div>
               </div>
 
@@ -178,54 +210,79 @@ function BkArrival() {
                   setReset={setMarkerClicked}
                   isMouseOn={isMouseOn}
                   recordName={"대여소 이용기록"}
-                  numOfRecord={clickedItem["num"]}
+                  numOfRecord={clickedItem["record"]}
                   title={clickedItem["label"]}
-                  // numOfBike={clickedItem["time"]}
+                  estTime={clickedItem["time"]}
+                  estOn={true}
                   ButtonTitle={"도착 대여소 지정"}
                 />
               )}
 
               <BkMapData>
-                {/* <ChangeView
-                  center={curLoca} //
-                  zoom={14}
-                /> */}
-                <Marker position={[37.534863, 126.90241]} icon={bikeIcon()} />
-                {arrMarkers.map((val) => {
-                  return (
-                    <Marker
-                      data={val} // options.data에서 나오는 값
-                      key={val["index"]}
-                      position={val["coor"]}
-                      // icon={arrMarker() }
-                      icon={
-                        (val["index"] === markerHoveredIndex) | (val["index"] === markerClicked)
-                          ? clickMarker()
-                          : arrMarker()
+                <ChangeView
+                  center={JSON.parse(depParams["coor"])} //
+                  zoom={12}
+                />
+                <Marker position={JSON.parse(depParams["coor"])} icon={bikeIcon()} zIndexOffset={1000}>
+                  <Tooltip direction="right" offset={[5, 40]} zIndexOffset={1000}>
+                    <div className="p-1" style={{ backgroundColor: "var(--green-color)", color: "var(--black-color)" }}>
+                      <div className="my-auto"> 대여소명 : {depParams["label"]}</div>
+                      <div className="my-auto"> 대여기록 : {depParams["num"]} 건 </div>
+                      <div className="my-auto"> 하루평균 : {Math.round(depParams["num"] / 365, 2)} 건</div>
+                    </div>
+                  </Tooltip>
+                </Marker>
+                <MarkerClusterGroup showCoverageOnHover={false} zoomToBoundsOnClick={false} maxClusterRadius={50}>
+                  {arrMarkers
+                    .filter((val) => {
+                      if (
+                        (val["time"] >= onTime[0]) &
+                        (val["time"] <= onTime[1]) &
+                        (val["record"] >= onRecord[0]) &
+                        (val["record"] <= onRecord[1]) &
+                        (val["dist"] >= onDistance[0]) &
+                        (val["dist"] <= onDistance[1])
+                      ) {
+                        return val;
                       }
-                      eventHandlers={{
-                        click: (e) => {
-                          setClickedItem(e.target.options.data);
-                          setMarkerClicked(e.target.options.data.index);
-                        },
-                        mouseover: (e) => {
-                          setMarkerHoveredIndex(e.target.options.data.index);
-                        },
-                        mouseout: () => {
-                          setMarkerHoveredIndex(-1);
-                        },
-                      }}>
-                      <Tooltip direction="right" offset={[5, 40]}>
-                        <div className="flex">
-                          <div className="my-auto"> 대여소명 : {val["label"]}</div>
-                          <div className="my-auto"> 대여기록 : {val["record"]} 건 </div>
-                          <div className="my-auto"> 하루평균 : {Math.round(val["record"] / 365)} 건</div>
-                          <div className="my-auto"> 예상시간 : {val["time"]} 분</div>
-                        </div>
-                      </Tooltip>
-                    </Marker>
-                  );
-                })}
+                      // return val;
+                    })
+                    .map((val) => {
+                      return (
+                        <Marker
+                          data={val} // options.data에서 나오는 값
+                          key={val["value"]}
+                          position={JSON.parse(val["coor"])}
+                          // icon={arrMarker() }
+                          icon={
+                            (val["value"] === markerHoveredIndex) | (val["value"] === markerClicked)
+                              ? clickMarker()
+                              : arrMarker()
+                          }
+                          eventHandlers={{
+                            click: (e) => {
+                              setClickedItem(e.target.options.data);
+                              setMarkerClicked(e.target.options.data.value);
+                            },
+                            mouseover: (e) => {
+                              setMarkerHoveredIndex(e.target.options.data.value);
+                            },
+                            mouseout: () => {
+                              setMarkerHoveredIndex(-1);
+                            },
+                          }}>
+                          <Tooltip direction="right" offset={[5, 40]}>
+                            <div className="m-1">
+                              <div className="my-auto"> 대여소명 : {val["label"]}</div>
+                              <div className="my-auto"> 대여기록 : {val["record"]} 건 </div>
+                              <div className="my-auto"> 하루평균 : {Math.round(val["record"] / 365).toFixed(1)} 건</div>
+                              <div className="my-auto"> 예상시간 : {val["time"]} 분</div>
+                            </div>
+                          </Tooltip>
+                        </Marker>
+                      );
+                    })}
+                </MarkerClusterGroup>
               </BkMapData>
             </div>
           </div>

@@ -1,4 +1,5 @@
 from cProfile import label
+from bike_moon_light.bkutils import bike_recommendation
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import viewsets, views
@@ -8,7 +9,7 @@ from .models import *
 import time
 from .mlutils import *
 import os
-
+import json
 
 # class departure_infoView(viewsets.ModelViewSet):
 #     serializer_class = departure_infoSerializer
@@ -32,7 +33,9 @@ sub_info = pd.read_csv(
 search_info = pd.read_csv(
     "bike_moon_light/assets/search_info.csv", encoding="CP949", index_col=0
 )
-
+bkstation = pd.read_csv(
+    "bike_moon_light/assets/bkstation_info.csv", encoding="CP949", index_col=0
+)
 
 print("!! 로드 완료 !!")
 
@@ -43,6 +46,36 @@ def BkdepartureInfo(request) -> Dict:
         "bike_moon_light/assets/bkstation_info.csv", encoding="CP949", index_col=0
     )
     return Response(bkstation.to_dict("records"))
+
+
+@api_view(["Post"])
+def Bkdirection(request) -> Dict:
+    dep = request.data.get("dep")
+    print(dep["coor"])
+    arr = request.data.get("arr")
+    print(arr["coor"])
+    bk = bike_recommendation(bkstation, seoul_bike)
+    data = bk.bkroute_coor(dep["coor"], arr["coor"])
+    # print(data)
+    return Response(data)
+
+
+class bk_leaflet_map(views.APIView):
+    bkstation = pd.read_csv(
+        "bike_moon_light/assets/bkstation_info.csv", encoding="CP949", index_col=0
+    )
+
+    def get(self, request) -> Dict:
+        return Response(bkstation.to_dict("records"))
+
+    def post(self, request):
+        # queryset
+        st_id = request.data.get("value")
+        print(st_id)
+
+        bk = bike_recommendation(bkstation, seoul_bike)
+        data, minmax = bk.arrStation(st_id)
+        return Response({"data": data.to_dict("records"), "minmax": minmax})
 
 
 ###### Moon Light

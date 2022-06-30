@@ -73,7 +73,11 @@ function MlDirection() {
               width: "100%",
               bottom: "7%",
             }}>
-            <MlSlider mapdata={mapData} changeFunc={setchangeDirection} change={changeDirection} />
+            <MlSlider
+              mapdata={mapData} //
+              changeFunc={setchangeDirection}
+              change={changeDirection}
+            />
           </div>
 
           {/* 지도*/}

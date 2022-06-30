@@ -21,13 +21,13 @@ const ValueContainer = ({ children, ...props }) => {
     )
   );
 };
-const BkSelect = ({ setStationInfo }) => {
+const BkSelect = ({ setStationInfo, reference }) => {
   const [bikeStation, setBikeStation] = useState([
     { label: "여의나루 1번 출구 ", value: "0" },
     { label: "여의나루 2번 출구 ", value: "1" },
   ]);
   useEffect(() => {
-    axios.get("bk/api/departureInfo").then((res) => {
+    axios.get("api/info").then((res) => {
       setBikeStation(res.data);
     });
   }, []);
@@ -53,7 +53,7 @@ const BkSelect = ({ setStationInfo }) => {
       boxShadow: "0px",
       borderRadius: "0px",
     }),
-    input: (styles) => ({ ...styles, height: "100%", paddingLeft: "20%" }),
+    input: (styles) => ({ ...styles, height: "100%", paddingLeft: "20%", cursor: "text" }),
     container: (styles) => ({
       ...styles,
       height: "100%", //
@@ -100,21 +100,33 @@ const BkSelect = ({ setStationInfo }) => {
           itemCount={children.length}
           itemSize={height}
           initialScrollOffset={initialOffset}>
-          {({ index, style }) => <div style={{ ...style }}>{children[index]}</div>}
+          {({ index, style }) => <div style={{ ...style, overflow: "hidden" }}> {children[index]}</div>}
         </List>
       );
     }
   }
-
   return (
-    <div>
-      <ReactSelect
-        placeholder="출발 대여소 검색하기"
-        options={bikeStation}
-        styles={style}
-        components={{ MenuList, DropdownIndicator: () => null, IndicatorSeparator: () => null, ValueContainer }}
-        onChange={(e) => setStationInfo(e)}
-      />
+    <div
+      className="d-flex mx-auto"
+      style={{
+        flexBasis: "30%",
+        border: "0.9px dashed black",
+        width: "80%",
+        cursor: "text",
+        borderRadius: "5px",
+      }}>
+      <div className="m-auto" style={{ flexBasis: "100%" }}>
+        <div>
+          <ReactSelect
+            placeholder="출발 대여소 검색하기"
+            options={bikeStation}
+            styles={style}
+            components={{ MenuList, DropdownIndicator: () => null, IndicatorSeparator: () => null, ValueContainer }}
+            onChange={(e) => setStationInfo(e)}
+            ref={reference}
+          />
+        </div>
+      </div>
     </div>
   );
 };
