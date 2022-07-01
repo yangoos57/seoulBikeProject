@@ -1,6 +1,5 @@
 :root{
     --background-ml-color : #252525;
-    /* --title-ml-color : #DFDFDD; */
     --search-ml-color : #f9fdff62;
     --text-ml-color : #DFDFDD;
     --bike-ml-color : #F3DB03;
@@ -164,8 +163,8 @@ box-shadow: 0 3px 14px rgba(0,0,0,0.4);
 
 @media (min-width : 600px){
     .main-ml{
-        width: 60vw;
-        height: 80vh;
+        width: 80vw;
+        height: 95vh;
     }
     .mlcard{
         font-size: 16px;
@@ -179,7 +178,7 @@ box-shadow: 0 3px 14px rgba(0,0,0,0.4);
 @media (min-width : 1000px) {
     .main-ml{
         width: 45vw;
-        height: 100vh;
+        height: 95vh;
     }
     .ReactModal__Content--after-open{
         width: 25vw
@@ -188,9 +187,16 @@ box-shadow: 0 3px 14px rgba(0,0,0,0.4);
     
 @media (min-width: 1440px) {
     .main-ml{
-        width: 27vw;
+        max-width: 27vw;
         height: 95vh;
     }
-    
 }
+
+@media (min-width: 2160px) {
+    .main-ml{
+        width: 20vw;
+        height: 90vh;
+    }
+}
+
 }

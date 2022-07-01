@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 const BkFiltering = ({ setClickedName, clickedName }) => {
   const boxStyle = {
     flexBasis: "30%",
@@ -22,11 +22,22 @@ const BkFiltering = ({ setClickedName, clickedName }) => {
   }
   return (
     <div className="flex-container flex-column w-100">
-      <div style={{ color: "var(--black-color)", fontSize: "20px", fontFamily: "NEXON", flexBasis: "50%" }}>
+      <div
+        style={{
+          color: "var(--black-color)", //
+          fontSize: "20px",
+          fontFamily: "NEXON",
+          flexBasis: "50%",
+        }}>
         도착대여소 선택하기
       </div>
       <div className="d-flex justify-content-between" style={{ flexBasis: "50%" }}>
-        <div className="d-flex px-2" style={boxStyle} onMouseOver={MouseOn} onMouseOut={mouseOut} onClick={mouseClick}>
+        <div
+          className="d-flex px-2"
+          style={boxStyle} //
+          onMouseOver={MouseOn}
+          onMouseOut={mouseOut}
+          onClick={mouseClick}>
           <div className="m-auto">이동시간</div>
         </div>
         <div

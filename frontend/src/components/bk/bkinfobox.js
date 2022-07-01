@@ -43,7 +43,12 @@ const BkInfoBox = ({
           </div>
         </div>
       </div>
-      <div className="d-flex flex-column" style={{ flexBasis: "40%", color: "var(--silver-color)" }}>
+      <div
+        className="d-flex flex-column"
+        style={{
+          flexBasis: "40%",
+          color: "var(--silver-color)",
+        }}>
         {estOn && <div className="m-auto py-1">예상시간 : {estTime} 분</div>}
         <div className="m-auto py-1">
           {recordName} : {numOfRecord.toLocaleString("en-US")} 건

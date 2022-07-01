@@ -79,7 +79,7 @@ const BkSelect = ({ setStationInfo, reference }) => {
     placeholder: (styles) => ({
       ...styles,
       color: "var(--black-color)",
-      fontSize: "20px",
+      fontSize: "1.2rem",
       textAlign: "center",
       fontFamily: "NEXON Lighter",
     }),

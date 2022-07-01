@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import MlSearchButton from "./mlsearchbutton";
 import MlSlider from "./mlslider";
 import MlMapData from "./mlmapdata";

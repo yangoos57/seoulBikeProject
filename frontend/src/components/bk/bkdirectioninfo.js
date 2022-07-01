@@ -16,7 +16,12 @@ const BkDirctionInfo = ({ dep, arr }) => {
       }}>
       <div
         className="d-flex flex-column p-2 justify-content-start ms-3" //
-        style={{ color: "var(--silver-color)", paddingLeft: "20px", width: "90%", fontSize: "15px" }}>
+        style={{
+          color: "var(--silver-color)", //
+          paddingLeft: "20px",
+          width: "90%",
+          fontSize: "15px",
+        }}>
         {/* 1 */}
         <div style={{ flexBasis: "5%" }}> </div>
         {/* 2 */}

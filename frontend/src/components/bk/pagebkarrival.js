@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./assets/bkstyle.css";
-import { Marker, Popup, Tooltip, useMap } from "react-leaflet";
+import { Marker, Tooltip, useMap } from "react-leaflet";
 import L from "leaflet";
 import BkMapData from "./bkmapdata";
 import BkTitleName from "./bktitlename";
