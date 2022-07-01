@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Marker, useMap } from "react-leaflet";
+import { Marker, Tooltip, useMap } from "react-leaflet";
 import BkTitleName from "./bktitlename";
 import L from "leaflet";
 import BkMapData from "./bkmapdata";
@@ -9,6 +9,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import BkInfoBox from "./bkinfobox";
 import bikegreen from "./assets/icons/bikegreen.svg";
 import bikewhite from "./assets/icons/bikewhite.svg";
+import axios from "axios";
+import MarkerClusterGroup from "react-leaflet-cluster";
+import arrmarker from "./assets/icons/arrMarker.svg";
+import arrmarkerclick from "./assets/icons/arrmarkerclick.svg";
 
 function ChangeView({ center, zoom }) {
   const map = useMap();
@@ -23,9 +27,36 @@ function current_icon() {
     iconAnchor: [10, 35],
   });
 }
+function arrMarker() {
+  return L.icon({
+    iconUrl: arrmarker,
+    iconSize: [15, 15],
+    className: "svgTest",
+  });
+}
+
+function clickMarker() {
+  return L.icon({
+    iconUrl: arrmarkerclick,
+    iconSize: [15, 15],
+  });
+}
+const initialMarker = [
+  {
+    label: "여의도역 ", //
+    index: "0",
+    coor: "[0, 0]",
+    record: 100,
+    time: 20,
+    dist: 16,
+  },
+];
 
 // main function
 function BkDeparture() {
+  const [clickedItem, setClickedItem] = useState(undefined); // marker info
+  const [markerClicked, setMarkerClicked] = useState(undefined); // marker index for clicked
+  const [markerHoveredIndex, setMarkerHoveredIndex] = useState(undefined); // marker index for hover
   // 현재좌표 불러오기
   const [curLoca, setCurLoca] = useState([37.534863, 126.90241]);
   const options = {
@@ -47,6 +78,14 @@ function BkDeparture() {
     navigator.geolocation.getCurrentPosition(success, error, options);
   }, []);
   // 현재좌표 불러오기 여기까지
+
+  // 현재 위치 500m 반경 내 대여소 표시
+  const [near500m, setNear500m] = useState(initialMarker);
+  console.log(near500m);
+  useEffect(() => {
+    if (curLoca !== [37.534863, 126.90241])
+      axios.post("api/near500m", { value1: curLoca }).then((res) => setNear500m(res.data));
+  }, [curLoca]);
 
   //stationInfo = bksearch 값 저장=> 선택되면 여러 값들이 변함..
   const [stationInfo, setStationInfo] = useState(undefined);
@@ -147,19 +186,44 @@ function BkDeparture() {
                 {stationInfo === undefined ? (
                   <Marker position={curLoca} icon={current_icon()} />
                 ) : (
-                  <Marker position={JSON.parse(stationInfo["coor"])} icon={bikeIcon()} />
+                  <Marker position={JSON.parse(stationInfo["coor"])} icon={bikeIcon()} zIndexOffset={2000} />
                 )}
                 {stationInfo === undefined ? (
                   <ChangeView
                     center={curLoca} //
-                    zoom={14}
+                    zoom={15}
                   />
                 ) : (
                   <ChangeView
                     center={JSON.parse(stationInfo["coor"])} //
-                    zoom={14}
+                    zoom={15}
                   />
                 )}
+                <MarkerClusterGroup showCoverageOnHover={false} zoomToBoundsOnClick={false} maxClusterRadius={50}>
+                  {near500m.map((val) => {
+                    return (
+                      <Marker
+                        data={val} // options.data에서 나오는 값
+                        key={val["value"]}
+                        position={JSON.parse(val["coor"])}
+                        // icon={arrMarker() }
+                        icon={arrMarker()}
+                        eventHandlers={{
+                          click: (e) => {
+                            setStationInfo(e.target.options.data);
+                            setMarkerClicked(e.target.options.data.value);
+                          },
+                        }}>
+                        <Tooltip direction="right" offset={[5, 40]}>
+                          <div className="m-1">
+                            <div className="my-auto"> 대여소명 : {val["label"]}</div>
+                            <div className="my-auto"> 대여기록 : {val["num"]} 건 </div>
+                          </div>
+                        </Tooltip>
+                      </Marker>
+                    );
+                  })}
+                </MarkerClusterGroup>
               </BkMapData>
             </div>
           </div>

@@ -37,8 +37,8 @@ function MlSearch2({
 
   return (
     <div className="flex-container flex-column">
-      <div className="d-flex" style={{ height: "10%" }}></div>
-      <div className="d-flex flex-column" style={{ minHeight: "22%" }}>
+      <div className="d-flex" style={{ flexBasis: "5%" }}></div>
+      <div className="d-flex flex-column" style={{ flexBasis: "20%" }}>
         <SearchBoxMl
           icon={false} //
           placeholder={ClickedItemName}
@@ -61,7 +61,7 @@ function MlSearch2({
         }}>
         도착장소는 따릉이 대여소만 검색 가능합니다.
       </div>
-      <div className="d-flex flex-column " style={{ height: "65%" }}>
+      <div className="flex-item flex-column " style={{ flexBasis: "65%" }}>
         <SearchItem
           searchterm={searchTermEnd}
           options={onlyBike}

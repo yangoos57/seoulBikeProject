@@ -1,18 +1,64 @@
 import json
-import urllib
 import requests
-from urllib.request import Request, urlopen
 import pandas as pd
 import numpy as np
 import ast
 import time
 from typing import Dict, List
 
-from typing import Dict
+
+def bkhaversine_np(coor1: List[int], coor2: List[int]) -> np.array:
+
+    lon1 = coor1[0]
+    lat1 = coor1[1]
+    lon2 = coor2[0]
+    lat2 = coor2[1]
+
+    """
+        Calculate the great circle distance between two points
+        on the earth (specified in decimal degrees)
+
+        All args must be of equal length.
+
+        """
+
+    lon1, lat1, lon2, lat2 = map(np.radians, [lon1, lat1, lon2, lat2])
+
+    dlon = lon2 - lon1
+    dlat = lat2 - lat1
+
+    a = np.sin(dlat / 2.0) ** 2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon / 2.0) ** 2
+
+    c = 2 * np.arcsin(np.sqrt(a))
+    m = 6367 * c * 1000
+    return m
+
+
+def near_500m(coor: List) -> pd.DataFrame:
+    station = pd.read_csv(
+        "bike_moon_light/assets/seoul_bike_station_01_12.csv",
+        encoding="CP949",
+        index_col=0,
+    )
+    bkstation_info = pd.read_csv(
+        "bike_moon_light/assets/bkstation_info.csv", encoding="CP949", index_col=0
+    )
+
+    station[["latitude", "longtitude"]].T.values
+
+    dist = bkhaversine_np(coor, station[["latitude", "longtitude"]].T.values)
+
+    station["dist"] = dist
+
+    st_id = station[station["dist"] <= 500].reset_index(drop=False)["st_id"]
+
+    result = bkstation_info[bkstation_info.value.isin(st_id.tolist())]
+
+    return result
 
 
 class bike_recommendation:
-    def __init__(self, bkstation, seoul_bike):
+    def __init__(self, bkstation: pd.DataFrame, seoul_bike: pd.DataFrame):
         self.bkstation = bkstation
         self.seoul_bike = seoul_bike
 
@@ -26,11 +72,6 @@ class bike_recommendation:
         bm = (filtered_data["st_id1"] == val) & (filtered_data["st_id2"] == val)
         filtered_data = filtered_data[~bm]
 
-        # # 반납
-        # filtered_data_end = filtered_data[
-        #     (filtered_data["st_id2"] == val) & (filtered_data["st_id1"] != val)
-        # ]
-
         return filtered_data
 
     def arrStation(self, st_id: int) -> Dict:
@@ -41,7 +82,7 @@ class bike_recommendation:
 
         all_record = st_id1_record.add(st_id2_record, fill_value=0)
 
-        # 대여기록 100건 이상 총 200개 대여소만 추출하기
+        # 대여기록 50건 이상 총 200개 대여소만 추출하기
         sort_info = all_record[all_record > 50].sort_values(ascending=False)[1:201]
         station_id = sort_info.index.to_list()
 
@@ -135,15 +176,6 @@ class bike_recommendation:
         arrival_station: list,
     ) -> List:
 
-        """departure_station과 arrival_station은 모두 dataframe으로!"""
-        # if isinstance(departure_station, pd.Series):
-        #     raise TypeError(f"DataFrame만 가능 현재 : {type(departure_station)}")
-
-        # if isinstance(arrival_station, pd.Series):
-        #     raise TypeError(f"DataFrame만 가능 현재 : {type(arrival_station)}")
-
-        # if departure_station.empty or arrival_station.empty:
-        #     raise ValueError("Value is Empty!")
         if type(departure_station) == str:
             departure_station = ast.literal_eval(departure_station)
         if type(arrival_station) == str:
@@ -193,4 +225,5 @@ class bike_recommendation:
                     finish_data.append(i)
             else:
                 pass
+        # 끝
         return pd.DataFrame(finish_data)[[1, 0]].values  ## 위도 경도 위치 바꾸기

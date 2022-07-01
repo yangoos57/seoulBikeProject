@@ -93,8 +93,8 @@ const MlMapData = ({ mapdata, change, children }) => {
     { bike2: bike2ArrStation }, //
     { bike2: bike2DepStation },
   ];
-  var result = change ? filteredmarkers : bike2markers; // 이건 뭐지.. 암튼..
-
+  var result = change ? filteredmarkers : bike2markers; // 마커 선택하기
+  console.log("모지", result);
   if (mapdata["walk"] !== undefined) {
     var asd = Math.round(mapdata["walk"].length / 2);
     var walkMan = mapdata["walk"][asd];
@@ -138,15 +138,20 @@ const MlMapData = ({ mapdata, change, children }) => {
             }
             return (
               <div key={index}>
-                <Marker position={marker[type]} icon={icon()} zIndexOffset={2000}></Marker>
+                {marker[type] !== [0, 0] ? (
+                  <Marker position={marker[type]} icon={icon()} zIndexOffset={2000}></Marker>
+                ) : (
+                  ""
+                )}
               </div>
             );
           })}
-          {mapdata["walk"] !== undefined || mapdata["Sub"] !== undefined ? (
+          {console.log(mapdata["walk"])}
+          {/* {(mapdata["walk"] !== [[0, 0]]) | (mapdata["walk"] !== undefined) || mapdata["Sub"] !== undefined ? (
             <Marker position={walkMan} icon={walk_icon()} zIndexOffset={2000}></Marker>
           ) : (
             ""
-          )}
+          )} */}
 
           {/* 
           경로 
@@ -167,9 +172,10 @@ const MlMapData = ({ mapdata, change, children }) => {
           )}
           {change && mapdata["walk"] !== undefined && (
             <Polyline
-              pathOptions={{ color: "var(--walk-ml-color)", opacity: 0.6 }} //
+              pathOptions={{ color: "var(--walk-ml-color)", opacity: 1 }} //
               positions={mapdata["walk"]}
               dashArray={[5, 10]}
+              zIndexOffset={1500}
             />
           )}
           {change && mapdata["bike"] !== undefined && (

@@ -214,7 +214,7 @@ function BkArrival() {
                   title={clickedItem["label"]}
                   estTime={clickedItem["time"]}
                   estOn={true}
-                  ButtonTitle={"도착 대여소 지정"}
+                  ButtonTitle={"도착 대여소 선택"}
                 />
               )}
 

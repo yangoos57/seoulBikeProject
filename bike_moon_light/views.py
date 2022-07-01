@@ -1,5 +1,5 @@
 from cProfile import label
-from bike_moon_light.bkutils import bike_recommendation
+from bike_moon_light.bkutils import bike_recommendation, near_500m
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import viewsets, views
@@ -49,6 +49,15 @@ def BkdepartureInfo(request) -> Dict:
 
 
 @api_view(["Post"])
+def Bknear_500(request) -> Dict:
+    # print(request)
+    departure_coor = request.data.get("value1")
+    result = near_500m(departure_coor)
+
+    return Response(result.to_dict("records"))
+
+
+@api_view(["Post"])
 def Bkdirection(request) -> Dict:
     dep = request.data.get("dep")
     print(dep["coor"])
@@ -78,6 +87,8 @@ class bk_leaflet_map(views.APIView):
         return Response({"data": data.to_dict("records"), "minmax": minmax})
 
 
+###
+####
 ###### Moon Light
 @api_view(["Get"])
 def departureInfo(request) -> Dict[int, str]:

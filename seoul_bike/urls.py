@@ -27,6 +27,7 @@ urlpatterns = [
     # path("bk/api/departureInfo", ml_views.BkdepartureInfo),
     path("bk/api/info", ml_views.bk_leaflet_map.as_view()),
     path("bk/api/direction", ml_views.Bkdirection),
+    path("bk/api/near500m", ml_views.Bknear_500),
 ]
 # path('stationinfo/', views.stationToDB)  # bike_station 정보
 

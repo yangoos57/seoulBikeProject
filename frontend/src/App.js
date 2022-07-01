@@ -21,14 +21,14 @@ function App() {
       <Routes>
         <Route path="/test" element={<Test />}></Route>
         <Route path="/dash" element={<Main />}></Route>
-        <Route path="/" element={<BkTitle />}></Route>
+        {/* <Route path="/" element={<BkTitle />}></Route>
         <Route path="/bk/departure" element={<BkTemplate />}></Route>
         <Route path="/bk/arrival" element={<BkArrival />}></Route>
-        <Route path="/bk/direction" element={<BkDirection />}></Route>
-        {/* <Route path="/" element={<MlTitle />}></Route>
+        <Route path="/bk/direction" element={<BkDirection />}></Route> */}
+        <Route path="/" element={<MlTitle />}></Route>
         <Route path="/ml" element={<MlMain />}></Route>
         <Route path="/ml/search" element={<MlSearchPage />}></Route>
-        <Route path="/ml/direction" element={<MlDirection />}></Route> */}
+        <Route path="/ml/direction" element={<MlDirection />}></Route>
       </Routes>
     </BrowserRouter>
   );

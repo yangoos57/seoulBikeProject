@@ -25,8 +25,8 @@ function MlSearch({
 
   return (
     <div className="flex-container flex-column">
-      <div className="d-flex" style={{ height: "10%" }}></div>
-      <div className="d-flex flex-column" style={{ minHeight: "22%" }}>
+      <div className="d-flex" style={{ flexBasis: "5%" }}></div>
+      <div className="d-flex flex-column" style={{ flexBasis: "20%" }}>
         <SearchBoxMl
           placeholder={"출발장소 검색"}
           onChange={setSearchTermStart} //
@@ -40,7 +40,7 @@ function MlSearch({
         />
       </div>
 
-      <div className="d-flex flex-column " style={{ height: "80%" }}>
+      <div className="flex-item flex-column " style={{ flexBasis: "75%" }}>
         <SearchItem
           searchterm={searchTermStart}
           options={options}

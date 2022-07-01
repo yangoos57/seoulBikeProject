@@ -122,11 +122,30 @@ class moon_light:
 
             #
             else:
-                bus = [""]
-                walk = [""]
-                bike = [""]
-                center = [""]
-                route_info = [""]
+                print("버스 경로에서 자전거 경로로 변경")
+                arr_trans = bus_start_end.iloc[[0]]
+                arr_bike_info = self.near_bus_bike_info(arr_trans, arr_info)
+                arr_bike_info = arr_bike_info.sort_values(by="num", ascending=False)
+                dep_bike_info = self.near_bus_bike_info(
+                    bus_start_end.iloc[[0]], arr_info
+                )
+                bike2 = self.route_coor(dep_bike_info, arr_info)
+                center2 = self.center_data(bike2)
+                record_info2 = self.record_info(
+                    dep_bike_info["st_id"].iloc[0], arr_info.index[0], 50
+                )
+                bike2_info = (
+                    {
+                        "bike2": [
+                            dep_bike_info["st_name"].iloc[0],
+                            arr_info["st_name"].iloc[0],
+                            record_info2[0],
+                            record_info2[1],
+                        ]
+                    },
+                )
+
+                return dict(bike=bike2, center=center2, route_info=bike2_info)
 
             #
 
@@ -285,7 +304,6 @@ class moon_light:
         if bus_route_inter == []:
             print("목적지와 연결된 검색노선 없음.")
 
-            # 정류장,지하철역, 대여소 등 관련 내용이 없으면 station => station 검색 함수로 옮김
             return pd.DataFrame([])
 
         # 겹치는 노선에 대한 정보만 불러온더
@@ -307,7 +325,7 @@ class moon_light:
             starting_order = starting_bus.query("bus==@num")
             ending_order = ending_bus.sort_values(by=["dist", "order"]).query(
                 "bus==@num"
-            )[:2]
+            )
             # ending_order = ending_bus.sort_values(by=["dist", "order"]).query(
             #     "bus==@num"
             # )[:2]
@@ -359,16 +377,16 @@ class moon_light:
             )  ## 세번째에 bus_route를 넣은 이유는 bike2를 이용하기 위함임.
         else:
             # 범위선택
-            route1 = bus_route["order"].iloc[0]
-            route2 = bus_route["order"].iloc[-1]
+            bus_order_start = bus_route["order"].iloc[0]
+            bus_order_end = bus_route["order"].iloc[-1]
             bus_name = bus_route["bus"].iloc[0]
 
-            if route1 < route2:
-                bus_order_start = route1
-                bus_order_end = route2
-            else:
-                bus_order_start = route2
-                bus_order_end = route1
+            # if route1 < route2:
+            #     bus_order_start = route1
+            #     bus_order_end = route2
+            # else:
+            #     bus_order_start = route2
+            #     bus_order_end = route1
             # 자료 sorting
             route_whole = self.near_bus.query(
                 "@bus_order_start <= order <= @bus_order_end & bus == @bus_name"

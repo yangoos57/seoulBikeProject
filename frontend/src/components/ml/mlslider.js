@@ -53,7 +53,7 @@ const MlSlider = ({ mapdata, changeFunc, change }) => {
           record: Object.values(val)[0][3],
         };
         item = [a, b];
-      } else {
+      } else if (Object.keys(val)[0] === "Sub") {
         let a = { label: Object.values(val)[0], icon: subIcon };
         let b = { label: Object.values(val)[1][0], icon: bikeIcon };
         let c = {
@@ -135,7 +135,7 @@ const MlSlider = ({ mapdata, changeFunc, change }) => {
                   })}
                 </div>
                 <div className="my-auto" style={{ flexBasis: "5%" }}>
-                  {mapdata["bus"] !== undefined && <i class="fa-solid fa-angle-right fa-lg"></i>}
+                  {mapdata["bus"] !== undefined && <i className="fa-solid fa-angle-right fa-lg"></i>}
                 </div>
               </div>
               {/* mlcard /div */}
