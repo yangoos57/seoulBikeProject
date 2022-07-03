@@ -94,7 +94,6 @@ const MlMapData = ({ mapdata, change, children }) => {
     { bike2: bike2DepStation },
   ];
   var result = change ? filteredmarkers : bike2markers; // 마커 선택하기
-  console.log("모지", result);
   if (mapdata["walk"] !== undefined) {
     var asd = Math.round(mapdata["walk"].length / 2);
     var walkMan = mapdata["walk"][asd];
@@ -102,8 +101,6 @@ const MlMapData = ({ mapdata, change, children }) => {
     var asd = Math.round(mapdata["Sub"].length / 2);
     var walkMan = mapdata["Sub"][asd];
   }
-  console.log(mapdata["Sub"]);
-  console.log("? : ", mapdata["Sub"]);
   // console.log(asd);
   return (
     <div className="flex-container m-auto">
@@ -146,17 +143,11 @@ const MlMapData = ({ mapdata, change, children }) => {
               </div>
             );
           })}
-          {console.log(mapdata["walk"])}
-          {/* {(mapdata["walk"] !== [[0, 0]]) | (mapdata["walk"] !== undefined) || mapdata["Sub"] !== undefined ? (
+          {change & (mapdata["walk"] !== undefined || mapdata["Sub"] !== undefined) ? (
             <Marker position={walkMan} icon={walk_icon()} zIndexOffset={2000}></Marker>
           ) : (
             ""
-          )} */}
-
-          {/* 
-          경로 
-          change = bike2 선택
-           */}
+          )}
           {mapdata["Sub"] !== undefined && (
             <Polyline
               pathOptions={{ color: "var(--walk-ml-color)", opacity: 0.6 }} //
