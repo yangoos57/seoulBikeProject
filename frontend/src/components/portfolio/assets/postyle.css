@@ -1,0 +1,171 @@
+:root{
+    --black-color : #252525;
+    /* --black-color-80 : #232329c4; */
+    --silver-color : #F4F4F4;
+    --green-color : #4FC276;
+    --green-color-70 : #4FC276B3;
+    --green-color-30 : #4fc2753e;
+    --beige-color : #D8CCAD;
+}
+ul {
+    list-style-type: "‣ ";
+}
+
+#root{
+    height: 100%;
+    overflow: hidden;
+}
+.poWhole{
+    background-color: var(--black-color);
+    line-height: 180%;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    font-family: "NEXON Lighter";
+}
+.poViewPort{
+    display: flex;
+    margin : auto;
+    max-width: 768px;
+    height: 100%;
+}
+.poMainFrame{
+    margin: auto;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    background-color: var(--black-color);
+    color: var(--silver-color);
+
+}
+.poNavBar{
+    display: flex;
+    width: 100%;
+    height: 10%;
+    justify-content: space-between;
+    font-family: "NEXON";
+    position: fixed;
+    max-width: 768px;
+    background-color: var(--black-color);
+    backdrop-filter: blur(5px);
+    z-index: 20000;
+}
+.poButton{
+    color: var(--silver-color);
+    text-decoration: none;
+    font-family: "NEXON";
+}
+.poButton:hover{
+    color:var(--black-color);
+
+}
+.poLink{
+    display: flex;
+    text-decoration: none;
+    margin: auto;
+    color: var(--silver-color);
+    width:100%;
+    height:100%;
+}
+.poNavBar .poLink:hover{
+    color: var(--silver-color);
+    text-decoration: underline;
+}
+.poNavBar .poLink:active{
+    /* background-color: var(--silver-color); */
+    background-color: transparent;
+    /* color: var(--black-color); */
+    color: var(--silver-color);
+    border: 5px solid var(--green-color);
+}
+.poBody{
+    padding-top: 150px;
+}
+.mobile{
+    display: none;
+}
+.poTitleBox{
+    display: flex;
+}
+
+.poSubTitle{
+    text-decoration:  underline 3px var(--green-color);
+    text-underline-offset: 6px;
+    margin : 10px 0;
+    font-size: 1.2em;
+    font-family: "NEXON"
+}
+.poTitle{
+    /* text-decoration:  underline 3px var(--green-color);
+    text-underline-offset: 6px; */
+    margin : 1px 0;
+    font-size: 1.2em;
+    font-family: "NEXON";
+    /* background: linear-gradient(360deg, #252525 50%, var(--silver-color) 50%); */
+    /* -webkit-background-clip: text; */
+    /* -webkit-text-fill-color: transparent; */
+
+}
+.leewayLink{
+    display: flex;
+    text-decoration: none;
+    margin: auto;
+    color: var(--silver-color);
+    width:100%;
+    height:100%;
+}
+.leewayLink:hover{
+    color: var(--green-color);
+}
+
+
+/* About Page */
+.poabout{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+}
+.photoIntro{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+@media (max-width: 784px) {
+    .poViewPort, .poNavBar{
+        width: 100vw;
+        padding-left: 3%;
+        padding-right: 3%;
+    }
+    .mobile{
+        display: block;
+    }
+    .mobile .menu:hover{
+        color: var(--silver-color);
+    }
+    .poLink{
+        color: var(--black-color);
+    }
+    .pc{
+        display: none;
+    }
+    .photoIntro{
+        flex-direction: column-reverse;
+        justify-content: center;
+        display: flex;
+    }
+    .photoIntro .map-ml{
+        width: 80%;
+        height: 70%;
+        margin: auto !important;
+    }
+    .poTitleBox{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+}
+

@@ -7,12 +7,7 @@
     --beige-color : #D8CCAD;
 }
 
-@font-face {
-    font-family: 'NEXON Lighter';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
+
 
 .whole-bk{
     background-color: rgb(249, 243, 233);

@@ -12,6 +12,9 @@ import BkArrival from "./components/bk/pagebkarrival";
 import BkDirection from "./components/bk/pagebkdirection";
 import Test from "./components/test";
 import BkTitle from "./components/bk/bktitle";
+import PoMainFrame from "./components/portfolio/pomainframe";
+import PoAbout from "./components/portfolio/poabout";
+import PoProject from "./components/portfolio/poproject";
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -20,6 +23,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/test" element={<Test />}></Route>
+        <Route path="/About" element={<PoAbout />}></Route>
+        <Route path="/Project" element={<PoProject />}></Route>
         <Route path="/dash" element={<Main />}></Route>
         {/* <Route path="/" element={<BkTitle />}></Route>
         <Route path="/bk/departure" element={<BkTemplate />}></Route>
