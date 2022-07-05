@@ -68,7 +68,7 @@ const BkDirection = () => {
         <BkMapData>
           <ChangeView
             center={direction !== undefined ? direction[Math.round(direction.length / 3)] : ""} //
-            zoom={arr["dist"] > 5 ? 11 : arr["dist"] > 3 ? 12 : arr["dist"] > 1 ? 13 : 14}
+            zoom={arr["dist"] > 5 ? 12 : arr["dist"] > 3 ? 13 : arr["dist"] > 1 ? 14 : 15}
           />
           <Marker position={JSON.parse(dep["coor"])} icon={bikeIcon()} />
           <Polyline

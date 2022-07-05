@@ -72,6 +72,14 @@ function BkArrival() {
   const [onTime, setOnTime] = useState([undefined, undefined]); // rangeslider value
   const [onDistance, setOnDistance] = useState([undefined, undefined]); // rangeslider value
 
+  useEffect(() => {
+    axios.post("api/info", { value: depParams["value"] }).then((res) => {
+      setArrMarkers(res.data.data);
+      setFilterItem(res.data.minmax);
+      setClickedName("여행시간");
+    });
+  }, []);
+
   //filter default value
   useEffect(() => {
     setOnRecord([filterItem["minrecord"], filterItem["maxrecord"]]);
@@ -84,25 +92,18 @@ function BkArrival() {
 
   function arrMarker() {
     return L.icon({
-      iconUrl: arrmarker,
-      iconSize: [15, 15],
+      iconUrl: arrmarkerclick,
+      iconSize: [18, 18],
       className: "svgTest",
     });
   }
 
   function clickMarker() {
     return L.icon({
-      iconUrl: arrmarkerclick,
-      iconSize: [15, 15],
+      iconUrl: arrmarker,
+      iconSize: [18, 18],
     });
   }
-
-  useEffect(() => {
-    axios.post("api/info", { value: depParams["value"] }).then((res) => {
-      setArrMarkers(res.data.data);
-      setFilterItem(res.data.minmax);
-    });
-  }, []);
 
   const navigate = useNavigate();
 
@@ -150,7 +151,6 @@ function BkArrival() {
 
             {/* 지도부분 */}
             <div className="flex-container" style={{ flexBasis: "70%", position: "relative" }}>
-              {/* filtering 내려오는 부분 */}
               <div
                 className="filterBox"
                 style={{
@@ -160,7 +160,7 @@ function BkArrival() {
                   className="slider"
                   style={{
                     visibility:
-                      clickedName === "이동시간" //
+                      clickedName === "여행시간" //
                         ? "visible"
                         : "hidden",
                   }}>
@@ -190,7 +190,7 @@ function BkArrival() {
                   className="slider"
                   style={{
                     visibility:
-                      clickedName === "이동거리" //
+                      clickedName === "여행거리" //
                         ? "visible"
                         : "hidden",
                   }}>
@@ -232,7 +232,7 @@ function BkArrival() {
                     </div>
                   </Tooltip>
                 </Marker>
-                <MarkerClusterGroup showCoverageOnHover={false} zoomToBoundsOnClick={false} maxClusterRadius={50}>
+                <MarkerClusterGroup showCoverageOnHover={false} maxClusterRadius={50}>
                   {arrMarkers
                     .filter((val) => {
                       if (

@@ -20,7 +20,7 @@ export default function PositionedMenu() {
         <i className="fa-solid fa-bars fa-lg"></i>
       </Button>
       <Menu
-        sx={{ marginTop: "5px" }}
+        sx={{ marginTop: "5px", zIndex: 20000 }}
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
@@ -34,7 +34,7 @@ export default function PositionedMenu() {
         }}>
         <MenuItem onClick={handleClose}>
           {" "}
-          <Link className="poLink" to="/about">
+          <Link className="poLink" to="/">
             <div className="m-auto">Home</div>
           </Link>
         </MenuItem>

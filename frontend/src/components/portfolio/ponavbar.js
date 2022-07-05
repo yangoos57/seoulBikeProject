@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const poNavBar = () => {
   return (
     <div className="d-flex justify-content-evenly">
-      <Link className="poLink" to="/about">
+      <Link className="poLink" to="/">
         <div className="m-auto">Home</div>
       </Link>
       <Link className="poLink" to="/project">

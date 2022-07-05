@@ -1,28 +1,39 @@
 :root{
-    --black-color : #252525;
-    /* --black-color-80 : #232329c4; */
+    --poblack-color : #252525;
     --silver-color : #F4F4F4;
     --green-color : #4FC276;
     --green-color-70 : #4FC276B3;
     --green-color-30 : #4fc2753e;
     --beige-color : #D8CCAD;
-    --light-green-color : #bbff2c
+    --light-green-color : #bbff2c;
 }
-/* ul {
-    list-style-type: "‣ ";
-} */
+
+
 
 #root{
     height: 100%;
     overflow: hidden;
 }
 .poWhole{
-    background-color: var(--black-color);
+    background-color: var(--poblack-color);
     line-height: 180%;
     width: 100%;
     height: 100%;
     overflow: auto;
     font-family: "NEXON Lighter";
+    /* word-spacing: 1px; */
+    letter-spacing: 1px;
+}
+.poWhole  ul {
+    padding-left: 20px;
+}
+
+.poWhole ul >li >ul>li {
+    list-style-type: "- ";
+}
+.poWhole ul>li>ul {
+    padding-left: 15px;
+    margin: 10px 0 50px 0;
 }
 .poViewPort{
     display: flex;
@@ -36,7 +47,7 @@
     width: 100%;
     height: 100%;
     flex-direction: column;
-    background-color: var(--black-color);
+    background-color: var(--poblack-color);
     color: var(--silver-color);
 
 }
@@ -48,7 +59,7 @@
     font-family: "NEXON";
     position: fixed;
     max-width: 768px;
-    background-color: var(--black-color);
+    background-color: var(--poblack-color);
     backdrop-filter: blur(5px);
     z-index: 20000;
 }
@@ -58,7 +69,7 @@
     font-family: "NEXON";
 }
 .poButton:hover{
-    color:var(--black-color);
+    color:var(--poblack-color);
 
 }
 .poLink{
@@ -80,7 +91,7 @@
 .poNavBar .poLink:active{
     /* background-color: var(--silver-color); */
     background-color: transparent;
-    /* color: var(--black-color); */
+    /* color: var(--poblack-color); */
     color: var(--silver-color);
     border: 5px solid var(--green-color);
 }
@@ -92,6 +103,7 @@
 }
 .poTitleBox{
     display: flex;
+    align-items: end;
 }
 
 .poSubTitle{
@@ -104,6 +116,7 @@
 .poTitle{
     font-size: 1.4em;
     font-family: "NEXON";
+    padding-bottom: 5px;
 }
 .photoIntro{
     display: flex;
@@ -122,7 +135,7 @@
     margin: auto;
     /* color: var(--silver-color); */
     color: var(--light-green-color);
-    /* color : #bbff2c; */
+    /* color : #ff9432; */
     width:100%;
     height:100%;
     font-family: 'Carter One';
@@ -147,7 +160,13 @@
     /* justify-content: space-evenly; */
 }
 
-@media (max-width: 784px) {
+/* Project Page */
+.poProjectImg{
+    height: 400px;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
     .poViewPort, .poNavBar{
         width: 100vw;
         padding-left: 3%;
@@ -160,7 +179,7 @@
         color: var(--silver-color);
     }
     .poLink{
-        color: var(--black-color);
+        color: var(--poblack-color);
     }
     .pc{
         display: none;
@@ -172,13 +191,12 @@
         display: flex;
     }
     .photoIntro .map-ml{
-        width: 80%;
-        height: 70%;
         margin: auto !important;
     }
     .photoIntro .poTitle{
         font-size: 1em;
         font-family: "NEXON Lighter";
+        margin-top: 50px;
     }
     .poTitleBox{
         display: flex;
@@ -186,5 +204,6 @@
         align-items: center;
         justify-content: center;
     }
+    /* Project Page */
 }
 

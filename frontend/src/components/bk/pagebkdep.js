@@ -29,16 +29,16 @@ function current_icon() {
 }
 function arrMarker() {
   return L.icon({
-    iconUrl: arrmarker,
-    iconSize: [15, 15],
+    iconUrl: arrmarkerclick,
+    iconSize: [18, 18],
     className: "svgTest",
   });
 }
 
 function clickMarker() {
   return L.icon({
-    iconUrl: arrmarkerclick,
-    iconSize: [15, 15],
+    iconUrl: arrmarker,
+    iconSize: [18, 18],
   });
 }
 const initialMarker = [
@@ -184,7 +184,7 @@ function BkDeparture() {
 
               <BkMapData>
                 {stationInfo === undefined ? (
-                  <Marker position={curLoca} icon={current_icon()} />
+                  <Marker position={curLoca} icon={current_icon()} zIndexOffset={10} />
                 ) : (
                   <Marker position={JSON.parse(stationInfo["coor"])} icon={bikeIcon()} zIndexOffset={2000} />
                 )}
@@ -199,12 +199,13 @@ function BkDeparture() {
                     zoom={15}
                   />
                 )}
-                <MarkerClusterGroup showCoverageOnHover={false} zoomToBoundsOnClick={false} maxClusterRadius={50}>
+                <MarkerClusterGroup showCoverageOnHover={false} maxClusterRadius={50}>
                   {near500m.map((val) => {
                     return (
                       <Marker
                         data={val} // options.data에서 나오는 값
                         key={val["value"]}
+                        zIndexOffset={1000}
                         position={JSON.parse(val["coor"])}
                         // icon={arrMarker() }
                         icon={arrMarker()}

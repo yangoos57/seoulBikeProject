@@ -38,7 +38,7 @@ const BkFiltering = ({ setClickedName, clickedName }) => {
           onMouseOver={MouseOn}
           onMouseOut={mouseOut}
           onClick={mouseClick}>
-          <div className="m-auto">이동시간</div>
+          <div className="m-auto">여행시간</div>
         </div>
         <div
           className="d-flex px-2 py-1 "
@@ -54,7 +54,7 @@ const BkFiltering = ({ setClickedName, clickedName }) => {
           onMouseOver={MouseOn}
           onMouseOut={mouseOut}
           onClick={mouseClick}>
-          <div className="m-auto">이동거리</div>
+          <div className="m-auto">여행거리</div>
         </div>
       </div>
     </div>

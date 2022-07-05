@@ -10,7 +10,7 @@ const PoMainFrame = ({ children }) => {
         <div className="poMainFrame">
           <header className="poNavBar">
             <div className="my-auto h4" style={{ flexBasis: "15%" }}>
-              <Link to="/about" className="leewayLink">
+              <Link to="/" className="leewayLink">
                 LEEWAY
               </Link>
             </div>

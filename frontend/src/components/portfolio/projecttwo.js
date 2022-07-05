@@ -1,21 +1,23 @@
 import React from "react";
-import ProjectTwoSlider from "./projecttwoslider";
-
+// import ProjectTwoSlider from "./projecttwoslider";
+import { ReactComponent as WeaponeeringOne } from "./assets/weaponeering (1).svg";
 const ProjectTwo = () => {
   return (
     <div className="d-flex flex-column">
-      <div className="poTitleBox">
+      <div className="poTitleBox mb-2">
         <div className="d-flex ">
-          <div className="m-auto poTitle fs-3">&nbsp; 전쟁데이터 기반의 항공무기추천 &nbsp;</div>
+          <div className="my-auto poTitle fs-3">전쟁데이터 기반의 항공무기추천 &nbsp;</div>
         </div>
-        <div className="ms-2 pt-3 fs-6" style={{ fontFamily: "NEXON" }}>
+        <div className="ms-1 pt-3 fs-6" style={{ fontFamily: "NEXON" }}>
           2017.08 - 2018.12
         </div>
       </div>
       <br />
       <div>
         {/* <div className="poTitle">둘러보기 </div> */}
-        <ProjectTwoSlider />
+        {/* <ProjectTwoSlider /> */}
+
+        <WeaponeeringOne height={"420px"} width={"100%"} />
       </div>
       <br />
       <br />
