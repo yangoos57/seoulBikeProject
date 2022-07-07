@@ -10,7 +10,7 @@ import axios from "axios";
 function Main() {
   const [loading, setLoading] = useState(false);
   const [Img, setImg] = useState(0);
-  const [stationInfo, setStationInfo] = useState({ label: "207: 여의나루역 1번출구 앞" });
+  const [stationInfo, setStationInfo] = useState({ label: "여의나루역 1번출구 앞" });
   const [plotly, setPlotly] = useState(0);
   const mounted = useRef(false);
   const [imgOn, setimgOn] = useState(false);
@@ -45,14 +45,14 @@ function Main() {
 
   // station 정보를 요청하는 api
   useEffect(() => {
-    axios.get("api/selector_Options/").then((res) => {
+    axios.get("ml/api/departureInfo").then((res) => {
       setStations(res.data);
     });
   }, []);
 
-  // station 정보를 불러오면 default 값으로 207 여의나루역을 불러온다.
+  // station 정보를 불러오면 default 값으로 여의나루역을 불러온다.
   useEffect(() => {
-    axios.post("api/testing/", { values: 207 }).then((res) => {
+    axios.post("api/testing/", { values: 90 }).then((res) => {
       setImg(res.data);
       setLoading(true);
     });

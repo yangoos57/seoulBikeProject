@@ -24,6 +24,7 @@ function Selector({ stationInfo, setStationInfo, setImg, stations }) {
 
   // 대여소를 선택하면 stationInfo에 저장되고 자동으로 해당 api를 실행한다.
   useEffect(() => {
+    console.log(stationInfo);
     axios.post("api/testing/", { values: stationInfo.value }).then((res) => {
       setImg(res.data);
     });
@@ -64,18 +65,17 @@ function Selector({ stationInfo, setStationInfo, setImg, stations }) {
       display: "flex",
       flex: 1,
       overflow: "auto",
-      fontSize: "16px",
-      color: "white",
-      border: 0,
+      fontSize: "20px",
+      color: "var(--black-color)",
       boxShadow: "none",
     }),
     singleValue: (provided, state) => {
       const opacity = state.isDisabled ? 0.5 : 1;
       const transition = "opacity 300ms";
-      const color = "#F5F5F5";
+      const color = "var(--black-color)";
       return { ...provided, opacity, transition, color };
     },
-    placeholder: (styles) => ({ ...styles, color: "#F5F5F5" }),
+    placeholder: (styles) => ({ ...styles, color: "var(--black-color)", fontSize: "20px" }),
   };
   const DropdownIndicator = (props) => {
     return (

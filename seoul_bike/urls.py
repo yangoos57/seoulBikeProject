@@ -20,7 +20,7 @@ urlpatterns = [
     # path("", HomeTemplateView.as_view(), name="home"),
     path("admin", admin.site.urls),
     path("api/", include(router.urls)),
-    path("api/testing/", views.plots.as_view()),
+    path("api/testing/", ml_views.plots.as_view()),
     path("ml/api/departureInfo", ml_views.departureInfo),
     path("ml/api/leafletMap", ml_views.leaflet_map.as_view()),
     # path("bk/api/departureInfo", ml_views.BkdepartureInfo),

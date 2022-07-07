@@ -13,6 +13,11 @@ import ast
 from io import BytesIO
 from matplotlib import font_manager, rc
 
+# bikeDash용도
+def value_to_bkid(station, search_id):
+    return station.iloc[[search_id]].values[0][0]
+
+
 matplotlib.use("Agg")
 rc("font", family="AppleGothic")
 plt.rcParams["axes.unicode_minus"] = False
@@ -58,7 +63,7 @@ def haversine_np(lon1, lat1, lon2, lat2):
     return m
 
 
-def raw_data(query_data, val):
+def dash_raw_data(query_data, val):
     quert_st_id1 = query_data[query_data["st_id1"] == val]
     quert_st_id2 = query_data[query_data["st_id2"] == val]
     filtered_data = pd.concat([quert_st_id1, quert_st_id2], axis=0).drop_duplicates()
@@ -89,7 +94,6 @@ def day_rent(filtered_data):
 
     # max 요일
     max_value = np.where(data_numpy == data_numpy.max())[0][0]
-    print("max_value:", max_value)
 
     # 높이 normalize 후 0.5 더함( 0.5는 막대 길이를 의미함)
     height = list(
@@ -577,7 +581,6 @@ class recommend_sub_station:
         )
         main_lat = self.station.query("st_id==@self.stat_id")["latitude"]
         main_long = self.station.query("st_id==@self.stat_id")["longtitude"]
-        print(main_long)
         # 해당 따릉이 대여소 색 표시
         fig_2 = go.Figure(
             go.Scattermapbox(

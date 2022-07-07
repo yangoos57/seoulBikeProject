@@ -9,8 +9,8 @@ import time
 from .utils import *
 
 
-seoul_bike_raw_data = pd.read_parquet("parquet/220607_bike_record.parquet.gzip")
-print("data loading complete")
+# seoul_bike_raw_data = pd.read_parquet("parquet/220607_bike_record.parquet.gzip")
+# print("data loading complete")
 
 
 class stationInformationView(viewsets.ModelViewSet):
