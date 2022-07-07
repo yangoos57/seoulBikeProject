@@ -15,6 +15,7 @@ import BkTitle from "./components/bk/bktitle";
 import PoMainFrame from "./components/portfolio/pomainframe";
 import PoAbout from "./components/portfolio/poabout";
 import PoProject from "./components/portfolio/poproject";
+import BkWeather from "./components/bk/bkweather";
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -22,7 +23,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/test" element={<Test />}></Route>
+        <Route path="/test" element={<BkWeather />}></Route>
         <Route path="/" element={<PoAbout />}></Route>
         <Route path="/Project" element={<PoProject />}></Route>
         <Route path="/dash" element={<Main />}></Route>

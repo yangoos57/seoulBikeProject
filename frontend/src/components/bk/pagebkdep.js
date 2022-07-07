@@ -13,6 +13,7 @@ import axios from "axios";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import arrmarker from "./assets/icons/arrMarker.svg";
 import arrmarkerclick from "./assets/icons/arrmarkerclick.svg";
+import BkWeather from "./bkweather";
 
 function ChangeView({ center, zoom }) {
   const map = useMap();
@@ -135,9 +136,9 @@ function BkDeparture() {
                 <div className="" style={{}}>
                   <BkTitleName fontValue="28px" />
                 </div>
-                <div className="flex-container " style={{ flexBasis: "30%" }}>
+                <div className="flex-container " style={{ flexBasis: "40%" }}>
                   {/* weather Component */}
-                  <div className="m-auto w-100 weather text-center">날씨정보 API 넣기</div>
+                  <BkWeather></BkWeather>
                 </div>
               </div>
               {stationInfo === undefined ? (

@@ -19,6 +19,7 @@
 .weather{
     border-radius: 10px;
     border: 0.5px dashed var(--black-color);
+    justify-content: space-between;
 
 }
 

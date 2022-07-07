@@ -10,33 +10,52 @@ const poHome = () => {
     <PoMainFrame>
       <div className="poabout">
         <div className="photoIntro my-5">
-          <div className="poTitle" style={{ flexBasis: "70%", lineHeight: "180%" }}>
-            " 안녕하세요! 데이터에 죽고 데이터에 사는 남자
-            <strong>이시대의 천재 데이터분석가 이양우입니다.</strong>
-            <div>제 별명은 염소새끼 입니다. 매에에에~"</div>
+          <div className="poTitle" style={{ flexBasis: "70%", lineHeight: "180%", wordSpacing: "1px" }}>
+            {/* 제가 생각하는 데이터 분석이란 사방팔방으로 뻣어나가는 생각을 하나의 흐름으로 정제해나가는 과정입니다. */}
+            {/* 데이터 분석은 생각의 발산과 수렴을 거쳐 하나의 완전한 생각을 가능케 하는 과정이다. */}
+            {/* <div>
+              <i className="fa-solid fa-quote-left" /> 데이터 분석은 발산과 수렴을 거쳐 하나의
+            </div>
+            <div className="ms-2">
+              <strong className="poStrongTest"> 완전한 생각을 가능케 하는 과정</strong>이다.{" "}
+              <i class="fa-solid fa-quote-right" />
+            </div> */}
+            <div>
+              <i className="fa-solid fa-quote-left" /> 데이터 분석이란 <strong>발산하는 생각을</strong>
+            </div>
+            <div className="ms-5">
+              <strong>하나의 흐름으로 수렴하는 과정</strong>이다. <i class="fa-solid fa-quote-right" />
+            </div>
+            <div className="mt-3">
+              <span className="fs-5 fw-bold">Baby Goat</span>
+              <span className="fs-6 fw-bold"> (1992 - )</span>
+            </div>
           </div>
           <div className="m-auto d-flex pb-2" style={{ flexBasis: "40%" }}>
             <img src={portrait} alt="" className="pc map-ml" />
-            <img src={portraitMobile} alt="" className="mobile map-ml" />
+            <img
+              src={portraitMobile}
+              alt=""
+              className="mobile map-ml"
+              style={{ width: "100%", height: "60%", margin: 0 }}
+            />
           </div>
         </div>
         <div className="my-5">
           <div className="poSubTitle pb-2">ABOUT ME</div>
           <div className="mb-2" style={{ wordSpacing: "1px", letterSpacing: "1px" }}>
-            안녕 나는 공군에서 5년동안 쐬빠지게 일... 하진 않았고 그냥 띵가띵가 하다가 전역했어. 그치만 이 시기는 내게
-            중요한 마음의 힌트를 제공했어 그건 바로 데이터가 주는 가치를 열광적으로 실감했다는거야. 모두들 데이터의
-            핵심을 분석이라고 생각하지? 그건 틀렸어. 왜냐구? 데이터 분석가는 데이터를 만지지 않는 이상 그저 그런 평범한
-            회사원이거든. 하지만 데이터를 만지는 순간 매말랐던 생각들이 샘물 솟듯 콸콸 터지고 큰 우물을 형성하지 데이터
-            분석가의 상상력은 끝이 없어. 대신 그 상상력을 뒷밭침 해야하는 데이터가 있어야겠지.
-            <div className="mt-3">
-              그런 데이터는 어떻게 얻냐구? 현재에는 알수 없어{" "}
-              <strong>
-                지금 축적하고 있는 데이터가 어떤 목적으로 분석이 되겠지하는 생각은 바보같은 생각이야. 데이터는 데이터
-                분석가들이 아이디어를 샘솟게 하는 원천이지만 분석가 조차도 무슨 아이디어를 떠오를지 모르거든 그저
-                데이터를
-              </strong>{" "}
-              가지고 논다는 마음으로 이것 저것 적용해보면서 어느순간 뽝 하는 인사이트가 떠오르거든 그게 언제올지 어떤
-              생각인지 분석가 애비도 모른다는게 핵심이야 내 생각에 동의해? 그럼 날 뽑아
+            공군에서 5년 간 데이터를 활용해 북한을 분석하는 업무를 담당하였습니다. 데이터 수집 부서, 분석 부서, 활용
+            부서에 근무한 경험으로 데이터가 수집되고 활용되는 전반의 과정을 이해할 수 있었습니다. 감사하게도 이 기간동안
+            미국의 정보기관과 함께 일하며 부서의 일원으로서 그들의 데이터 수집, 분석 체계를 활용해보는 경험을
+            하였습니다. 이러한 경험들은 데이터의 중요성과 그 가치를 깨닫게 하는 밑바탕이 되었습니다. 데이터에 대한
+            관심이 증가할수록 북한 뿐만 아니라 다양한 분야의 데이터를 다뤄보고 싶은 열망도 커졌습니다. 오랜 고민 끝에
+            개인의 성장을 위해서 여러 분야의 데이터를 접하고 제한없이 분석할 수 있는 환경을 찾고자 결심했습니다.
+            <div className="mt-4">
+              무언가를 상상하는 일에 흥미를 느낍니다. 여러 분야의 데이터를 접하고자 하는 열망은 이러한 성향에
+              기인합니다. 저는 데이터를 상상력을 자극하는 재료라 생각합니다. 데이터를 이리저리 만저보고 다양한 생각을
+              접목하다보면 마르지 않는 우물처럼 생각이 끊임없이 떠오릅니다. 머리속에 가득찬 생각을 하나씩 점검하고
+              줄여나가는 과정도 재밌습니다. 분석이 깊어질수록 생각이 구체화되고 하나의 논리체계가 정립되며 하나의 완전한
+              생각을 가능케 하는 과정이기 때문입니다.
             </div>
           </div>
         </div>

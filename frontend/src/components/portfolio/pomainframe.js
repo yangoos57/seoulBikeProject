@@ -14,7 +14,7 @@ const PoMainFrame = ({ children }) => {
                 LEEWAY
               </Link>
             </div>
-            <div className="my-auto pc" style={{ flexBasis: "45%" }}>
+            <div className="my-auto pc" style={{ flexBasis: "50%" }}>
               <PoNavBar></PoNavBar>
             </div>
             <div className="my-auto mobile" style={{ flexBasis: "5%" }}>

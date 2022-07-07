@@ -4,19 +4,15 @@ import { ReactComponent as WeaponeeringOne } from "./assets/weaponeering (1).svg
 const ProjectTwo = () => {
   return (
     <div className="d-flex flex-column">
-      <div className="poTitleBox mb-2">
+      <div className="poTitleBox mb-4">
         <div className="d-flex ">
-          <div className="my-auto poTitle fs-3">전쟁데이터 기반의 항공무기추천 &nbsp;</div>
+          <div className=" poTitle fs-3 me-2">전쟁데이터 기반의 항공무기추천 &nbsp;</div>
         </div>
-        <div className="ms-1 pt-3 fs-6" style={{ fontFamily: "NEXON" }}>
+        <div className="pt-3 fs-5" style={{ fontFamily: "NEXON" }}>
           2017.08 - 2018.12
         </div>
       </div>
-      <br />
       <div>
-        {/* <div className="poTitle">둘러보기 </div> */}
-        {/* <ProjectTwoSlider /> */}
-
         <WeaponeeringOne height={"420px"} width={"100%"} />
       </div>
       <br />
@@ -35,7 +31,7 @@ const ProjectTwo = () => {
       </div>
 
       <div>
-        <div className="poSubTitle"> 주요역할 </div>
+        <div className="poSubTitle"> 팀내 역할 </div>
         <ul>
           <li>
             팀의 주요 업무로는 무기추천 프로세스 개발, 업무 매뉴얼 작성, 북한 모든 표적에 대한 무기추천 프로세스 수행이
@@ -79,6 +75,16 @@ const ProjectTwo = () => {
       </div>
       <br />
       <br />
+      <div className="d-flex flex-column">
+        <div className="poSubTitle">관련링크</div>
+        <a
+          href="https://post.naver.com/viewer/postView.nhn?volumeNo=18869597&memberNo=38486222&vType=VERTICAL"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="poButton">
+          • 지금은 데이터 시대! 군을 과학적으로 운용하기 위한 데이터 활용 방법은?
+        </a>
+      </div>
       <br />
       <br />
     </div>

@@ -1,8 +1,5 @@
 import React from "react";
 // import ProjectOneSlider from "./projectoneslider";
-import { ReactComponent as SeoulIcon } from "./assets/seoulIcon.svg";
-import { ReactComponent as MoonIcon } from "./assets/moonIcon.svg";
-import { ReactComponent as DashIcon } from "./assets/dashIcon.svg";
 import ProjectThree from "./assets/projectOne3.png";
 import ProjectTwo from "./assets/projectOne2.png";
 import ProjectOne from "./assets/projectOne1.png";
@@ -11,7 +8,7 @@ import PoProjectOneButton from "./poprojectonebutton";
 const Project = () => {
   return (
     <div className="d-flex flex-column">
-      <div className="poTitleBox  mb-3">
+      <div className="poTitleBox mb-4">
         <div className="d-flex ">
           <div className=" poTitle fs-3 me-2">따릉이 대여소 분석 &nbsp;</div>
         </div>
@@ -20,8 +17,9 @@ const Project = () => {
         </div>
       </div>
       <div>
-        {/* <div className="poTitle">둘러보기 </div> */}
-        {/* <ProjectOneSlider /> */}
+        {/* <div className="poSubTitle">따릉이로 동네투어</div> */}
+        {/* <div className="poSubTitle">따릉이 대여소 대시보드</div> */}
+        {/* <div className="poSubTitle">달빛 따릉이</div> */}
         <img src={ProjectOne} alt="" className="poProjectImg" />
         <img src={ProjectTwo} alt="" className="poProjectImg" />
         <img src={ProjectThree} alt="" className="poProjectImg" />
@@ -30,13 +28,10 @@ const Project = () => {
       <div>
         <div className="poSubTitle"> 프로젝트 소개 </div>
         <div>
-          따릉이 대여기록을 분석하며 얻게 된 아이디어를 웹어플리케이션으로 구현하였습니다. 3주간의 데이터 마이닝을 거친
+          따릉이 대여기록을 분석하며 얻게 된 아이디어를 웹어플리케이션으로 제작하였습니다. 3주간의 데이터 마이닝을 거친
           뒤 한 달 간 디자인부터 서버 업로드까지 웹 개발 전반을 공부하며 직접 구현하였습니다. 따릉이 대시보드, 달빛
-          따릉이, 따릉이로 동네투어 순으로 개발을 진행하였으며,{" "}
-          <strong>
-            개별 프로젝트 중 느꼈던 개선점을 다음 프로젝트에 반영하여 개념을 익히고 새로운 언어와 개념을 숙달하는데에
-            기술적 중점을 두었습니다.
-          </strong>
+          따릉이, 따릉이로 동네투어 순으로 개발을 진행하였으며, 개별 프로젝트 중 느꼈던 개선점을 다음 프로젝트에
+          반영하고 숙달하는데에 기술적 중점을 두었습니다.
         </div>
         <br /> <br />
       </div>
@@ -139,7 +134,9 @@ const Project = () => {
         </li>
       </ul>
       <br />
-      <hr />
+      <br />
+      <hr style={{ border: "1px solid var(--green-color)", opacity: 1 }} />
+      <br />
       <br />
       <br />
     </div>
