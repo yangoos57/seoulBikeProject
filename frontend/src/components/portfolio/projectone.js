@@ -17,9 +17,6 @@ const Project = () => {
         </div>
       </div>
       <div>
-        {/* <div className="poSubTitle">따릉이로 동네투어</div> */}
-        {/* <div className="poSubTitle">따릉이 대여소 대시보드</div> */}
-        {/* <div className="poSubTitle">달빛 따릉이</div> */}
         <img src={ProjectOne} alt="" className="poProjectImg" />
         <img src={ProjectTwo} alt="" className="poProjectImg" />
         <img src={ProjectThree} alt="" className="poProjectImg" />
@@ -32,6 +29,25 @@ const Project = () => {
           뒤 한 달 간 디자인부터 서버 업로드까지 웹 개발 전반을 공부하며 직접 구현하였습니다. 따릉이 대시보드, 달빛
           따릉이, 따릉이로 동네투어 순으로 개발을 진행하였으며, 개별 프로젝트 중 느꼈던 개선점을 다음 프로젝트에
           반영하고 숙달하는데에 기술적 중점을 두었습니다.
+          <div className="py-2"></div>
+          <div className="fw-bold" style={{ color: "var(--green-color)" }}>
+            따릉이로 동네투어
+          </div>
+          자주 이용하는 대여소를 선택하면 주변 동네의 따릉이 대여소를 추천합니다. 대여소 추천은 대여 기록을 바탕으로
+          합니다. 대여기록이 많다는 의미는 이동이 편리하다는 말과 같습니다. 따릉이로 주변 동네의 매력을 느껴보세요.
+          <div className="py-2"></div>
+          <div className="fw-bold" style={{ color: "var(--green-color)" }}>
+            달빛 따릉이
+          </div>
+          정규 교통편이 끊긴 새벽, 야간버스와 따릉이로 귀가하는 방법을 추천합니다. 택시비가 아깝다면, 아무도 없는 밤
+          거리를 달리고 싶다면, 야간버스와 따릉이로 경로 추천을 받고 싶다면 달빛 따릉이가 안내해드립니다.
+          <div className="py-2"></div>
+          <div className="fw-bold" style={{ color: "var(--green-color)" }}>
+            따릉이 대여소 대시보드
+          </div>{" "}
+          자주 이용하는 대여소의 정보를 한눈에 보여줍니다. 다른 사람들이 따릉이를 어느시간대에 이용하는지, 어느 대여소를
+          자주 이용하는지 눈으로 이해할 수 있게 만들었습니다.
+          <div className="py-2"></div>
         </div>
         <br /> <br />
       </div>

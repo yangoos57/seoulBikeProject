@@ -34,7 +34,6 @@ if os.environ.get("DJANGO_ALLOWED_HOSTS"):
     ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 else:
     ALLOWED_HOSTS = [
-        "d2bd-121-190-214-76.jp.ngrok.io",
         "localhost",
         "127.0.0.1:8000",
     ]
