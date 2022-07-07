@@ -1,5 +1,7 @@
 import React from "react";
 import BkTitleName from "./bktitlename";
+import BkWeather from "./bkweather";
+
 const BkMainFrame = ({ children, children2 }) => {
   return (
     <div className="whole-bk d-flex ">
@@ -12,9 +14,9 @@ const BkMainFrame = ({ children, children2 }) => {
               <div className="" style={{}}>
                 <BkTitleName fontValue="28px" />
               </div>
-              <div className="flex-container " style={{ flexBasis: "30%" }}>
+              <div className="flex-container " style={{ flexBasis: "40%" }}>
                 {/* weather Component */}
-                <div className="m-auto border border-2">날씨정보 API 넣기 </div>
+                <BkWeather></BkWeather>
               </div>
             </div>
             {children}

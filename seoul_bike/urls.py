@@ -1,6 +1,5 @@
 from django.contrib import admin
-from django.urls import path
-from django.urls import path, include
+from django.urls import path, re_path, include
 from rest_framework import routers
 from dashboard import views
 from bike_moon_light import views as ml_views
@@ -18,16 +17,17 @@ router.register(
 router.register("selector_Options", views.selector_OptionsView, "selector_Options")
 
 urlpatterns = [
-    path("", HomeTemplateView.as_view(), name="home"),
-    path("admin/", admin.site.urls),
+    # path("", HomeTemplateView.as_view(), name="home"),
+    path("admin", admin.site.urls),
     path("api/", include(router.urls)),
-    path("api/testing", views.plots.as_view()),
+    path("api/testing/", views.plots.as_view()),
     path("ml/api/departureInfo", ml_views.departureInfo),
     path("ml/api/leafletMap", ml_views.leaflet_map.as_view()),
     # path("bk/api/departureInfo", ml_views.BkdepartureInfo),
     path("bk/api/info", ml_views.bk_leaflet_map.as_view()),
     path("bk/api/direction", ml_views.Bkdirection),
     path("bk/api/near500m", ml_views.Bknear_500),
+    re_path(r"", HomeTemplateView.as_view(), name="home"),
 ]
 # path('stationinfo/', views.stationToDB)  # bike_station 정보
 

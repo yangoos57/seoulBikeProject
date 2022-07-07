@@ -52,7 +52,7 @@ function Main() {
 
   // station 정보를 불러오면 default 값으로 207 여의나루역을 불러온다.
   useEffect(() => {
-    axios.post("api/testing", { values: 207 }).then((res) => {
+    axios.post("api/testing/", { values: 207 }).then((res) => {
       setImg(res.data);
       setLoading(true);
     });
@@ -107,17 +107,13 @@ function Main() {
                           src={"data:image/png;base64," + Img.img_3}
                           alt=""
                         />
-                        <div
-                          className="d-flex flex-column justify-content-start h-100"
-                          style={{ width: "25%" }}
-                        >
+                        <div className="d-flex flex-column justify-content-start h-100" style={{ width: "25%" }}>
                           <div className="d-flex w-100">
                             <div
                               className="my-auto me-1 pie_legend"
                               style={{
                                 backgroundColor: "#35C768",
-                              }}
-                            >
+                              }}>
                               {" "}
                             </div>
                             <div className="flex-item my-auto ms-1" style={{ fontSize: 10 }}>
@@ -129,8 +125,7 @@ function Main() {
                               className="pie_legend my-auto me-1"
                               style={{
                                 backgroundColor: "#35C76880",
-                              }}
-                            >
+                              }}>
                               {" "}
                             </div>
                             <div className="flex-item my-auto ms-1" style={{ fontSize: 10 }}>
@@ -143,15 +138,9 @@ function Main() {
                   </div>
                   <div className="left-col border border-1 bg-white d-flex mb-1 h-100">
                     <div className="flex-item flex-column justify-content-center">
-                      <div className="fs-6 bg-white me-1 p-3 pb-4 text-center mt-1 ">
-                        요일별 이용량
-                      </div>
+                      <div className="fs-6 bg-white me-1 p-3 pb-4 text-center mt-1 ">요일별 이용량</div>
                       <div className="img-box me-1 bg-white">
-                        <img
-                          className="chart-image"
-                          src={"data:image/png;base64," + Img.img_1}
-                          alt=""
-                        />
+                        <img className="chart-image" src={"data:image/png;base64," + Img.img_1} alt="" />
                       </div>
                     </div>
                     <div className="flex-item flex-column ">
@@ -160,19 +149,14 @@ function Main() {
                         <TimeSelect onChange={setTimeSelect} values={Img} />
                       </div>
                       <div className="img-box ms-1 bg-white">
-                        <img
-                          className="chart-image"
-                          src={"data:image/png;base64," + timeSelect}
-                          alt=""
-                        />
+                        <img className="chart-image" src={"data:image/png;base64," + timeSelect} alt="" />
                       </div>
                     </div>
                   </div>
                   <div className="left-col d-flex h-100">
                     <div className="flex-item border border-1 flex-column gray-box me-1">
                       <div className=" pt-2 fs-7 text-center mb-2">
-                        <i className="fa-solid fa-train-subway me-2 icon-gray pt-2"></i>자주가는
-                        지하철역
+                        <i className="fa-solid fa-train-subway me-2 icon-gray pt-2"></i>자주가는 지하철역
                       </div>
                       <div className="img-box">
                         <div className="chart-image">
@@ -205,8 +189,7 @@ function Main() {
                         background: "#ebeef280",
                         zIndex: 100,
                       }}
-                      className="d-flex align-items-center justify-content-center"
-                    >
+                      className="d-flex align-items-center justify-content-center">
                       <div className="box-green fs-7 p-2 w-100 mx-4 text-center fw-bold">
                         {" "}
                         <Selector

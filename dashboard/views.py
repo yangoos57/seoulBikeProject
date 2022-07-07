@@ -23,17 +23,6 @@ class selector_OptionsView(viewsets.ModelViewSet):
     queryset = selector_Options.objects.all()
 
 
-###  통신 Test 용
-@api_view(["POST"])
-def post(request):
-    if request.method == "POST":
-        name = request.data.get("name")
-        tasting = request.data.get("tasting")
-        # if tasting == 'nutty' :
-        results = {"status": f"해당 {name}는 {tasting}한 느낌이 있어요."}
-        return Response(results)
-
-
 ### Class Base View Test
 class plots(views.APIView):
     def __init__(self):

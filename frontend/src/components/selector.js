@@ -24,7 +24,7 @@ function Selector({ stationInfo, setStationInfo, setImg, stations }) {
 
   // 대여소를 선택하면 stationInfo에 저장되고 자동으로 해당 api를 실행한다.
   useEffect(() => {
-    axios.post("api/testing", { values: stationInfo.value }).then((res) => {
+    axios.post("api/testing/", { values: stationInfo.value }).then((res) => {
       setImg(res.data);
     });
   }, [stationInfo]);

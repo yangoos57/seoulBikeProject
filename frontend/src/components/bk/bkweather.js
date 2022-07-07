@@ -17,20 +17,6 @@ const BkWeather = () => {
   const hour = new Date().getHours();
   const time = String(hour + "00");
 
-  function ChangewWeatherIcon() {
-    if (rain !== "강수없음") {
-      return <img src={Rain} alt="" />;
-    } else if ((sky >= 0) & (sky <= 5)) {
-      if ((time >= 1900) & (time <= 2400) || (time >= 0) & (time <= 600)) {
-        return <img src={Night} alt="" />;
-      } else {
-        return <img src={Sunny} alt="" />;
-      }
-    } else if (sky > 5) {
-      return <img src={Cloud} alt="" />;
-    }
-  }
-
   useEffect(() => {
     axios
       .get(
@@ -53,7 +39,8 @@ const BkWeather = () => {
   }, []);
 
   useEffect(() => {
-    if (rain !== "강수없음") {
+    if (rain === "") {
+    } else if (rain !== "강수없음") {
       return setWeatherIcon(<img src={Rain} alt="" />), setState("강 수");
     } else if ((parseInt(sky) >= 0) & (parseInt(sky) <= "5")) {
       if ((hour >= 19) & (hour <= 24) || (hour >= 0) & (hour <= 6)) {

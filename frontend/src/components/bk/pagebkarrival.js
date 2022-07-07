@@ -14,6 +14,7 @@ import BkInfoBox from "./bkinfobox";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import MarkerClusterGroup from "react-leaflet-cluster";
+import BkWeather from "./bkweather";
 
 function ChangeView({ center, zoom }) {
   const map = useMap();
@@ -125,9 +126,9 @@ function BkArrival() {
                 <div className="">
                   <BkTitleName fontValue="28px" />
                 </div>
-                <div className="flex-container " style={{ flexBasis: "30%" }}>
+                <div className="flex-container " style={{ flexBasis: "40%" }}>
                   {/* weather Component */}
-                  <div className="m-auto border border-2">날씨정보 API 넣기 </div>
+                  <BkWeather></BkWeather>
                 </div>
               </div>
               <div
