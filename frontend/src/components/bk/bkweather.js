@@ -18,25 +18,38 @@ const BkWeather = () => {
   const time = String(hour + "00");
 
   useEffect(() => {
-    axios
-      .get(
-        `
-      /1360000/VilageFcstInfoService_2.0/getUltraSrtFcst?serviceKey=${key}&pageNo=1&numOfRows=100&dataType=JSON&base_date=${date}&base_time=${time}&nx=${coor[0]}&ny=${coor[1]}
-      
-      `
-      )
-      .then((res) => {
-        var data = res.data.response.body.items;
-        console.log(data);
-        if (data !== undefined) {
-          setTemp(data.item[24].fcstValue);
-          setSky(data.item[18].fcstValue);
-          setRain(data.item[12].fcstValue);
-        } else {
-          console.log("error");
-        }
-      });
+    axios.get("api/bkweather").then((res) => {
+      console.log("hi", res.data);
+      const data = res.data;
+      if (data !== undefined) {
+        setTemp(data[24].fcstValue);
+        setSky(data[18].fcstValue);
+        setRain(data[12].fcstValue);
+      } else {
+        console.log("error");
+      }
+    });
   }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get(
+  //       `
+  //     /1360000/VilageFcstInfoService_2.0/getUltraSrtFcst?serviceKey=${key}&pageNo=1&numOfRows=100&dataType=JSON&base_date=${date}&base_time=${time}&nx=${coor[0]}&ny=${coor[1]}
+
+  //     `
+  //     )
+  //     .then((res) => {
+  //       console.log(res);
+  //       var data = res.data.response.body.items;
+  //       if (data !== undefined) {
+  //         setTemp(data.item[24].fcstValue);
+  //         setSky(data.item[18].fcstValue);
+  //         setRain(data.item[12].fcstValue);
+  //       } else {
+  //         console.log("error");
+  //       }
+  //     });
+  // }, []);
 
   useEffect(() => {
     if (rain === "") {

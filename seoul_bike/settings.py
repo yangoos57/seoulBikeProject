@@ -35,7 +35,7 @@ if os.environ.get("DJANGO_ALLOWED_HOSTS"):
 else:
     ALLOWED_HOSTS = [
         "localhost",
-        "127.0.0.1:8000",
+        "127.0.0.1",
     ]
 
 
@@ -72,6 +72,7 @@ INTERNAL_IPS = "127.0.0.1"
 CORS_ORIGIN_WHITELIST = (
     "http://localhost:3000",
     "http://localhost:8000",
+    "http://apis.data.go.kr",
 )
 
 ROOT_URLCONF = "seoul_bike.urls"

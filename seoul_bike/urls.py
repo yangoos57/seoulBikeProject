@@ -25,6 +25,7 @@ urlpatterns = [
     path("ml/api/leafletMap", ml_views.leaflet_map.as_view()),
     # path("bk/api/departureInfo", ml_views.BkdepartureInfo),
     path("bk/api/info", ml_views.bk_leaflet_map.as_view()),
+    path("bk/api/bkweather", ml_views.weather),
     path("bk/api/direction", ml_views.Bkdirection),
     path("bk/api/near500m", ml_views.Bknear_500),
     re_path(r"", HomeTemplateView.as_view(), name="home"),

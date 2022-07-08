@@ -5,6 +5,8 @@ import numpy as np
 import ast
 import time
 from typing import Dict, List
+from datetime import datetime
+from urllib.parse import unquote
 
 
 def bkhaversine_np(coor1: List[int], coor2: List[int]) -> np.array:
@@ -227,3 +229,31 @@ class bike_recommendation:
                 pass
         # 끝
         return pd.DataFrame(finish_data)[[1, 0]].values  ## 위도 경도 위치 바꾸기
+
+
+def bkweather():
+    url = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst"
+    datenow = datetime.now().strftime("%Y%m%d")
+    hournow = datetime.now().strftime("%H") + "00"
+    # requests에선 %를 %25로 변환한다. 이를 막기 위해 unquote를 사용한다.
+    key = unquote(
+        "kweaR5p7XFQ3hpE2XziQSArbOXvFHfhOyD46cjNj1ntsPN%2B5agxteHVt6nU5Ur0OBxaVAlQYNMx9q8wEBMOdLw%3D%3D"
+    )
+    params = {
+        "serviceKey": key,
+        "pageNo": "1",
+        "numOfRows": "60",
+        "dataType": "JSON",
+        "base_date": datenow,
+        "base_time": hournow,
+        "nx": "57",
+        "ny": "127",
+    }
+
+    response = requests.get(url, params=params)
+
+    result = response.content
+    val = result.decode("utf-8")
+    val = ast.literal_eval(val)
+    result = val["response"]["body"]["items"]["item"]
+    return result

@@ -1,5 +1,5 @@
 from urllib import response
-from bike_moon_light.bkutils import bike_recommendation, near_500m
+from bike_moon_light.bkutils import bike_recommendation, near_500m, bkweather
 from .mlutils import *
 from .dashutils import *
 
@@ -49,6 +49,12 @@ def BkdepartureInfo(request) -> Dict:
         "bike_moon_light/assets/bkstation_info.csv", encoding="CP949", index_col=0
     )
     return Response(bkstation.to_dict("records"))
+
+
+@api_view(["Get"])
+def weather(request) -> Dict:
+    result = bkweather()
+    return Response(result)
 
 
 @api_view(["Post"])
