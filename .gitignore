@@ -140,3 +140,4 @@ parquet/
 
 ## 
 settings.py
+.DS_Store
