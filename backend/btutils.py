@@ -9,7 +9,7 @@ from datetime import datetime
 from urllib.parse import unquote
 
 
-def bkhaversine_np(coor1: List[int], coor2: List[int]) -> np.array:
+def bthaversine_np(coor1: List[int], coor2: List[int]) -> np.array:
 
     lon1 = coor1[0]
     lat1 = coor1[1]
@@ -38,30 +38,30 @@ def bkhaversine_np(coor1: List[int], coor2: List[int]) -> np.array:
 
 def near_500m(coor: List) -> pd.DataFrame:
     station = pd.read_csv(
-        "bike_moon_light/assets/seoul_bike_station_01_12.csv",
+        "backend/assets/seoul_bike_station_01_12.csv",
         encoding="CP949",
         index_col=0,
     )
-    bkstation_info = pd.read_csv(
-        "bike_moon_light/assets/bkstation_info.csv", encoding="CP949", index_col=0
+    btstation_info = pd.read_csv(
+        "backend/assets/bkstation_info(backup).csv", encoding="CP949", index_col=0
     )
 
     station[["latitude", "longtitude"]].T.values
 
-    dist = bkhaversine_np(coor, station[["latitude", "longtitude"]].T.values)
+    dist = bthaversine_np(coor, station[["latitude", "longtitude"]].T.values)
 
     station["dist"] = dist
 
     st_id = station[station["dist"] <= 500].reset_index(drop=False)["st_id"]
 
-    result = bkstation_info[bkstation_info.value.isin(st_id.tolist())]
+    result = btstation_info[btstation_info.value.isin(st_id.tolist())]
 
     return result
 
 
 class bike_recommendation:
-    def __init__(self, bkstation: pd.DataFrame, seoul_bike: pd.DataFrame):
-        self.bkstation = bkstation
+    def __init__(self, btstation: pd.DataFrame, seoul_bike: pd.DataFrame):
+        self.btstation = btstation
         self.seoul_bike = seoul_bike
 
     def raw_data(self, val: int) -> pd.DataFrame:
@@ -88,7 +88,7 @@ class bike_recommendation:
         sort_info = all_record[all_record > 50].sort_values(ascending=False)[1:201]
         station_id = sort_info.index.to_list()
 
-        result = self.bkstation.query("value == @station_id").reset_index(drop=True)
+        result = self.btstation.query("value == @station_id").reset_index(drop=True)
 
         result_station = []
         for j in result["value"]:
@@ -172,7 +172,7 @@ class bike_recommendation:
 
         return data, minmax
 
-    def bkroute_coor(
+    def btroute_coor(
         self,
         departure_station: list,
         arrival_station: list,
@@ -231,7 +231,7 @@ class bike_recommendation:
         return pd.DataFrame(finish_data)[[1, 0]].values  ## 위도 경도 위치 바꾸기
 
 
-def bkweather():
+def btweather():
     url = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst"
     datenow = datetime.now().strftime("%Y%m%d")
     hournow = datetime.now().strftime("%H") + "00"

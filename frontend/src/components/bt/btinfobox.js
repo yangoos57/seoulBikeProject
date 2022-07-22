@@ -1,7 +1,7 @@
 import React from "react";
 import { ReactComponent as Xbox } from "./assets/icons/xbox.svg";
 
-const BkInfoBox = ({
+const BtInfoBox = ({
   setIsMouseOn, //
   setIsClicked,
   setReset,
@@ -81,4 +81,4 @@ const BkInfoBox = ({
   );
 };
 
-export default BkInfoBox;
+export default BtInfoBox;

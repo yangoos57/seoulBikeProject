@@ -6,16 +6,13 @@ import MlMain from "./components/ml/pagemlmain";
 import MlSearchPage from "./components/ml/pagemlsearch";
 import MlDirection from "./components/ml/pagemldirection";
 import MlTitle from "./components/ml/mltitle";
-// import BkTitle from "./components/bk/bktitle";
-import BkTemplate from "./components/bk/pagebkdep";
-import BkArrival from "./components/bk/pagebkarrival";
-import BkDirection from "./components/bk/pagebkdirection";
-import Test from "./components/test";
-import BkTitle from "./components/bk/bktitle";
-import PoMainFrame from "./components/portfolio/pomainframe";
+import BtTemplate from "./components/bt/pagebtdep";
+import BtArrival from "./components/bt/pagebtarrival";
+import BtDirection from "./components/bt/pagebtdirection";
+import BtTitle from "./components/bt/bttitle";
 import PoAbout from "./components/portfolio/poabout";
 import PoProject from "./components/portfolio/poproject";
-import BkWeather from "./components/bk/bkweather";
+import BtWeather from "./components/bt/btweather";
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -23,14 +20,14 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/test" element={<BkWeather />}></Route>
+        <Route path="/test" element={<BtWeather />}></Route>
         <Route path="/" element={<PoAbout />}></Route>
         <Route path="/Project" element={<PoProject />}></Route>
         <Route path="/dash" element={<Main />}></Route>
-        <Route path="/bktitle" element={<BkTitle />}></Route>
-        <Route path="/bk/departure" element={<BkTemplate />}></Route>
-        <Route path="/bk/arrival" element={<BkArrival />}></Route>
-        <Route path="/bk/direction" element={<BkDirection />}></Route>
+        <Route path="/bikeTourTitle" element={<BtTitle />}></Route>
+        <Route path="/bikeTour/departure" element={<BtTemplate />}></Route>
+        <Route path="/bikeTour/arrival" element={<BtArrival />}></Route>
+        <Route path="/bikeTour/direction" element={<BtDirection />}></Route>
         <Route path="/mltitle" element={<MlTitle />}></Route>
         <Route path="/ml" element={<MlMain />}></Route>
         <Route path="/ml/search" element={<MlSearchPage />}></Route>

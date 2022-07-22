@@ -18,7 +18,7 @@ function SetViewOnClick({ animateRef }) {
 
   return null;
 }
-const BkMapData = ({ children }) => {
+const BtMapData = ({ children }) => {
   return (
     <MapContainer
       center={[37.534863, 126.90241]}
@@ -36,4 +36,4 @@ const BkMapData = ({ children }) => {
   );
 };
 
-export default BkMapData;
+export default BtMapData;

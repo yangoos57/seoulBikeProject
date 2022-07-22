@@ -1,19 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Marker, Tooltip, useMap } from "react-leaflet";
-import BkTitleName from "./bktitlename";
+import BkTitleName from "./bttitlename";
 import L from "leaflet";
-import BkMapData from "./bkmapdata";
-import "./assets/bkstyle.css";
-import BkSelect from "./bkselect";
+import BkMapData from "./btmapdata";
+import "./assets/btstyle.css";
+import BkSelect from "./btselect";
 import { useLocation, useNavigate } from "react-router-dom";
-import BkInfoBox from "./bkinfobox";
+import BkInfoBox from "./btinfobox";
 import bikegreen from "./assets/icons/bikegreen.svg";
 import bikewhite from "./assets/icons/bikewhite.svg";
 import axios from "axios";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import arrmarker from "./assets/icons/arrMarker.svg";
 import arrmarkerclick from "./assets/icons/arrmarkerclick.svg";
-import BkWeather from "./bkweather";
+import BkWeather from "./btweather";
 
 function ChangeView({ center, zoom }) {
   const map = useMap();
@@ -54,7 +54,7 @@ const initialMarker = [
 ];
 
 // main function
-function BkDeparture() {
+function BtDeparture() {
   const [clickedItem, setClickedItem] = useState(undefined); // marker info
   const [markerClicked, setMarkerClicked] = useState(undefined); // marker index for clicked
   const [markerHoveredIndex, setMarkerHoveredIndex] = useState(undefined); // marker index for hover
@@ -103,7 +103,7 @@ function BkDeparture() {
   const navigate = useNavigate();
 
   if (isClicked) {
-    navigate("/bk/arrival", { state: stationInfo });
+    navigate("/bikeTour/arrival", { state: stationInfo });
   }
 
   // 경로 검색 이후 다시 정보 받아서 /bk arrival로 쏘아주기
@@ -234,4 +234,4 @@ function BkDeparture() {
     </>
   );
 }
-export default BkDeparture;
+export default BtDeparture;

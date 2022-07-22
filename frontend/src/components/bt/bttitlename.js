@@ -2,14 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Tooltip from "@mui/material/Tooltip";
 
-const BkTitleName = ({ fontValue = "40px" }) => {
+const BtTitleName = ({ fontValue = "40px" }) => {
   const style = {
     fontSize: fontValue,
     fontFamily: "NEXON",
     lineHeight: "120%",
   };
   return (
-    <Link to="/bk/departure" style={{ textDecoration: "none" }}>
+    <Link to="/bikeTour/departure" style={{ textDecoration: "none" }}>
       <Tooltip title="대여소 검색으로 이동" placement="right-start" followCursor>
         <div className="bg-white flex-column flex-container">
           <div className="m-auto">
@@ -28,4 +28,4 @@ const BkTitleName = ({ fontValue = "40px" }) => {
   );
 };
 
-export default BkTitleName;
+export default BtTitleName;

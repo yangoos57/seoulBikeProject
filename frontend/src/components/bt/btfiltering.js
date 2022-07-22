@@ -1,5 +1,5 @@
 import React from "react";
-const BkFiltering = ({ setClickedName, clickedName }) => {
+const BtFiltering = ({ setClickedName, clickedName }) => {
   const boxStyle = {
     flexBasis: "30%",
     backgroundColor: "var(--silver-color)",
@@ -61,4 +61,4 @@ const BkFiltering = ({ setClickedName, clickedName }) => {
   );
 };
 
-export default BkFiltering;
+export default BtFiltering;

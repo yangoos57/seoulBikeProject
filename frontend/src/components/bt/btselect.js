@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { Component, useEffect, useState } from "react";
 import ReactSelect, { components } from "react-select";
 import { FixedSizeList as List } from "react-window";
-import "./assets/bkstyle.css";
+import "./assets/btstyle.css";
 
 const ValueContainer = ({ children, ...props }) => {
   // 화면 왼편에 돋보기 넣기
@@ -21,7 +21,7 @@ const ValueContainer = ({ children, ...props }) => {
     )
   );
 };
-const BkSelect = ({ setStationInfo, reference }) => {
+const BtSelect = ({ setStationInfo, reference }) => {
   const [bikeStation, setBikeStation] = useState([
     { label: "여의나루 1번 출구 ", value: "0" },
     { label: "여의나루 2번 출구 ", value: "1" },
@@ -131,4 +131,4 @@ const BkSelect = ({ setStationInfo, reference }) => {
   );
 };
 
-export default BkSelect;
+export default BtSelect;

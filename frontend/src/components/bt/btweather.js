@@ -5,20 +5,16 @@ import Sunny from "./assets/icons/sunny.png";
 import Rain from "./assets/icons/rain.png";
 import Night from "./assets/icons/night.png";
 
-const BkWeather = () => {
+const BtWeather = () => {
   const [temp, setTemp] = useState(undefined);
   const [weatherIcon, setWeatherIcon] = useState(undefined);
   const [sky, setSky] = useState("");
   const [rain, setRain] = useState("");
   const [state, setState] = useState("");
-  const key = "kweaR5p7XFQ3hpE2XziQSArbOXvFHfhOyD46cjNj1ntsPN%2B5agxteHVt6nU5Ur0OBxaVAlQYNMx9q8wEBMOdLw%3D%3D";
-  const date = "20220706";
-  const coor = [57, 127];
   const hour = new Date().getHours();
-  const time = String(hour + "00");
 
   useEffect(() => {
-    axios.get("api/bkweather").then((res) => {
+    axios.get("api/weather").then((res) => {
       console.log("hi", res.data);
       const data = res.data;
       if (data !== undefined) {
@@ -30,27 +26,6 @@ const BkWeather = () => {
       }
     });
   }, []);
-  // useEffect(() => {
-  //   axios
-  //     .get(
-  //       `
-  //     /1360000/VilageFcstInfoService_2.0/getUltraSrtFcst?serviceKey=${key}&pageNo=1&numOfRows=100&dataType=JSON&base_date=${date}&base_time=${time}&nx=${coor[0]}&ny=${coor[1]}
-
-  //     `
-  //     )
-  //     .then((res) => {
-  //       console.log(res);
-  //       var data = res.data.response.body.items;
-  //       if (data !== undefined) {
-  //         setTemp(data.item[24].fcstValue);
-  //         setSky(data.item[18].fcstValue);
-  //         setRain(data.item[12].fcstValue);
-  //       } else {
-  //         console.log("error");
-  //       }
-  //     });
-  // }, []);
-
   useEffect(() => {
     if (rain === "") {
     } else if (rain !== "강수없음") {
@@ -86,4 +61,4 @@ const BkWeather = () => {
   );
 };
 
-export default BkWeather;
+export default BtWeather;

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-function BkTitle() {
+function BtTitle() {
   const style = {
     fontSize: "40px",
     fontFamily: "NEXON",
@@ -8,7 +8,7 @@ function BkTitle() {
   };
   const navigate = useNavigate();
   useEffect(() => {
-    setTimeout(() => navigate("/bk/departure"), 2000);
+    setTimeout(() => navigate("/bikeTour/departure"), 2000);
   }, [navigate]);
 
   return (
@@ -40,4 +40,4 @@ function BkTitle() {
     </>
   );
 }
-export default BkTitle;
+export default BtTitle;

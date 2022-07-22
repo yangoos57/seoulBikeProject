@@ -10,7 +10,7 @@ export default function BasicButtonGroup() {
       className="d-flex my-auto justify-content-center"
       style={{ backgroundColor: "#ffffff99", borderRadius: "20px", height: "80px", width: "250px" }}>
       <Button>
-        <Link className="poButton" to="/bktitle" target="_blank" rel="noopener noreferrer">
+        <Link className="poButton" to="/bikeTourTitle" target="_blank" rel="noopener noreferrer">
           <SeoulIcon className="my-auto mx-2" width={"60px"} height={"60px"} />
         </Link>
       </Button>

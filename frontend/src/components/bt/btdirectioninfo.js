@@ -1,6 +1,6 @@
 import React from "react";
 
-const BkDirctionInfo = ({ dep, arr }) => {
+const BtDirctionInfo = ({ dep, arr }) => {
   return (
     <div
       style={{
@@ -62,4 +62,4 @@ const BkDirctionInfo = ({ dep, arr }) => {
   );
 };
 
-export default BkDirctionInfo;
+export default BtDirctionInfo;

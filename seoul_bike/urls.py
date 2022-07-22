@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, re_path, include
 from rest_framework import routers
 from dashboard import views
-from bike_moon_light import views as ml_views
+from backend import views as functions
 from django.views.generic import TemplateView
 
 
@@ -17,20 +17,17 @@ router.register(
 router.register("selector_Options", views.selector_OptionsView, "selector_Options")
 
 urlpatterns = [
-    # path("", HomeTemplateView.as_view(), name="home"),
     path("admin", admin.site.urls),
-    path("api/", include(router.urls)),
-    path("api/testing/", ml_views.plots.as_view()),
-    path("ml/api/departureInfo", ml_views.departureInfo),
-    path("ml/api/leafletMap", ml_views.leaflet_map.as_view()),
-    # path("bk/api/departureInfo", ml_views.BkdepartureInfo),
-    path("bk/api/info", ml_views.bk_leaflet_map.as_view()),
-    path("bk/api/bkweather", ml_views.weather),
-    path("bk/api/direction", ml_views.Bkdirection),
-    path("bk/api/near500m", ml_views.Bknear_500),
+    path("bikeDash/api/", include(router.urls)),
+    path("bikeDash/api/testing/", functions.plots.as_view()),
+    path("moonLight/api/departureInfo", functions.departureInfo),
+    path("moonLight/api/leafletMap", functions.ml_leaflet_map.as_view()),
+    path("bikeTour/api/info", functions.bt_leaflet_map.as_view()),
+    path("bikeTour/api/weather", functions.weather),
+    path("bikeTour/api/direction", functions.btdirection),
+    path("bikeTour/api/near500m", functions.btnear_500),
     re_path(r"", HomeTemplateView.as_view(), name="home"),
 ]
-# path('stationinfo/', views.stationToDB)  # bike_station 정보
 
 
 from django.conf import settings

@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
-import "./assets/bkstyle.css";
+import "./assets/btstyle.css";
 import { Marker, Tooltip, useMap } from "react-leaflet";
 import L from "leaflet";
-import BkMapData from "./bkmapdata";
-import BkTitleName from "./bktitlename";
-import BkFiltering from "./bkfiltering";
-import BkRangeSlider from "./bkrangeslider";
+import BkMapData from "./btmapdata";
+import BkTitleName from "./bttitlename";
+import BkFiltering from "./btfiltering";
+import BkRangeSlider from "./btrangeslider";
 import { useLocation } from "react-router-dom";
 import arrmarker from "./assets/icons/arrMarker.svg";
 import arrmarkerclick from "./assets/icons/arrmarkerclick.svg";
 import bikegreen from "./assets/icons/bikegreen.svg";
-import BkInfoBox from "./bkinfobox";
+import BkInfoBox from "./btinfobox";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import MarkerClusterGroup from "react-leaflet-cluster";
-import BkWeather from "./bkweather";
+import BkWeather from "./btweather";
 
 function ChangeView({ center, zoom }) {
   const map = useMap();
@@ -110,7 +110,7 @@ function BkArrival() {
 
   useEffect(() => {
     if (isClicked === true) {
-      navigate("/bk/direction", { state: { dep: depParams, arr: clickedItem } }); //출도착정보 모두 넣어주기
+      navigate("/bikeTour/direction", { state: { dep: depParams, arr: clickedItem } }); //출도착정보 모두 넣어주기
     }
   }, [isClicked]);
 

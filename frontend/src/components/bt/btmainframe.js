@@ -1,8 +1,8 @@
 import React from "react";
-import BkTitleName from "./bktitlename";
-import BkWeather from "./bkweather";
+import BkTitleName from "./bttitlename";
+import BkWeather from "./btweather";
 
-const BkMainFrame = ({ children, children2 }) => {
+const BtMainFrame = ({ children, children2 }) => {
   return (
     <div className="whole-bk d-flex ">
       <div className="main-ml m-auto ">
@@ -30,4 +30,4 @@ const BkMainFrame = ({ children, children2 }) => {
   );
 };
 
-export default BkMainFrame;
+export default BtMainFrame;

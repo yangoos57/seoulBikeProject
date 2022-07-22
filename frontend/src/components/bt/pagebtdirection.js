@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Marker, Polyline, useMap } from "react-leaflet";
 import { useLocation } from "react-router-dom";
-import BkMainFrame from "./bkmainframe";
-import BkMapData from "./bkmapdata";
-import BkSelect from "./bkselect";
+import BkMainFrame from "./btmainframe";
+import BkMapData from "./btmapdata";
+import BkSelect from "./btselect";
 import bikegreen from "./assets/icons/bikegreen.svg";
 import arricon from "./assets/icons/arricon.svg";
 import L from "leaflet";
 import { useNavigate } from "react-router-dom";
-import BkDirctionInfo from "./bkdirectioninfo";
+import BkDirctionInfo from "./btdirectioninfo";
 import axios from "axios";
 
 function ChangeView({ center, zoom }) {
@@ -32,14 +32,14 @@ function arrIcon() {
 }
 
 //main
-const BkDirection = () => {
+const BtDirection = () => {
   const navigate = useNavigate();
 
   // 대여소 재검색 기능
   const [stationInfo, setStationInfo] = useState(undefined);
 
   if (stationInfo !== undefined) {
-    navigate("/bk/departure", { state: stationInfo });
+    navigate("/bikeTour/departure", { state: stationInfo });
   }
 
   const location = useLocation();
@@ -83,4 +83,4 @@ const BkDirection = () => {
   return <BkMainFrame children={child1()} children2={child2()} />;
 };
 
-export default BkDirection;
+export default BtDirection;
