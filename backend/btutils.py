@@ -60,9 +60,12 @@ def near_500m(coor: List) -> pd.DataFrame:
 
 
 class bike_recommendation:
-    def __init__(self, btstation: pd.DataFrame, seoul_bike: pd.DataFrame):
+    def __init__(
+        self, btstation: pd.DataFrame, seoul_bike: pd.DataFrame, station: pd.DataFrame
+    ):
         self.btstation = btstation
         self.seoul_bike = seoul_bike
+        self.station = station
 
     def raw_data(self, val: int) -> pd.DataFrame:
         quert_st_id1 = self.seoul_bike[self.seoul_bike["st_id1"] == val]
@@ -76,7 +79,124 @@ class bike_recommendation:
 
         return filtered_data
 
-    def arrStation(self, st_id: int) -> Dict:
+    def filterBikeRate(self, id1: int, id2: int, rawData) -> pd.Series:
+        k = rawData[(rawData["st_id1"] == id1) & (rawData["st_id2"] == id2)]  # 주 목적
+        kk = rawData[(rawData["st_id1"] == id2) & (rawData["st_id2"] == id1)]  # 비교 목적
+        if len(k) and len(kk):
+            rere = len(k) / len(kk)
+            if rere > 0.8:
+                return k
+
+    def filterIn1000M(self, id: int) -> pd.DataFrame:
+        k = self.station[self.station.index == id]
+        tLong = k["longtitude"].values
+        tLat = k["latitude"].values
+        bLong = self.station["longtitude"]
+        bLat = self.station["latitude"]
+        dist = bthaversine_np(tLong, tLat, bLong, bLat)
+
+        subInfoCopy = self.station.copy()
+        subInfoCopy["dist"] = dist
+        bikeSort = subInfoCopy[(dist < 1000)]
+
+        return bikeSort
+
+    def filterConditions(self, id1: int, rawData) -> np.array:
+        id1Value = rawData["st_id2"].value_counts()[1:]
+        id1List = id1Value[id1Value > val].index.to_numpy()
+        id2List = self.filterIn1000M(id1).index.to_numpy()
+
+        # 조건1 최소 대여기록
+        if len(rawData) > 100000:
+            val = 100
+        elif len(rawData) > 50000:
+            val = 50
+        elif len(rawData) > 25000:
+            val = 30
+        else:
+            val = 20
+
+        # 조건 2 최소 1000m 이상 거리
+        filteredidx = id1List[~np.in1d(id1List, id2List)]
+
+        result = [self.filterBikeRate(id1, id2, rawData) for id2 in filteredidx]
+
+        returnValue: np.array = (
+            pd.concat(result)["st_id2"].value_counts().index.to_numpy()
+        )
+        return returnValue
+
+    def arrStation(self, st_id: int) -> pd.DataFrame:
+        filtered_data = self.raw_data(st_id)
+
+        # 대여소 idx 추출
+        station_id = self.filterConditions(st_id, filtered_data).tolist()
+
+        # 대여소 정보 추출
+        result = self.btstation.query("value == @station_id").reset_index(drop=True)
+        # result = btstation.query("value == @station_id").reset_index(drop=True)
+
+        result_station = []
+        for j in result["value"]:
+            # 예상시간 계산
+            BM = filtered_data["st_id2"] == j
+            all_rent = (
+                filtered_data[BM]["riding_time"]
+                .value_counts()
+                .sort_values(ascending=False)
+            )
+
+            ### 대여기록
+            total_record = all_rent.sum()
+
+            k = []
+            i = 2
+            ### 기록 많은 순만 종합
+            while len(k) < 1:
+                k = all_rent[all_rent >= (total_record / i)]
+                i = i * 1.5
+
+            ### 대여시간
+            ind = k.index
+            ### 대여기록
+            val = k.values
+            ### 대여기록 합
+            a = k.sum()
+            ### 대여시간 * 대여기록
+            asddd = sum([a * b for a, b in zip(ind, val)])
+            # 평균 시간
+            ddddd = asddd / a
+
+            # 올림
+            val = round(ddddd, 0)
+
+            ### 이동거리 계산
+            BM = filtered_data["st_id2"] == j
+            all_rent = (
+                filtered_data[BM]["dist"].value_counts().sort_values(ascending=False)
+            )
+
+            dist = (
+                pd.cut(all_rent.index, bins=50)
+                .value_counts()
+                .sort_values(ascending=False)
+            )
+            # 상위 3개 값을 평균냄. mid는 pd.interval 매서드에서 쓰는 변수임.
+            num = 3
+            vals = [dist[:num].index[a].mid * dist.iloc[a] for a in range(num)]
+            avg_dist = sum(vals) / sum(dist.to_list()[:num])
+
+            result_station.append([val, total_record, (round(avg_dist / 1000, 2))])
+
+        df = pd.DataFrame(result_station)
+        data = pd.concat([result, df], axis=1)
+        data.columns = ["value", "label", "coor", "num", "time", "record", "dist"]
+        data = data[data["value"] != st_id]
+
+        return data
+
+    # 예전버전(안정화 시 삭제 필요)
+    def _arrStation(self, st_id: int) -> Dict:
         # 대여소 추출기록
         filtered_data = self.raw_data(st_id)
         st_id1_record = filtered_data.groupby(by="st_id1").size()
