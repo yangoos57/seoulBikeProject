@@ -1,0 +1,191 @@
+:root{
+    --gray-dodo-color : #4F4E4E;
+    --orange-dodo-color : #F2B13D;
+    --background-dodo-color : #FFF5EA;
+    --search-dodo-color : #FFF5EA;
+    --libBox-dodo-color : #83838383;
+    --resultBox-dodo-color : #838383;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+.whole-dodo {
+    background-color: #F5DCDC;
+    font-family: 'NEXON Lighter';
+    height: 100%;
+}
+.main-dodo{
+    background-color: var(--background-dodo-color);
+    width: 100vw;
+    height: 100vh;
+}
+.search-dodo{
+    font-family: 'NEXON';
+    width: 100%;
+    height: 70%;
+    border: 1px solid var(--gray-dodo-color);
+    cursor: text;
+    border-radius: 5px;
+    background-color: var(--orange-dodo-color);
+    color: var(--search-dodo-color);
+    font-size: 17px;
+    display: flex;
+}
+
+.libBox-dodo{
+    display: flex;
+    font-family: 'NEXON';
+    width: 100%;
+    height: 75%;
+    border: 1px solid var(--gray-dodo-color);
+    cursor: text;
+    border-radius: 5px;
+    background-color: var(--background-dodo-color);
+    font-size: 18px;
+    
+}
+.libBox-title-dodo{
+    display: flex;
+    color: var(--gray-dodo-color)
+}
+.libBox-names-dodo{
+    display: flex;
+    color: var(--libBox-dodo-color);
+}
+.libBox-mini-dodo{
+    width: 100%;
+    border: dashed 1px var(--gray-dodo-color);
+    border-radius: 5px;
+    font-family: 'NEXON';
+    color: var(--gray-dodo-color);
+    text-align: center;
+    font-size: 16px;
+}
+
+
+/* checkBox 관련 css */
+/*general styles for all CSS Checkboxes*/
+label {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    }
+    
+input[type=checkbox].css-checkbox {
+    position: absolute; 
+    overflow: hidden; 
+    clip: rect(0 0 0 0); 
+    height:1px; 
+    width:1px; 
+    margin:-1px; 
+    padding:0;
+    border:0;
+}
+
+input[type=checkbox].css-checkbox + label.css-label {
+    padding-left:20px;
+    height:15px; 
+    display:inline-block;
+    line-height:15px;
+    background-repeat:no-repeat;
+    background-position: 0 0;
+    font-size:17px;
+    vertical-align:middle;
+    cursor:pointer;
+}
+
+input[type=checkbox].css-checkbox:checked + label.css-label {
+    background-position: 0 -15px;
+    color :var(--gray-dodo-color);
+}
+.lite-gray-check{background-image:url(http://csscheckbox.com/checkboxes/lite-gray-check.png);}
+/* checkBox 관련 css 끝 */
+
+
+
+input {
+    /* text-align: center; */
+    text-indent: 15px;
+    outline: none
+}
+input::placeholder {
+    color: var(--search-dodo-color);
+}
+input:focus::placeholder {
+    color: transparent;
+  }
+
+.float {
+    position: relative;
+    -webkit-animation: floatBubble 2s infinite  normal ease-out;
+    animation: floatBubble 2s infinite  normal ease-out;
+}
+@-webkit-keyframes floatBubble {
+    0% {
+        top:500px;
+    }
+    100% {
+        top: 0px;
+    }
+}
+@keyframes floatBubble {
+    0% {
+        top:500px;
+    }
+    100% {
+        top: 0px;
+    }
+}
+
+.resultBox-dodo{
+    background-color: var(--resultBox-dodo-color);
+    border: 1px solid var(--gray-dodo-color);
+    width: 100%;
+    /* height: 95%; */
+}
+
+.book-info-dodo{
+    background-color: var(--background-dodo-color);
+    width: 90%;
+    height: 85%;
+    border-radius: 5px;
+}
+
+
+
+
+@media (min-width : 430px){
+    .main-dodo{
+        width: 420px;
+        height: 100vh;
+    }
+    
+}
+
+@media (min-width : 1000px) {
+    .main-dodo{
+
+        width: 420px;
+        height: 100vh;
+    }
+    
+@media (min-width: 1440px) {
+    .main-dodo{
+        width: 420px;
+        height: 100vh;
+    }
+}
+
+@media (min-width: 2160px) {
+    .main-dodo{
+        width: 420px;
+        height: 100vh;
+    }
+}
+
+}
+

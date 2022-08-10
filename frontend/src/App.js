@@ -13,6 +13,8 @@ import BtTitle from "./components/bt/bttitle";
 import PoAbout from "./components/portfolio/poabout";
 import PoProject from "./components/portfolio/poproject";
 import BtWeather from "./components/bt/btweather";
+import DodoTitle from "./components/dodomoa/pagedodoTitle";
+import DoDoResult from "./components/dodomoa/pagedodoResult";
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -32,6 +34,8 @@ function App() {
         <Route path="/ml" element={<MlMain />}></Route>
         <Route path="/ml/search" element={<MlSearchPage />}></Route>
         <Route path="/ml/direction" element={<MlDirection />}></Route>
+        <Route path="/dodo/maintitle" element={<DodoTitle />}></Route>
+        <Route path="/dodo/searchresult" element={<DoDoResult />}></Route>
       </Routes>
     </BrowserRouter>
   );

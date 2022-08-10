@@ -10,6 +10,10 @@ from .serializers import *
 from .models import *
 import time
 
+# from django.db import connection
+# cursor = connection.cursor()
+# cursor.execute('''SELECT count(*) FROM people_person''')
+
 #
 ##
 ###

@@ -44,7 +44,7 @@
 ## 사용법 소개 <a name="tutorial"></a>
 
 <div>
-    <img width=700px src='ReadMeImg/screenshot.svg'>
+    <img width=800px src='ReadMeImg/screenshot.png'>
 </div>
 
 <h4>1. 출발 대여소를 검색하세요.</h4>
@@ -69,9 +69,7 @@
 
 - 앱에서 제공하는 경로를 참고해 본인만의 경로를 고민해보세요.
 
-```diff
-! 6. 여행 준비는 끝났습니다. 마음이 끌리는 길을 따라 목적지까지 여행하세요! :rocket:
-```
+<h4>6. 여행 준비는 끝났습니다. 마음이 끌리는 길을 따라 목적지까지 여행하세요! :rocket:</h4>
 
 ## 앱 사용하기 <a name="apps"></a>
 
