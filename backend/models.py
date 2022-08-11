@@ -69,3 +69,8 @@ class dodomoaBookInfo(models.Model):
     주제분류번호 = models.CharField(max_length=20)
     등록일자 = models.DateField()
     이미지주소 = models.CharField(max_length=100)
+
+
+class dodomoaKeyword2(models.Model):
+    ISBN = models.BigIntegerField(db_index=True)
+    keyword = models.TextField()
