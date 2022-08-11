@@ -16,6 +16,7 @@
     "html-react-parser": "^1.4.14",
     "leaflet": "^1.8.0",
     "leaflet.markercluster": "^1.5.3",
+    "notistack": "^2.0.5",
     "react": "^18.2.0",
     "react-compound-slider": "^3.4.0",
     "react-dom": "^18.2.0",

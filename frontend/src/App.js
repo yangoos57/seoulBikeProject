@@ -34,7 +34,7 @@ function App() {
         <Route path="/ml" element={<MlMain />}></Route>
         <Route path="/ml/search" element={<MlSearchPage />}></Route>
         <Route path="/ml/direction" element={<MlDirection />}></Route>
-        <Route path="/dodo/maintitle" element={<DodoTitle />}></Route>
+        <Route path="/dodo" element={<DodoTitle />}></Route>
         <Route path="/dodo/searchresult" element={<DoDoResult />}></Route>
       </Routes>
     </BrowserRouter>

@@ -2,7 +2,7 @@ import React from "react";
 
 function bookInfoBox(imgurl, title, author, lib, num) {
   return (
-    <div className="flex-container justify-content-center py-2" style={{ height: "35%" }}>
+    <div className="flex-container justify-content-center py-2" style={{ height: "160px" }}>
       {/* Beige 색 박스 설정 */}
       <div
         className="flex-container mx-auto p-2"
@@ -44,10 +44,10 @@ const DoDoBookList = ({ item }) => {
           color: "#FFF5EA",
           fontWeight: "bolder",
         }}>
-        총 100건 검색
+        총 {item.length}건 검색
       </div>
       {/* 도서 정보 보여주는 칸 */}
-      <div className="flex-container" style={{ overflow: "hidden", height: "460px" }}>
+      <div className="flex-container bookList-dodo" style={{ overflow: "hidden" }}>
         <div className="flex-column" style={{ overflow: "auto", width: "100%" }}>
           {" "}
           {item.map((v) => {
@@ -56,8 +56,8 @@ const DoDoBookList = ({ item }) => {
         </div>
       </div>
       {/* 밑에 더 있다는 표시 */}
-      <div class="mx-auto pt-1" style={{ flexBasis: "7%" }}>
-        <i class="fa-solid fa-play fa-rotate-90"></i>
+      <div className="mx-auto pt-1" style={{ flexBasis: "7%" }}>
+        <i className="fa-solid fa-play fa-rotate-90"></i>
       </div>
     </div>
   );

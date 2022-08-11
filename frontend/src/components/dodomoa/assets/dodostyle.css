@@ -19,6 +19,8 @@
     background-color: var(--background-dodo-color);
     width: 100vw;
     height: 100vh;
+    max-height: 950px;
+    max-width: 420px;
 }
 .search-dodo{
     font-family: 'NEXON';
@@ -29,7 +31,7 @@
     border-radius: 5px;
     background-color: var(--orange-dodo-color);
     color: var(--search-dodo-color);
-    font-size: 17px;
+    font-size: 16px;
     display: flex;
 }
 
@@ -52,15 +54,6 @@
 .libBox-names-dodo{
     display: flex;
     color: var(--libBox-dodo-color);
-}
-.libBox-mini-dodo{
-    width: 100%;
-    border: dashed 1px var(--gray-dodo-color);
-    border-radius: 5px;
-    font-family: 'NEXON';
-    color: var(--gray-dodo-color);
-    text-align: center;
-    font-size: 16px;
 }
 
 
@@ -97,7 +90,6 @@ input[type=checkbox].css-checkbox + label.css-label {
     vertical-align:middle;
     cursor:pointer;
 }
-
 input[type=checkbox].css-checkbox:checked + label.css-label {
     background-position: 0 -15px;
     color :var(--gray-dodo-color);
@@ -106,10 +98,35 @@ input[type=checkbox].css-checkbox:checked + label.css-label {
 /* checkBox 관련 css 끝 */
 
 
+/* dodominilib-popover */
+.libBox-mini-dodo{
+    width: 100%;
+    border: dashed 1px var(--gray-dodo-color);
+    border-radius: 5px;
+    font-family: 'NEXON';
+    color: var(--gray-dodo-color);
+    text-align: center;
+    font-size: 16px;
+}
+
+
+.MuiPopover-paper{
+    background-color: transparent !important;
+    color : transparent !important;
+    border: 0px !important;
+    box-shadow: none !important;
+}
+.MuiButtonBase-root.MuiButton-root{
+    box-shadow: none !important;
+}
+.MuiButtonBase-root.MuiButton-root:hover{
+    background-color: var(--orange-dodo-color) !important;
+    color: var(--search-dodo-color);    
+}
 
 input {
     /* text-align: center; */
-    text-indent: 15px;
+    text-indent: 10px;
     outline: none
 }
 input::placeholder {
@@ -156,36 +173,15 @@ input:focus::placeholder {
 }
 
 
+.bookList-dodo{
+    height: 460px;
+}
 
 
-@media (min-width : 430px){
-    .main-dodo{
-        width: 420px;
-        height: 100vh;
+@media (min-height : 890px){
+    .bookList-dodo{
+        height: 600px;
     }
     
-}
-
-@media (min-width : 1000px) {
-    .main-dodo{
-
-        width: 420px;
-        height: 100vh;
-    }
-    
-@media (min-width: 1440px) {
-    .main-dodo{
-        width: 420px;
-        height: 100vh;
-    }
-}
-
-@media (min-width: 2160px) {
-    .main-dodo{
-        width: 420px;
-        height: 100vh;
-    }
-}
-
 }
 
