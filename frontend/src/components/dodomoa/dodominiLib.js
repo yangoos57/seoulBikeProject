@@ -1,26 +1,32 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import miniLogo from "./assets/minilogo.svg";
 import DodoPopOver from "./dodopopover";
 // Main Function
-const DoDominiLib = ({ libs }) => {
+const DoDominiLib = ({ libs, checkedInputs, setCheckedInputs }) => {
   // libs = 선택한 도서관 개수 보여주기
 
   // 선택한 도서관 개수에 따라 제공되는 표현 달라짐
   if (libs.length > 1) {
-    var val = libs[0] + " 외 " + (libs.length - 1);
+    var libName = libs[0] + " 외 " + (libs.length - 1);
   } else if (libs.length === 1) {
-    var val = libs[0];
+    libName = libs[0];
+  } else {
+    libName = "도서관을 선택하세요";
   }
 
   return (
     <div className="flex-container align-items-end mb-1">
-      <div className="d-flex" style={{ flexBasis: "50%" }}>
-        <img width="150px" src={miniLogo} alt="" />
-      </div>
+      {/* 도도모아 로고 클릭 시 메인페이지로 이동 */}
+      <Link to="/dodo" style={{ textDecoration: "none", flexBasis: "50%" }}>
+        <div className="d-flex">
+          <img width="150px" src={miniLogo} alt="" />
+        </div>
+      </Link>
       <div className="d-flex" style={{ flexBasis: "50%", cursor: "pointer" }}>
         <div className="libBox-mini-dodo">
-          {" "}
-          <DodoPopOver name={val} />
+          {/* 도서관 리스트 띄우기 */}
+          <DodoPopOver name={libName} checkedInputs={checkedInputs} setCheckedInputs={setCheckedInputs} />
         </div>
       </div>
     </div>

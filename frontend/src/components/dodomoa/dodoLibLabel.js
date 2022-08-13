@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const libName1 = [
   "강남도서관",
@@ -55,6 +55,15 @@ function CustomInput(v, i, setCheckedInputs, checkedInputs) {
 }
 
 const DodoLabel = ({ checkedInputs, setCheckedInputs }) => {
+  // 값 유지시키기
+  useEffect(() => {
+    if (checkedInputs.length !== 0) {
+      checkedInputs.map((id) => {
+        var a = document.getElementById(id);
+        a.checked = true;
+      });
+    }
+  });
   return (
     <div className="mx-auto libBox-dodo flex-column ">
       <div className=" libBox-title-dodo" style={{ flexBasis: "18%" }}>

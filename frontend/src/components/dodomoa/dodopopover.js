@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import DodolibLabel from "./dodoLibLabel";
 
-export default function BasicPopover({ name }) {
+export default function BasicPopover({ name, checkedInputs, setCheckedInputs }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -43,7 +43,7 @@ export default function BasicPopover({ name }) {
             height: "450px",
             "& .MuiPopover-paper": { backgroundColor: "transparent" },
           }}>
-          <DodolibLabel />
+          <DodolibLabel checkedInputs={checkedInputs} setCheckedInputs={setCheckedInputs} />
         </Typography>
       </Popover>
     </div>

@@ -11,7 +11,7 @@ function DoDoLogo() {
   const [libInfo, setLibInfo] = useState([]);
 
   // 정보종합
-  const values = { keyword: keyword, lib: libInfo };
+  const values = { keyword: keyword, library: libInfo };
 
   return (
     <div className="flex-container flex-column mx-auto" style={{ width: "80%" }}>
@@ -23,6 +23,7 @@ function DoDoLogo() {
       </div>
       <div className="flex-container mx-auto " style={{ flexBasis: "60%" }}>
         <DodoLibLabel checkedInputs={libInfo} setCheckedInputs={setLibInfo} />
+        {console.log(libInfo)}
       </div>
     </div>
   );

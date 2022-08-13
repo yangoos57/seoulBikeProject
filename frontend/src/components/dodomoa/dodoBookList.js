@@ -1,6 +1,15 @@
 import React from "react";
 
 function bookInfoBox(imgurl, title, author, lib, num) {
+  if (title.length > 30) {
+    title = title.substring(0, 25) + "...";
+  }
+  if (author.length > 10) {
+    author = author.substring(0, 10) + "...";
+  }
+  if (lib.length > 10) {
+    lib = lib.substring(0, 10) + "...";
+  }
   return (
     <div className="flex-container justify-content-center py-2" style={{ height: "160px" }}>
       {/* Beige 색 박스 설정 */}
@@ -9,7 +18,7 @@ function bookInfoBox(imgurl, title, author, lib, num) {
         style={{
           backgroundColor: "var(--background-dodo-color)",
           width: "90%",
-          height: "90%",
+          height: "95%",
           borderRadius: "5px",
         }}>
         {/* Book Info 배치 : 이미지 35% 나머지 65% */}
@@ -20,10 +29,14 @@ function bookInfoBox(imgurl, title, author, lib, num) {
         </div>
         <div style={{ flexBasis: "65%" }}>
           {" "}
-          <div style={{ fontSize: "16px", fontWeight: "Bolder" }}>{title}</div>
-          <div style={{ fontSize: "10px", fontWeight: "Bolder" }}>저자 : {author}</div>
-          <div style={{ fontSize: "10px", fontWeight: "Bolder" }}>도서관 : {lib}</div>
-          <div style={{ fontSize: "10px", fontWeight: "Bolder" }}>청구기호 : {num}</div>
+          <div
+            className="mb-1"
+            style={{ fontSize: "16px", fontWeight: "Bolder", color: "#4F4E4E", fontFamily: "NEXON" }}>
+            {title}
+          </div>
+          <div style={{ fontSize: "1px", fontWeight: "bold" }}>저자 : {author}</div>
+          <div style={{ fontSize: "10px", fontWeight: "bold" }}>도서관 : {lib}</div>
+          <div style={{ fontSize: "10px", fontWeight: "bold" }}>청구기호 : {num}</div>
         </div>
       </div>
     </div>
@@ -40,7 +53,6 @@ const DoDoBookList = ({ item }) => {
         style={{
           paddingRight: "5%",
           flexBasis: "5%",
-          fontSize: "16px", //
           color: "#FFF5EA",
           fontWeight: "bolder",
         }}>
