@@ -4,49 +4,27 @@ import DodoSearch from "./dodoSearch";
 import DoDominiLib from "./dodominiLib";
 import DoDoBookList from "./dodoBookList";
 import { useSearchParams } from "react-router-dom";
-
-const item = [
-  {
-    url: "http://image.kyobobook.co.kr/images/book/large/359/l9791158393359.jpg",
-    title: "SQL로 시작하는 데이터 분석 데이터 분석 데이터 분석 데이터 분석",
-    author: "이기창 지음 이기창 지음 이기창 지음 ",
-    lib: "양천, 강서, 염창, 노량진 ",
-    num: "005.1",
-  },
-  {
-    url: "http://image.kyobobook.co.kr/images/book/large/359/l9791158393359.jpg",
-    title: "SQL로 시작하는 데이터 분석",
-    author: "이기창 지음",
-    lib: ["양천 ", "강서 "],
-    num: "005.1",
-  },
-  {
-    url: "http://image.kyobobook.co.kr/images/book/large/359/l9791158393359.jpg",
-    title: "SQL로 시작하는 데이터 분석",
-    author: "이기창 지음",
-    lib: ["양천 ", "강서 "],
-    num: "005.1",
-  },
-  {
-    url: "http://image.kyobobook.co.kr/images/book/large/359/l9791158393359.jpg",
-    title: "SQL로 시작하는 데이터 분석",
-    author: "이기창 지음",
-    lib: ["양천 ", "강서 "],
-    num: "005.1",
-  },
-];
+import axios from "axios";
 
 function DoDoResultPage() {
+  const [item, setItem] = useState([
+    {
+      url: "",
+      title: "",
+      author: "",
+      lib: "",
+      num: "",
+    },
+  ]);
   const [keyword, setKeyword] = useState("");
   const [libInfo, setLibInfo] = useState([]);
   const values = { keyword: keyword, library: libInfo };
 
   // get params
   const [searchParams] = useSearchParams();
-  const searhedParams = [...searchParams];
-
+  const searchedParams = [...searchParams];
   // lib 정보 가져오기
-  const val = searhedParams
+  const val = searchedParams
     .filter((e) => {
       if (e.includes("library")) return e;
     })
@@ -59,12 +37,17 @@ function DoDoResultPage() {
     setKeyword(searchParams.get("keyword"));
     setLibInfo(val);
   }, []);
+  // searchedParams update 될때마다 실행
+  useEffect(() => {
+    axios.post("api/book", { keyword: searchParams.get("keyword"), library: val }).then((res) => {
+      setItem(res.data);
+    });
+  }, [searchParams]);
 
   return (
     <div className="flex-container flex-column mx-auto" style={{ width: "80%", position: "relative" }}>
       <div className="flex-container" style={{ height: "100px" }}>
         <DoDominiLib libs={libInfo} checkedInputs={libInfo} setCheckedInputs={setLibInfo} />
-        {console.log(keyword)}
       </div>
       <div className="flex-container mx-auto" style={{ flexBasis: "10%" }}>
         <DodoSearch placeholder={searchParams.get("keyword")} setCheckedInputs={setKeyword} values={values} />

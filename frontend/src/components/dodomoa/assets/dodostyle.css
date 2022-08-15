@@ -2,7 +2,8 @@
     --gray-dodo-color : #4F4E4E;
     --orange-dodo-color : #F2B13D;
     --background-dodo-color : #FFF5EA;
-    --search-dodo-color : #FFF5EA;
+    --search-dodo-color : #4F4E4E;
+    /* --search-dodo-color : #FFF5EA; */
     --libBox-dodo-color : #83838383;
     --resultBox-dodo-color : #838383;
 }

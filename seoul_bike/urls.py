@@ -26,6 +26,7 @@ urlpatterns = [
     path("bikeTour/api/weather", functions.weather),
     path("bikeTour/api/direction", functions.btdirection),
     path("bikeTour/api/near500m", functions.btnear_500),
+    path("dodo/api/book", functions.dodoMoa),
     re_path(r"", HomeTemplateView.as_view(), name="home"),
 ]
 

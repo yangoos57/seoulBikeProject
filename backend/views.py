@@ -1,7 +1,9 @@
+from ast import keyword
 from urllib import response
 from .btutils import *
 from .mlutils import *
 from .dashutils import *
+from .dodoutils import *
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import viewsets, views
@@ -13,6 +15,15 @@ import time
 # from django.db import connection
 # cursor = connection.cursor()
 # cursor.execute('''SELECT count(*) FROM people_person''')
+
+#####
+@api_view(["Post"])
+def dodoMoa(request) -> Dict:
+    libName = request.data.get("library")
+    userWords = request.data.get("keyword")
+    result = createBookList(libName, userWords)
+    return Response(result.to_dict("records"))
+
 
 #
 ##
