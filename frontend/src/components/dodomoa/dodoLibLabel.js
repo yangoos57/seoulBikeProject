@@ -38,16 +38,16 @@ function CustomInput(v, i, setCheckedInputs, checkedInputs) {
     }
   };
   return (
-    <div className="ms-3" key={i}>
+    <div className="ms-3 libNameCover" key={i}>
       <input
         type="checkbox"
-        className="css-checkbox"
+        className="css-checkbox "
         id={v}
         onChange={(e) => {
           changeHandler(e.target.checked, e.target.id);
         }}
       />
-      <label for={v} className="css-label lite-gray-check" name="checkbox1_lbl">
+      <label for={v} className="css-label lite-gray-check libName" name="checkbox1_lbl">
         {v}
       </label>
     </div>
@@ -66,8 +66,8 @@ const DodoLabel = ({ checkedInputs, setCheckedInputs }) => {
   });
   return (
     <div className="mx-auto libBox-dodo flex-column ">
-      <div className=" libBox-title-dodo" style={{ flexBasis: "18%" }}>
-        <div className="m-auto">도서관을 선택하세요</div>
+      <div className="libBox-title-dodo" style={{ flexBasis: "18%" }}>
+        <div className="m-auto libTitle">도서관을 선택하세요</div>
       </div>
       <div className="libBox-names-dodo">
         <div className="flex-container">

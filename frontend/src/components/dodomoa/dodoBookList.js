@@ -11,7 +11,7 @@ function bookInfoBox(imgurl, title, author, lib, num) {
     lib = lib.substring(0, 10) + "...";
   }
   return (
-    <div className="flex-container justify-content-center py-2" style={{ height: "160px" }}>
+    <div className="flex-container justify-content-center py-2 bookListBox">
       {/* Beige 색 박스 설정 */}
       <div
         className="flex-container mx-auto p-2"
@@ -27,16 +27,12 @@ function bookInfoBox(imgurl, title, author, lib, num) {
             <img style={{ width: "100%", border: "0.3px solid #4F4E4E" }} src={imgurl} alt="" />
           </div>
         </div>
-        <div style={{ flexBasis: "65%" }}>
+        <div className="flex-container flex-column" style={{ flexBasis: "65%" }}>
           {" "}
-          <div
-            className="mb-1"
-            style={{ fontSize: "16px", fontWeight: "Bolder", color: "#4F4E4E", fontFamily: "NEXON" }}>
-            {title}
-          </div>
-          <div style={{ fontSize: "1px", fontWeight: "bold" }}>저자 : {author}</div>
-          <div style={{ fontSize: "10px", fontWeight: "bold" }}>도서관 : {lib}</div>
-          <div style={{ fontSize: "10px", fontWeight: "bold" }}>청구기호 : {num}</div>
+          <div className="mb-1 bookTitleInfo">{title}</div>
+          <div className="bookInfo">저자 : {author}</div>
+          <div className="bookInfo">도서관 : {lib}</div>
+          <div className="bookInfo">청구기호 : {num}</div>
         </div>
       </div>
     </div>
@@ -68,9 +64,9 @@ const DoDoBookList = ({ item }) => {
         </div>
       </div>
       {/* 밑에 더 있다는 표시 */}
-      <div className="mx-auto pt-1" style={{ flexBasis: "7%" }}>
+      {/* <div className="mx-auto pt-1" style={{ flexBasis: "7%" }}>
         <i className="fa-solid fa-play fa-rotate-90"></i>
-      </div>
+      </div> */}
     </div>
   );
 };

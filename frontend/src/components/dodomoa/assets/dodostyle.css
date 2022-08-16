@@ -18,10 +18,8 @@
 }
 .main-dodo{
     background-color: var(--background-dodo-color);
-    width: 100vw;
     height: 100vh;
-    max-height: 950px;
-    max-width: 420px;
+    width: 420px;
 }
 .search-dodo{
     font-family: 'NEXON';
@@ -35,6 +33,18 @@
     font-size: 16px;
     display: flex;
 }
+.searchIcon{
+    background-color: #F2B13D;
+    border: 0px;
+    padding: 0px;
+    position: absolute;
+    height: 55%;
+    bottom: 22%;
+    width: 15%;
+    right: 0.5%;
+    text-decoration: none;
+    cursor: pointer;
+  }
 
 .libBox-dodo{
     display: flex;
@@ -173,16 +183,59 @@ input:focus::placeholder {
     border-radius: 5px;
 }
 
-
 .bookList-dodo{
     height: 460px;
 }
+.bookListBox{ 
+    height: 160px
+ }
+.bookInfo{ font-size: 12px; 
+    font-weight: bold; 
+    flex-basis: 10% 
+}
+.bookTitleInfo{ 
+    font-size: 16px ; 
+    font-weight: Bolder ;
+    color: #4F4E4E ;
+    font-family: "NEXON" ;
+    flex-basis: 50% 
+}
 
 
-@media (min-height : 890px){
-    .bookList-dodo{
-        height: 600px;
+
+
+@media (min-width : 1441px){
+    .main-dodo{
+        width: 550px;
     }
-    
+    .search-dodo{
+        font-size: 20px;
+        height: 60%;
+    }
+    .libTitle{
+        font-size: 25px;
+    }
+    .libName{
+        font-size: 25px !important;
+    }
+    .libNameCover{
+        margin-bottom: 15px ;
+        margin-left: 30px !important;
+    }
+    .titleLogo{
+        width: 300px;
+    }
+    .searchIcon{
+        bottom: 22%;
+    }
+    .bookListBox{ 
+        height: 220px
+    }
+    .bookInfo{
+        font-size: 17px;
+    }
+    .bookTitleInfo{
+        font-size: 20px;
+    }
 }
 

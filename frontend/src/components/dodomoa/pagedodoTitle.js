@@ -16,7 +16,7 @@ function DoDoLogo() {
   return (
     <div className="flex-container flex-column mx-auto" style={{ width: "80%" }}>
       <div className="d-flex mx-auto align-items-end" style={{ flexBasis: "30%" }}>
-        <img width="200px" src={mainLogo} alt="" />
+        <img className="titleLogo" src={mainLogo} alt="" />
       </div>
       <div className="flex-container mx-auto mb-2" style={{ flexBasis: "10%" }}>
         <DodoSearch placeholder="키워드를 검색하세요. ex) 파이썬, SQL" setCheckedInputs={setKeyword} values={values} />

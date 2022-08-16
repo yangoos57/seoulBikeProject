@@ -10,10 +10,10 @@ function DoDoResultPage() {
   const [item, setItem] = useState([
     {
       url: "",
-      title: "",
-      author: "",
-      lib: "",
-      num: "",
+      title: "123123",
+      author: "12312313",
+      lib: "1231231",
+      num: "123123",
     },
   ]);
   const [keyword, setKeyword] = useState("");

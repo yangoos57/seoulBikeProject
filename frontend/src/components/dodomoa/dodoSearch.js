@@ -40,22 +40,7 @@ const DodoSearch = ({ placeholder, setCheckedInputs, values }) => {
         className="m-auto search-dodo"
         onChange={(e) => setCheckedInputs(e.target.value)}
       />
-      <div
-        onClick={() => clickSearch(values, navigate)}
-        className="d-flex"
-        style={{
-          // backgroundColor: "white",
-          backgroundColor: "#F2B13D",
-          border: "0px",
-          padding: "0px",
-          position: "absolute",
-          height: "65%",
-          width: "15%",
-          right: "1%",
-          bottom: "17%",
-          textDecoration: "none",
-          cursor: "pointer",
-        }}>
+      <div onClick={() => clickSearch(values, navigate)} className="d-flex searchIcon">
         <i className="fa fa-search fa-lg m-auto" aria-hidden="true" style={{ color: "#4F4E4E" }} />
       </div>
     </div>
