@@ -9,7 +9,9 @@ const PoMainFrame = ({ children }) => {
       <div className="poViewPort">
         <div className="poMainFrame">
           <header className="poNavBar">
-            <div className="my-auto h4" style={{ flexBasis: "15%" }}>
+            {/* Hello Word */}
+            {/* NavBar 임시 제거 */}
+            {/* <div className="my-auto h4" style={{ flexBasis: "15%" }}>
               <Link to="/" className="leewayLink">
                 LEEWAY
               </Link>
@@ -19,7 +21,7 @@ const PoMainFrame = ({ children }) => {
             </div>
             <div className="my-auto mobile" style={{ flexBasis: "5%" }}>
               <PoNavBarMobile></PoNavBarMobile>
-            </div>
+            </div> */}
           </header>
           <div className="poBody" style={{ flexBasis: "90%" }}>
             {children}
