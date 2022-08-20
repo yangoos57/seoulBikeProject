@@ -106,7 +106,7 @@ celerybeat.pid
 .env.dev
 .venv
 env/
-venv/
+venv2/
 ENV/
 env.bak/
 venv.bak/
@@ -141,3 +141,8 @@ parquet/
 ## 
 settings.py
 .DS_Store
+
+##
+backend/assets/data/
+backend/miniproject/
+backend/practice/

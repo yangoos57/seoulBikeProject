@@ -18,7 +18,7 @@ def separateKeyword(words):
 
 # 영문을 한글로 변환
 def transToHan(words: list) -> list:
-    EngToKorDict = pd.read_csv("backend/assets/englist.csv", index_col=0)
+    EngToKorDict = pd.read_csv("backend/assets/dodomoa/englist.csv", index_col=0)
     result = []
     for word in words:
         enToko = EngToKorDict[EngToKorDict["0"].isin([word])]

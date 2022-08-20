@@ -98,8 +98,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "frontend", "build", "static"),
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "dashboard/static")  # 미디어 파일이 저장될 경로 설정
-MEDIA_URL = "/data_viz/dashboard/data/"  # 각 media 파일에 대한 url 고정값
+# MEDIA_ROOT = os.path.join(BASE_DIR, "dashboard/static")  # 미디어 파일이 저장될 경로 설정
+# MEDIA_URL = "/data_viz/dashboard/data/"  # 각 media 파일에 대한 url 고정값
 
 # 여기서 uni가 프로젝트 이름이고, main이 app이름 이다.
 
