@@ -146,3 +146,5 @@ settings.py
 backend/assets/data/
 backend/miniproject/
 backend/practice/
+sub/
+dashboard/

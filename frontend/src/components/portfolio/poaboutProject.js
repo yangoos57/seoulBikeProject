@@ -81,9 +81,7 @@ const poProject = () => {
                 <ul>
                   <li className="me-auto">클러스터링 기법 활용, 오염된 대여 데이터를 제거함으로써 추천 신뢰도 제고</li>
                   <li className="me-auto">지도 시각화 숙달...(내용추가) </li>
-                  <li className="me-auto">
-                    백엔드,프론트엔드 분야를 학습하고 숙달함으로서 MVP 개발에 대한 기초 역량 함양
-                  </li>
+                  <li className="me-auto">백엔드,프론트엔드를 직접 구현하면서 MVP 개발에 대한 기초 역량 함양</li>
                 </ul>
               </div>
             </div>
