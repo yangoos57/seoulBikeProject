@@ -9,7 +9,7 @@ import MlTitle from "./components/ml/mltitle";
 import BtTemplate from "./components/bt/pagebtdep";
 import BtArrival from "./components/bt/pagebtarrival";
 import BtDirection from "./components/bt/pagebtdirection";
-import BtTitle from "./components/bt/bttitle";
+import BtTitle from "./components/bt/pagebttitle";
 import PoAbout from "./components/portfolio/poabout";
 import PoProject from "./components/portfolio/poproject";
 import BtWeather from "./components/bt/btweather";

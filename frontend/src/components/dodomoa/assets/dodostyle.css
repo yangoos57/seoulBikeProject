@@ -206,7 +206,7 @@ input:focus::placeholder {
 
 @media (min-width : 1441px){
     .main-dodo{
-        width: 550px;
+        width: 576px;
     }
     .search-dodo{
         font-size: 20px;

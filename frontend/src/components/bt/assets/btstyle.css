@@ -9,18 +9,36 @@
 
 
 
-.whole-bk{
+.btWhole{
     background-color: rgb(249, 243, 233);
     font-family: 'NEXON Lighter';
     height: 100%;
 }
 
+.btMain{
+    background-color: var(--background-ml-color);
+    height: 100vh;
+    width: 420px;
+}
 
 .weather{
     border-radius: 10px;
     border: 0.5px dashed var(--black-color);
     justify-content: space-between;
+    padding: 5px;
+}
+.weather .fontSet{
+    font-weight: bold;
+    color: var(--black-color);
+    font-size: 18px;
+}
+.weather .iconSize{
+    width: 30px;
+    height: 30px;
+}
 
+.btTooltipInfo{
+    font-size: 16px;
 }
 
 /* filter */
@@ -34,12 +52,117 @@
     /* display: none; */
     display:flex
 }
+.filterBoxStyle{
+    flex-basis: 30%;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+
 .filterBox .slider{
     position: absolute;
     top: 30%;
     left: 14%;
     width: 100%;
 }
+
+.markercluster-map { height: 90vh; }
+
+
+.btTitle {
+        font-size: 40px;
+        font-family: "NEXON";
+        line-height: 120%;
+}
+.btTitleLogo {
+    font-size: 28px;
+    font-family: "NEXON";
+    line-height: 120%;
+}
+.btSelect{
+        flex-basis: 30%;
+        border: 0.9px dashed black;
+        width: 80%;
+        cursor: text;
+        border-radius: 5px;
+}
+.btStationInfo{
+    flex-basis: 30%;
+    padding: 10px;
+    width: 80%;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+}
+.fontSet{
+    font-size: 22px;
+}
+
+.btInfoBox{
+    font-size: 19px;
+}
+.btInfoBox .fontSet{
+    font-size: 18px;
+}
+.directionFontSet{
+    font-size: 16px;
+  }
+
+@media (min-width : 1441px){
+    .btMain{
+        width: 576px;
+    }
+    .btTitleLogo {
+        font-size: 40px;
+        font-family: "NEXON";
+        line-height: 120%;
+    }
+    .weather{
+        border: 1.5px dashed var(--black-color);
+    }
+    .weather .fontSet{
+        font-size: 26px;
+    }
+    .weather .iconSize{
+        width: 45px;
+        height: 45px;
+    }
+    .btSelect{
+        flex-basis: 30%;
+        border: 1.5px dashed black;
+        width: 80%;
+        cursor: text;
+        border-radius: 5px;
+}
+    .btTooltipInfo{
+        font-size: 20px;
+    }
+    .btInfoBox{
+        font-size: 26px;
+    }
+    .btInfoBox .fontSet{
+        font-size: 24px;
+    }
+    .fontSet{
+        font-size: 32px;
+    }
+    .filterBoxStyle{
+        font-size: 26px;
+
+      }
+      .directionFontSet{
+        font-size: 24px;
+      }
+}
+
+
+@media (min-height : 992px){
+    .btMain{
+        height: 95vh;
+    }
+}
+
 
 /* leaflet */
 .leaflet-popup-tip {
@@ -59,10 +182,4 @@
 .leaflet-tooltip-right:before{
     background-color: var(--black-color) !important;
     border: 0px !important;
-}
-
-.markercluster-map { height: 90vh; }
-
-.svgTest{
-    fill: red !important;
 }

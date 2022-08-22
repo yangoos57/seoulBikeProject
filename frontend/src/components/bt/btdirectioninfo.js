@@ -1,5 +1,8 @@
 import React from "react";
-
+function newLabel(dep) {
+  if (dep["label"].length > 15) return dep["label"].substring(0, 15) + " ...";
+  else return dep["label"];
+}
 const BtDirctionInfo = ({ dep, arr }) => {
   return (
     <div
@@ -25,37 +28,37 @@ const BtDirctionInfo = ({ dep, arr }) => {
         {/* 1 */}
         <div style={{ flexBasis: "5%" }}> </div>
         {/* 2 */}
-        <div className="d-flex" style={{ flexBasis: "15%" }}>
-          <div className="my-auto" style={{ fontFamily: "NEXON", flexBasis: "15%" }}>
+        <div className="me-auto d-flex directionFontSet" style={{ flexBasis: "15%" }}>
+          <div className="ms-3 my-auto directionFontSet" style={{ fontFamily: "NEXON" }}>
             출발
           </div>
-          <div className="my-auto ms-2" style={{ flexBasis: "80%" }}>
-            {dep["label"]}
+          <div className="my-auto ms-3 directionFontSet" style={{}}>
+            {newLabel(dep)}
           </div>
         </div>
         {/* 3 */}
-        <div className="my-2" style={{ flexBasis: "5%", marginLeft: "5px" }}>
+        <div className="ms-4 me-auto my-2 directionFontSet">
           <i className="fa-solid fa-arrow-down"></i>
         </div>
         {/* 4 */}
-        <div className="d-flex" style={{ flexBasis: "15%" }}>
-          <div className="my-auto" style={{ fontFamily: "NEXON", flexBasis: "15%" }}>
+        <div className="ms-3 me-auto d-flex directionFontSet" style={{ flexBasis: "15%" }}>
+          <div className="my-auto directionFontSet" style={{ fontFamily: "NEXON" }}>
             도착
           </div>
-          <div className="my-auto ms-2" style={{ flexBasis: "80%" }}>
-            {arr["label"]}
-          </div>
+          <div className="my-auto ms-3 directionFontSet">{newLabel(arr)}</div>
         </div>
         {/* 5 */}
-        <div className="p-1" style={{ flexBasis: "10%" }}></div>
+        <div className="p-1 " style={{ flexBasis: "10%" }}></div>
         {/* 6 */}
-        <div className="d-flex" style={{ flexBasis: "20%" }}>
-          <div className="my-auto" style={{ fontFamily: "NEXON" }}>
-            예상도착시간
+        <div className="d-flex ms-3" style={{ flexBasis: "15%" }}>
+          <div className="my-auto directionFontSet" style={{ fontFamily: "NEXON" }}>
+            예상시간
           </div>
-          <div className="my-auto ms-2" style={{ fontSize: "18px" }}>
-            {arr["time"]} 분
+          <div className="my-auto ms-2 directionFontSet">{arr["time"]} 분</div>
+          <div className="ms-4 my-auto directionFontSet" style={{ fontFamily: "NEXON" }}>
+            예상거리
           </div>
+          <div className="my-auto ms-2 directionFontSet">{arr["dist"]} km</div>
         </div>
       </div>
     </div>

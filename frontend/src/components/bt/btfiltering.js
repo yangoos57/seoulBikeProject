@@ -1,14 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 const BtFiltering = ({ setClickedName, clickedName }) => {
-  const boxStyle = {
-    flexBasis: "30%",
-    backgroundColor: "var(--silver-color)",
-    fontSize: "16px",
-    borderRadius: "5px",
-    cursor: "pointer",
-    marginBottom: "10px",
-  };
-  function MouseOn(e) {
+  function mouseOn(e) {
     e.currentTarget.style.backgroundColor = "var(--green-color)";
     e.currentTarget.style.color = "var(--silver-color)";
   }
@@ -19,13 +11,15 @@ const BtFiltering = ({ setClickedName, clickedName }) => {
 
   function mouseClick(e) {
     e.target.innerText !== clickedName ? setClickedName(e.target.innerText) : setClickedName(undefined);
+    e.currentTarget.style.backgroundColor = "var(--green-color)";
+    e.currentTarget.style.color = "var(--black-color)";
   }
+
   return (
-    <div className="flex-container flex-column w-100">
+    <div className="flex-container flex-column fontSet">
       <div
         style={{
-          color: "var(--black-color)", //
-          fontSize: "20px",
+          color: "var(--black-color)",
           fontFamily: "NEXON",
           flexBasis: "50%",
         }}>
@@ -33,28 +27,29 @@ const BtFiltering = ({ setClickedName, clickedName }) => {
       </div>
       <div className="d-flex justify-content-between" style={{ flexBasis: "50%" }}>
         <div
-          className="d-flex px-2"
-          style={boxStyle} //
-          onMouseOver={MouseOn}
-          onMouseOut={mouseOut}
-          onClick={mouseClick}>
-          <div className="m-auto">여행시간</div>
+          className="d-flex px-2 filterBoxStyle"
+          //
+          onMouseOver={clickedName === "이동시간" ? undefined : mouseOn}
+          onMouseOut={clickedName === "이동시간" ? undefined : mouseOut}
+          onClick={mouseClick}
+          style={{ backgroundColor: clickedName === "이동시간" ? "var(--green-color)" : "var(--silver-color)" }}>
+          <div className="m-auto">이동시간</div>
         </div>
         <div
-          className="d-flex px-2 py-1 "
-          style={boxStyle}
-          onMouseOver={MouseOn}
-          onMouseOut={mouseOut}
-          onClick={mouseClick}>
+          className="d-flex px-2 filterBoxStyle py-1"
+          onMouseOver={clickedName === "이동거리" ? undefined : mouseOn}
+          onMouseOut={clickedName === "이동거리" ? undefined : mouseOut}
+          onClick={mouseClick}
+          style={{ backgroundColor: clickedName === "이동거리" ? "var(--green-color)" : "var(--silver-color)" }}>
+          <div className="m-auto">이동거리</div>
+        </div>
+        <div
+          className="d-flex px-2 filterBoxStyle py-1 "
+          onMouseOver={clickedName === "대여기록" ? undefined : mouseOn}
+          onMouseOut={clickedName === "대여기록" ? undefined : mouseOut}
+          onClick={mouseClick}
+          style={{ backgroundColor: clickedName === "대여기록" ? "var(--green-color)" : "var(--silver-color)" }}>
           <div className="m-auto">대여기록</div>
-        </div>
-        <div
-          className="d-flex px-2 py-1"
-          style={boxStyle}
-          onMouseOver={MouseOn}
-          onMouseOut={mouseOut}
-          onClick={mouseClick}>
-          <div className="m-auto">여행거리</div>
         </div>
       </div>
     </div>

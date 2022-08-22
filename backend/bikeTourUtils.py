@@ -29,6 +29,37 @@ def haversine_np(lon1: float, lat1: float, lon2: float, lat2: float) -> np.array
     return m
 
 
+def near_500m(coor: List) -> pd.DataFrame:
+
+    """
+    - haversine을 이용, 현재 위치 반경 500m 내 대여소 정보를 불러온다.
+    """
+
+    station = pd.read_csv(
+        "backend/assets/bikeTour/seoul_bike_station_01_12.csv",
+        encoding="CP949",
+        index_col=0,
+    )
+    print("station")
+    btstation_info = pd.read_csv(
+        "backend/assets/bikeTour/bkstation_info(backup).csv",
+        encoding="CP949",
+        index_col=0,
+    )
+
+    # 거리 계산
+    dist = haversine_np(coor[0], coor[1], station["latitude"], station["longtitude"])
+
+    station["dist"] = dist
+
+    # 500m 이내 대여소 제거
+    st_id = station[station["dist"] <= 500].reset_index(drop=False)["st_id"]
+
+    result = btstation_info[btstation_info.value.isin(st_id.tolist())]
+
+    return result
+
+
 def btweather():
     """
     - 기상청 날씨 API를 활용해 날씨 데이터를 불러온다.
@@ -142,7 +173,6 @@ class bikeRecommandation:
         """
         # 조건 1 1000m 이하에 위치한 대여소를 제거한다.
         id2List = self._filterIn1000M(id1)["st_id"].to_numpy()
-
         # 조건 2 : 대여기록 0.1% 이상
         id1Value = rawData["st_id2"].value_counts()[1:]
         id1List = id1Value[id1Value > int(len(rawData) * 0.001)].index.to_numpy()
@@ -170,10 +200,10 @@ class bikeRecommandation:
 
         # 대여소 idx 추출
         station_id = self._filterConditionOne(st_id, rawRentalData).tolist()
+
         result = self.station[self.station["st_id"].isin(station_id)].reset_index(
             drop=True
         )
-
         result_station = []
         for j in result["st_id"]:
             # 예상시간 계산
@@ -261,7 +291,6 @@ class bikeRecommandation:
             "haversineDist",
         ]
         data = data[data["st_id"] != st_id]
-
         return data
 
     def extractStations(self, id: str) -> pd.DataFrame:
@@ -342,6 +371,14 @@ class bikeRecommandation:
 
         # 종합
         result = pd.concat(resultfinish).drop_duplicates(subset="st_id")
+
+        # frontend에 맞게 dataframe 변형
+        result["coor"] = result[["latitude", "longtitude"]].values.tolist()
+        result = result[
+            ["st_id", "st_name", "coor", "num", "ridingTime", "record", "ridingDist"]
+        ]
+        result.columns = "value", "label", "coor", "num", "time", "record", "dist"
+
         minmax = dict(
             mintime=result["time"].min(),
             maxtime=result["time"].max(),
@@ -350,10 +387,9 @@ class bikeRecommandation:
             mindist=result["dist"].min(),
             maxdist=result["dist"].max(),
         )
-
         return result, minmax
 
-    def btroute_coor(
+    def route_coor(
         self,
         dep_st: list,
         arr_st: list,

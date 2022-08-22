@@ -1,6 +1,6 @@
 :root{
-    --silver-color : #252525;
-    --poblack-color : #ffffff;
+    --poblack-color : #252525;
+    --posilver-color : #ffffff;
     /* --poblack-color : #252525; */
     --white-color : #F4F4F4;
     --green-color : #4FC276;
@@ -17,7 +17,7 @@
     overflow: hidden;
 }
 .poWhole{
-    background-color: var(--poblack-color);
+    background-color: var(--posilver-color);
     line-height: 180%;
     width: 100%;
     height: 100%;
@@ -49,8 +49,8 @@
     width: 100%;
     height: 100%;
     flex-direction: column;
-    background-color: var(--poblack-color);
-    color: var(--silver-color);
+    background-color: var(--posilver-color);
+    color: var(--poblack-color);
 
 }
 .poNavBar{
@@ -61,12 +61,11 @@
     font-family: "NEXON";
     position: fixed;
     max-width: 768px;
-    /* background-color: var(--poblack-color); */
     backdrop-filter: blur(1px); /*5px*/
     z-index: 20000;
 }
 .poButton{
-    color: var(--silver-color);
+    color: var(--poblack-color);
     text-decoration: none;
     font-family: "NEXON";
 }
@@ -78,7 +77,7 @@
     display: flex;
     text-decoration: none;
     margin: auto;
-    color: var(--silver-color);
+    color: var(--poblack-color);
     /* color: var(--light-green-color); */
     width:100%;
     height:100%;
@@ -87,7 +86,7 @@
 
 }
 .poNavBar .poLink:hover{
-    color: var(--silver-color);
+    color: var(--poblack-color);
     text-decoration: underline;
 }
 .poNavBar .poLink:active{
@@ -198,10 +197,10 @@
         display: block;
     }
     .mobile .menu:hover{
-        color: var(--silver-color);
+        color: var(--poblack-color);
     }
     .poLink{
-        color: var(--poblack-color);
+        color: var(--posilver-color);
     }
     .pc{
         display: none;

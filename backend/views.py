@@ -1,4 +1,4 @@
-from .bikeTourUtil import *
+from .bikeTourUtils import *
 from .dodoUtils import *
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -23,7 +23,7 @@ def dodoMoa(request) -> dict:
 
 # 필수 데이터 불러오기
 station = pd.read_csv(
-    "backend/assets/bikeTour/seoul_bike_station_01_12.csv",
+    "backend/assets/bikeTour/newStationInfo.csv",
     encoding="CP949",
     index_col=0,
 )
@@ -82,8 +82,8 @@ def btdirection(request) -> dict:
     print(dep["coor"])
     arr = request.data.get("arr")
     print(arr["coor"])
-    bt = bike_recommendation(btstation, seoul_bike, station)
-    data = bt.btroute_coor(dep["coor"], arr["coor"])
+    bt = bikeRecommandation(btstation, seoul_bike, station)
+    data = bt.route_coor(dep["coor"], arr["coor"])
     # print(data)
     return Response(data)
 
@@ -104,6 +104,6 @@ class bt_leaflet_map(views.APIView):
     def post(self, request):
         # queryset
         st_id = request.data.get("value")
-        bt = bike_recommendation(btstation, seoul_bike, station)
-        data, minmax = bt.arrStation(st_id)
+        bt = bikeRecommandation(btstation, seoul_bike, station)
+        data, minmax = bt.extractStations(st_id)
         return Response({"data": data.to_dict("records"), "minmax": minmax})

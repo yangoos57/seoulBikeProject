@@ -10,6 +10,7 @@ const BtInfoBox = ({
   title,
   numOfRecord,
   estTime,
+  estDist,
   estOn,
   ButtonTitle,
 }) => {
@@ -28,13 +29,13 @@ const BtInfoBox = ({
       }}>
       <div className="d-flex justify-content-end" style={{ flexBasis: "25%" }}>
         <div
-          className="m-auto px-4 py-2"
+          className="m-auto px-5 pt-3 btInfoBox"
           style={{
             color: isMouseOn ? "var(--green-color)" : "var(--silver-color)",
-            fontSize: "18px",
+            textAlign: "center",
           }}>
           {title}
-          <div style={{ position: "absolute", right: "3%", top: "3%", cursor: "pointer" }}>
+          <div style={{ position: "absolute", right: "5%", top: "9%", cursor: "pointer" }}>
             <Xbox
               onClick={() => {
                 setReset(undefined);
@@ -44,15 +45,21 @@ const BtInfoBox = ({
         </div>
       </div>
       <div
-        className="d-flex flex-column"
+        className="d-flex flex-column btInfoBox"
         style={{
           flexBasis: "40%",
           color: "var(--silver-color)",
         }}>
-        {estOn && <div className="m-auto py-1">예상시간 : {estTime} 분</div>}
-        <div className="m-auto py-1">
-          {recordName} : {numOfRecord.toLocaleString("en-US")} 건
-        </div>
+        {estOn ? (
+          <div className="m-auto fontSet">
+            <div className="mb-1">예상시간 : {estTime} 분</div>
+            <div>예상거리 : {estDist} km</div>
+          </div>
+        ) : (
+          <div className="m-auto ">
+            {recordName} : {numOfRecord.toLocaleString("en-US")} 건
+          </div>
+        )}
       </div>
       <div className="d-flex" style={{ flexBasis: "35%" }}>
         <div className="d-flex m-auto" style={{ flexBasis: "100%" }}>
@@ -73,7 +80,7 @@ const BtInfoBox = ({
             onMouseOut={() => {
               setIsMouseOn(false);
             }}>
-            <div className="m-auto">{ButtonTitle}</div>
+            <div className="m-auto btInfoBox">{ButtonTitle}</div>
           </div>
         </div>
       </div>

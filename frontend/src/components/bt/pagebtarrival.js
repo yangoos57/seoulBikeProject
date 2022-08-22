@@ -28,13 +28,27 @@ function ChangeView({ center, zoom }) {
 function bikeIcon() {
   return L.icon({
     iconUrl: bikegreen,
-    iconSize: [25, 25],
+    iconSize: window.innerWidth > 1441 ? [35, 35] : [28, 28],
+  });
+}
+
+function arrMarker() {
+  return L.icon({
+    iconUrl: arrmarkerclick,
+    iconSize: window.innerWidth > 1441 ? [26, 26] : [22, 22],
+    className: "svgTest",
+  });
+}
+function clickMarker() {
+  return L.icon({
+    iconUrl: arrmarker,
+    iconSize: window.innerWidth > 1441 ? [25, 25] : [21, 21],
   });
 }
 const initialMarker = [
   {
-    label: "여의도역 ", //
-    index: "0",
+    label: "", //
+    index: "",
     coor: "[0, 0]",
     record: 100,
     time: 20,
@@ -60,7 +74,6 @@ const initalfilter = {
 
 //main
 function BkArrival() {
-  const [isBoxOn, setIsBoxOn] = useState(false); // silder box on off
   const [isMouseOn, setIsMouseOn] = useState(false); // infobox color
   const [isClicked, setIsClicked] = useState(false); // infobox click
   const [clickedName, setClickedName] = useState(undefined); // filter name
@@ -77,7 +90,7 @@ function BkArrival() {
     axios.post("api/info", { value: depParams["value"] }).then((res) => {
       setArrMarkers(res.data.data);
       setFilterItem(res.data.minmax);
-      setClickedName("여행시간");
+      setClickedName("이동시간");
     });
   }, []);
 
@@ -91,21 +104,6 @@ function BkArrival() {
   const location = useLocation();
   const depParams = location.state;
 
-  function arrMarker() {
-    return L.icon({
-      iconUrl: arrmarkerclick,
-      iconSize: [18, 18],
-      className: "svgTest",
-    });
-  }
-
-  function clickMarker() {
-    return L.icon({
-      iconUrl: arrmarker,
-      iconSize: [18, 18],
-    });
-  }
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -116,21 +114,21 @@ function BkArrival() {
 
   return (
     <>
-      <div className="whole-bk d-flex ">
-        <div className="main-ml m-auto ">
+      <div className="btWhole d-flex ">
+        <div className="btMain m-auto ">
           <div className="bg-white flex-column flex-container">
             <div className="flex-container flex-column" style={{ flexBasis: "30%" }}>
               <div
                 className="d-flex justify-content-between mx-auto"
                 style={{ flexBasis: "60%", width: "80%", height: "100%" }}>
-                <div className="">
-                  <BkTitleName fontValue="28px" />
+                <div>
+                  <BkTitleName />
                 </div>
-                <div className="flex-container " style={{ flexBasis: "40%" }}>
+                <div className="flex-container " style={{ flexBasis: "60%" }}>
                   {/* weather Component */}
                   <BkWeather></BkWeather>
                 </div>
-              </div>
+              </div>{" "}
               <div
                 className="d-flex mx-auto"
                 style={{
@@ -161,7 +159,7 @@ function BkArrival() {
                   className="slider"
                   style={{
                     visibility:
-                      clickedName === "여행시간" //
+                      clickedName === "이동시간" //
                         ? "visible"
                         : "hidden",
                   }}>
@@ -191,7 +189,7 @@ function BkArrival() {
                   className="slider"
                   style={{
                     visibility:
-                      clickedName === "여행거리" //
+                      clickedName === "이동거리" //
                         ? "visible"
                         : "hidden",
                   }}>
@@ -214,6 +212,7 @@ function BkArrival() {
                   numOfRecord={clickedItem["record"]}
                   title={clickedItem["label"]}
                   estTime={clickedItem["time"]}
+                  estDist={clickedItem["dist"]}
                   estOn={true}
                   ButtonTitle={"도착 대여소 선택"}
                 />
@@ -226,7 +225,9 @@ function BkArrival() {
                 />
                 <Marker position={JSON.parse(depParams["coor"])} icon={bikeIcon()} zIndexOffset={1000}>
                   <Tooltip direction="right" offset={[5, 40]} zIndexOffset={1000}>
-                    <div className="p-1" style={{ backgroundColor: "var(--green-color)", color: "var(--black-color)" }}>
+                    <div
+                      className="p-1 btTooltipInfo"
+                      style={{ backgroundColor: "var(--green-color)", color: "var(--black-color)" }}>
                       <div className="my-auto"> 대여소명 : {depParams["label"]}</div>
                       <div className="my-auto"> 대여기록 : {depParams["num"]} 건 </div>
                       <div className="my-auto"> 하루평균 : {Math.round(depParams["num"] / 365, 2)} 건</div>
@@ -253,7 +254,8 @@ function BkArrival() {
                         <Marker
                           data={val} // options.data에서 나오는 값
                           key={val["value"]}
-                          position={JSON.parse(val["coor"])}
+                          position={val["coor"]}
+                          // position={JSON.parse(val["coor"])} // 좌표가 '[123,123]'과 같은 string일때 사용
                           // icon={arrMarker() }
                           icon={
                             (val["value"] === markerHoveredIndex) | (val["value"] === markerClicked)
@@ -273,10 +275,10 @@ function BkArrival() {
                             },
                           }}>
                           <Tooltip direction="right" offset={[5, 40]}>
-                            <div className="m-1">
+                            <div className="m-2 btTooltipInfo">
                               <div className="my-auto"> 대여소명 : {val["label"]}</div>
                               <div className="my-auto"> 대여기록 : {val["record"]} 건 </div>
-                              <div className="my-auto"> 하루평균 : {Math.round(val["record"] / 365).toFixed(1)} 건</div>
+                              <div className="my-auto"> 예상거라 : {val["dist"]} km </div>
                               <div className="my-auto"> 예상시간 : {val["time"]} 분</div>
                             </div>
                           </Tooltip>

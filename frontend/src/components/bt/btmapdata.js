@@ -1,23 +1,23 @@
 import React from "react";
-import { MapContainer, TileLayer, Polyline, Popup, Marker, useMapEvent, useMap, Tooltip } from "react-leaflet";
+import { MapContainer, TileLayer, useMapEvent, useMap } from "react-leaflet";
 import L from "leaflet";
 
-function ChangeView({ center, zoom }) {
-  const map = useMap();
-  map.setView(center, zoom);
-  return null;
-}
+// function ChangeView({ center, zoom }) {
+//   const map = useMap();
+//   map.setView(center, zoom);
+//   return null;
+// }
 
 //화면 부드럽게 이동
-function SetViewOnClick({ animateRef }) {
-  const map = useMapEvent("click", (e) => {
-    map.setView(e.latlng, map.getZoom(), {
-      animate: animateRef.current || false,
-    });
-  });
+// function SetViewOnClick({ animateRef }) {
+//   const map = useMapEvent("click", (e) => {
+//     map.setView(e.latlng, map.getZoom(), {
+//       animate: animateRef.current || false,
+//     });
+//   });
 
-  return null;
-}
+//   return null;
+// }
 const BtMapData = ({ children }) => {
   return (
     <MapContainer

@@ -20,14 +20,14 @@ function ChangeView({ center, zoom }) {
 function bikeIcon() {
   return L.icon({
     iconUrl: bikegreen,
-    iconSize: [25, 25],
+    iconSize: window.innerWidth > 1441 ? [35, 35] : [28, 28],
   });
 }
 
 function arrIcon() {
   return L.icon({
     iconUrl: arricon,
-    iconSize: [35, 35],
+    iconSize: window.innerWidth > 1441 ? [50, 50] : [45, 45],
   });
 }
 
@@ -55,27 +55,46 @@ const BtDirection = () => {
     });
   }, [dep, arr]);
 
-  //child1
+  function calCenter(direction, arr) {
+    // 거리 보여줄 때 경로가 겹치지 않도록 center Coordination 잡아주는 함수
+    var d = direction[Math.round(direction.length / 3)];
+    var num = 0;
+    // eslint-disable-next-line no-lone-blocks
+    {
+      arr["dist"] > 5
+        ? (num = 0.01)
+        : arr["dist"] > 3
+        ? (num = 0.005)
+        : arr["dist"] > 1
+        ? (num = 0.002)
+        : (num = 0.001);
+    }
+    var newCoor = [d[0] - num, d[1]];
+    return newCoor;
+  }
+
+  //child1 (main함수 1)
   function child1() {
     return <BkSelect setStationInfo={setStationInfo} />;
   }
 
-  //child2
+  //child2s (main함수 2)
   function child2() {
     return (
       <div className="w-100 h-100">
         <BkDirctionInfo dep={dep} arr={arr} />
         <BkMapData>
           <ChangeView
-            center={direction !== undefined ? direction[Math.round(direction.length / 3)] : ""} //
-            zoom={arr["dist"] > 5 ? 12 : arr["dist"] > 3 ? 13 : arr["dist"] > 1 ? 14 : 15}
+            center={direction !== undefined ? calCenter(direction, arr) : ""}
+            zoom={arr["dist"] > 5 ? 12 : arr["dist"] > 3 ? 13 : arr["dist"] > 1 ? 14 : 15} // 이동 거리별 zoom 수준 변경
           />
           <Marker position={JSON.parse(dep["coor"])} icon={bikeIcon()} />
+          {/* dep에서는 JSON.parse를 쓴 이유는 station.csv 파일에서 값을 불러와서 '[123,123]'양식이기 떄문임 */}
           <Polyline
-            pathOptions={{ color: "var(--black-color)", opacity: 0.6 }} //
+            pathOptions={{ color: "var(--black-color)", opacity: 0.9, weight: 4 }} //
             positions={direction}
           />
-          <Marker position={JSON.parse(arr["coor"])} icon={arrIcon()}></Marker>
+          <Marker position={arr["coor"]} icon={arrIcon()} />
         </BkMapData>
       </div>
     );
