@@ -186,6 +186,160 @@ class bikeRecommandation:
         )
         return returnValue
 
+    # def _calculateDistAndTime(self, st_id: int) -> pd.DataFrame:
+    #     """
+    #     대여소의 예상 시간과 거리를 DBSCAN으로 계산한다.
+    #     DBSCAN을 적용하기 위한 가설은 '대여기록의 상당수가 출발 대여소에서
+    #     도착대여소까지 이동을 목적으로한다'이다. 따릉이를 이용하다보면 다른 곳에 잠시 들리거나
+    #     가까운 길 대신 일부러 돌아 가는 경우가 있다. 대여기록에는 이러한 경우가 모두 포함되다 보니
+    #     평균 이동시간이나 이동거리를 에상하기 어렵다. DBSCAN을 활용해 가장 크게 뭉쳐져있는(가장 빈도수가 많은)
+    #     집단을 찾고 평균으로 계산한다.
+
+    #     """
+    #     rawRentalData = self._extractRentalRecord(st_id)
+
+    #     # 대여소 idx 추출
+    #     station_id = self._filterConditionOne(st_id, rawRentalData).tolist()
+
+    #     result = self.station[self.station["st_id"].isin(station_id)].reset_index(
+    #         drop=True
+    #     )
+    #     result_station = []
+    #     for j in result["st_id"]:
+    #         # 예상시간 계산
+    #         BM = rawRentalData["st_id2"] == j
+
+    #         all_rent = (
+    #             rawRentalData[BM]["riding_time"]
+    #             .value_counts()
+    #             .sort_values(ascending=False)
+    #         )
+
+    #         ### 대여기록
+    #         total_record = all_rent.sum()
+
+    #         k = []
+    #         i = 2
+    #         ### 기록 많은 순만 종합
+    #         while len(k) < 1:
+    #             k = all_rent[all_rent >= (total_record / i)]
+    #             i = i * 1.5
+
+    #         ### 대여시간
+    #         ind = k.index
+
+    #         ### 대여기록
+    #         val = k.values
+
+    #         ### 대여기록 합
+    #         a = k.sum()
+
+    #         ### 대여시간 * 대여기록
+    #         asddd = sum([a * b for a, b in zip(ind, val)])
+
+    #         # 평균 시간
+    #         ddddd = asddd / a
+
+    #         # 올림
+    #         val = round(ddddd, 0)
+
+    #         ### 이동거리 계산
+    #         BM = rawRentalData["st_id2"] == j
+    #         all_rent = (
+    #             rawRentalData[BM]["dist"].value_counts().sort_values(ascending=False)
+    #         )
+
+    #         dist = (
+    #             pd.cut(all_rent.index, bins=50)
+    #             .value_counts()
+    #             .sort_values(ascending=False)
+    #         )
+    #         # 상위 3개 값을 평균냄. mid는 pd.interval 매서드에서 쓰는 변수임.
+    #         num = 3
+    #         vals = [dist[:num].index[a].mid * dist.iloc[a] for a in range(num)]
+    #         avg_dist = sum(vals) / sum(dist.to_list()[:num])
+    #         result_station.append([val, total_record, (round(avg_dist / 1000, 2))])
+
+    #     # 결과 종합
+    #     df = pd.DataFrame(result_station)
+
+    #     # haversineDist 계산
+    #     dep = self.station[self.station["st_id"].isin([st_id])]
+    #     arr = result
+
+    #     depLong = dep["longtitude"].values
+    #     depLat = dep["latitude"].values
+    #     arrLong = arr["longtitude"]
+    #     arrLat = arr["latitude"]
+
+    #     dist = haversine_np(depLong, depLat, arrLong, arrLat)
+    #     dist = pd.DataFrame(round(dist / 1000, 2), columns=["haversineDist"])
+
+    #     # 데이터 종합
+    #     data = pd.concat([result, df, dist], axis=1)
+    #     data.columns = [
+    #         "st_id",
+    #         "st_name",
+    #         "district",
+    #         "latitude",
+    #         "longtitude",
+    #         "num",
+    #         "elevation",
+    #         "ridingTime",
+    #         "record",
+    #         "ridingDist",
+    #         "haversineDist",
+    #     ]
+    #     data = data[data["st_id"] != st_id]
+    #     return data
+
+    def _CalNaNDistAndTime(self, id, filtered_data):
+        # 예상시간 계산
+        all_rent = (
+            filtered_data["riding_time"].value_counts().sort_values(ascending=False)
+        )
+
+        ### 대여기록
+        total_record = all_rent.sum()
+
+        k = []
+        i = 2
+        ### 기록 많은 순만 종합
+        while len(k) < 1:
+            k = all_rent[all_rent >= (total_record / i)]
+            i = i * 1.5
+
+        ### 대여시간
+        ind = k.index
+
+        ### 대여기록
+        val = k.values
+
+        ### 대여기록 합
+        a = k.sum()
+
+        ### 대여시간 * 대여기록
+        asddd = sum([a * b for a, b in zip(ind, val)])
+
+        # 평균 시간
+        ddddd = asddd / a
+
+        # 올림
+        val = round(ddddd, 0)
+
+        ### 이동거리 계산
+        all_rent = filtered_data["dist"].value_counts().sort_values(ascending=False)
+
+        dist = (
+            pd.cut(all_rent.index, bins=50).value_counts().sort_values(ascending=False)
+        )
+        # 상위 3개 값을 평균냄. mid는 pd.interval 매서드에서 쓰는 변수임.
+        num = 3
+        vals = [dist[:num].index[a].mid * dist.iloc[a] for a in range(num)]
+        avg_dist = sum(vals) / sum(dist.to_list()[:num])
+
+        return [id, val, (round(avg_dist / 1000, 2)), total_record]
+
     def _calculateDistAndTime(self, st_id: int) -> pd.DataFrame:
         """
         대여소의 예상 시간과 거리를 DBSCAN으로 계산한다.
@@ -196,72 +350,39 @@ class bikeRecommandation:
         집단을 찾고 평균으로 계산한다.
 
         """
-        rawRentalData = self._extractRentalRecord(st_id)
+        std = StandardScaler()
 
         # 대여소 idx 추출
-        station_id = self._filterConditionOne(st_id, rawRentalData).tolist()
+        filtered_data = self._extractRentalRecord(st_id)
+        station_id = self._filterConditionOne(st_id, filtered_data).tolist()
+        st_id1_only = filtered_data[filtered_data["st_id1"] == st_id]
+        finish = []
+        for id in station_id:
+            df_raw = st_id1_only[st_id1_only["st_id2"] == id][["riding_time", "dist"]]
+            df_std = pd.DataFrame(
+                std.fit_transform(df_raw.values.tolist()),
+                columns=["riding_time", "dist"],
+            )
+
+            db = DBSCAN(eps=0.05).fit(df_std.values.tolist())
+            df_raw["label"] = db.labels_
+            sr_time = df_raw[df_raw["label"] == 0]["riding_time"].value_counts()
+            sr_dist = df_raw[df_raw["label"] == 0]["dist"].value_counts()
+            if sr_dist.empty == False:
+                time = np.round(np.array(sr_time.index).dot(sr_time) / sum(sr_time), 1)
+                dist = np.round(
+                    np.array(sr_dist.index).dot(sr_dist) / (sum(sr_dist) * 1000), 1
+                )
+                finish.append([id, time, dist, len(df_raw)])
+            else:
+                finish.append(self._CalNaNDistAndTime(id, df_raw))
 
         result = self.station[self.station["st_id"].isin(station_id)].reset_index(
             drop=True
         )
-        result_station = []
-        for j in result["st_id"]:
-            # 예상시간 계산
-            BM = rawRentalData["st_id2"] == j
 
-            all_rent = (
-                rawRentalData[BM]["riding_time"]
-                .value_counts()
-                .sort_values(ascending=False)
-            )
-
-            ### 대여기록
-            total_record = all_rent.sum()
-
-            k = []
-            i = 2
-            ### 기록 많은 순만 종합
-            while len(k) < 1:
-                k = all_rent[all_rent >= (total_record / i)]
-                i = i * 1.5
-
-            ### 대여시간
-            ind = k.index
-
-            ### 대여기록
-            val = k.values
-
-            ### 대여기록 합
-            a = k.sum()
-
-            ### 대여시간 * 대여기록
-            asddd = sum([a * b for a, b in zip(ind, val)])
-
-            # 평균 시간
-            ddddd = asddd / a
-
-            # 올림
-            val = round(ddddd, 0)
-
-            ### 이동거리 계산
-            BM = rawRentalData["st_id2"] == j
-            all_rent = (
-                rawRentalData[BM]["dist"].value_counts().sort_values(ascending=False)
-            )
-
-            dist = (
-                pd.cut(all_rent.index, bins=50)
-                .value_counts()
-                .sort_values(ascending=False)
-            )
-            # 상위 3개 값을 평균냄. mid는 pd.interval 매서드에서 쓰는 변수임.
-            num = 3
-            vals = [dist[:num].index[a].mid * dist.iloc[a] for a in range(num)]
-            avg_dist = sum(vals) / sum(dist.to_list()[:num])
-            result_station.append([val, total_record, (round(avg_dist / 1000, 2))])
-
-        # 결과 종합
-        df = pd.DataFrame(result_station)
+        df = pd.DataFrame(finish, columns=["id", "ridingTime", "ridingDist", "record"])
+        result = result.merge(df, left_on="st_id", right_on="id")
 
         # haversineDist 계산
         dep = self.station[self.station["st_id"].isin([st_id])]
@@ -276,21 +397,8 @@ class bikeRecommandation:
         dist = pd.DataFrame(round(dist / 1000, 2), columns=["haversineDist"])
 
         # 데이터 종합
-        data = pd.concat([result, df, dist], axis=1)
-        data.columns = [
-            "st_id",
-            "st_name",
-            "district",
-            "latitude",
-            "longtitude",
-            "num",
-            "elevation",
-            "ridingTime",
-            "record",
-            "ridingDist",
-            "haversineDist",
-        ]
-        data = data[data["st_id"] != st_id]
+        data = pd.concat([result, dist], axis=1).drop(columns=["id"])
+
         return data
 
     def extractStations(self, id: str) -> pd.DataFrame:

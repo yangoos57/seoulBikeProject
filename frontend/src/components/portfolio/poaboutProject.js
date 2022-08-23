@@ -21,7 +21,7 @@ const poProject = () => {
           {/* ---- */}
           {/* 실시간 위협상황 분석 및 지휘관 의사결정 지원 */}
           <div className="d-flex flex-column mb-5">
-            <div className="me-auto mb-1 h5 NotoBold">키워드에 기반한 도서 추천 프로그램 개발</div>
+            <div className="me-auto mb-1 h5 NotoBold">keyBert와 Word2Vec를 활용한 도서 검색 프로그램 개발</div>
             <div className="me-auto mb-4" style={{ color: "gray" }}>
               <span style={{ fontsize: "14px !important" }}> 2022.07. - 2022.08.</span>
             </div>
@@ -38,9 +38,28 @@ const poProject = () => {
               <div className="me-auto h6 NotoBold">경험 및 성과</div>
               <div className="me-auto">
                 <ul>
-                  <li className="me-auto">word2vec을 활용해 적은 개수의 키워드로도 도서 추천 정확도를 향상</li>
-                  <li className="me-auto">ETL 파이프라인 구축 및 자동화를 경험하며 (데이터 정합성의 중요성) 인식</li>
-                  <li className="me-auto">일상의 문제를 NLP를 적용해 해결하면서 NLP분야의 실용적 가치를 이해 </li>
+                  <li className="me-auto">
+                    word2vec 활용, 사용자 검색 키워드와 연관성 높은 키워드를 추출하여 도서 검색 정확도 향상
+                  </li>
+                  <li className="me-auto">
+                    TF-IDF, Word2Vec, Bert 등 NLP의 핵심 모델의 이론을 배우고 문제 해결을 위해 적용해보면서 개별 모델의
+                    특징과 장단점을 이해했다.
+                  </li>
+                  <li className="me-auto">
+                    ETL 파이프라인 구축 과정에서 여러 테이블에 있는 데이터를 활용해 원하는 테이블을 만드는 과정에서
+                    다양한 시행 착오를 통해 MYSQL을 숙달
+                  </li>
+                  <li className="me-auto">
+                    NLP 모델을 활용해 일상의 문제를 해결하는 과정에서 텍스트를 요약하는 분야에서 NLP의 실용적 가치를
+                    이해
+                  </li>
+                  <li className="me-auto">
+                    데이터 수집과 키워드 추출에 각각 Multi-Threading과 Multi-Processing을 적용해 기존 대비 80% 이상의
+                    처리 시간을 단축했음{" "}
+                  </li>
+                  <li className="me-auto">
+                    Docker-Compose를 사용해 Django와 Mysql 연동 및 AZURE에 웹 어플리케이션 업로드
+                  </li>
                 </ul>
               </div>
             </div>
@@ -62,7 +81,7 @@ const poProject = () => {
           {/* ----- */}
           {/* 실시간 위협상황 분석 및 지휘관 의사결정 지원 */}
           <div className="d-flex flex-column mb-5">
-            <div className="me-auto mb-1 h5 NotoBold">따릉이를 활용해 집 주변 여행지를 추천하는 프로그램 개발</div>
+            <div className="me-auto mb-1 h5 NotoBold">따릉이로 동네투어</div>
             <div className="me-auto mb-4" style={{ color: "gray" }}>
               <span style={{ fontsize: "14px !important" }}> 2022.06. - 2022.07.</span>
             </div>
@@ -71,7 +90,9 @@ const poProject = () => {
               <div className="me-auto">
                 <ul>
                   <li className="me-auto">3,000만 건의 따릉이 대여기록을 분석해 동네 여행에 적합한 대여소를 추천</li>
-                  <li className="me-auto">추천 알고리즘 내 KMeans와 DBSCAN을 활용 </li>
+                  <li className="me-auto">
+                    상관관계 분석, Kmeans, dbscan을 적용해 여행 목적에 적합하지 않은 대여소 제거
+                  </li>
                 </ul>{" "}
               </div>
             </div>
@@ -79,9 +100,21 @@ const poProject = () => {
               <div className="me-auto h6 NotoBold">경험 및 성과</div>
               <div className="me-auto">
                 <ul>
-                  <li className="me-auto">클러스터링 기법 활용, 오염된 대여 데이터를 제거함으로써 추천 신뢰도 제고</li>
-                  <li className="me-auto">지도 시각화 숙달...(내용추가) </li>
-                  <li className="me-auto">백엔드,프론트엔드를 직접 구현하면서 MVP 개발에 대한 기초 역량 함양</li>
+                  <li className="me-auto">
+                    따릉이 데이터에 서울 고도 데이터를 적용해 EDA를 진행, 대여소 고도와 대여 건수 간의 상관관계 파악,
+                    이를 여행 적합하지 않은 대여소를 제거하는데 활용
+                  </li>
+                  <li className="me-auto">
+                    자전거 이용시간, 이용거리를 DBSCAN을 활용해 군집화 한 뒤 선별하여 사용자에게 정확한 예상도착시간 및
+                    예상 거리 정보를 제공
+                  </li>
+                  <li className="me-auto">분석, 프론트엔드 구현, 백엔드 구현, 클라우드에 업로드 등 경험</li>
+                  <li className="me-auto">Kmeans를 활용해 중첩된 대여소들을 제거</li>
+                  <li className="me-auto">REST API 사용 경험</li>
+                  <li className="me-auto">
+                    대여소를 지도에 띄우고 거리를 파악하고 Leaflet.js, plotlyy, folium 등 지도시각화 툴을 활용하면서 Geo
+                    Spatial Analysis에 숙달 하였음
+                  </li>
                 </ul>
               </div>
             </div>
