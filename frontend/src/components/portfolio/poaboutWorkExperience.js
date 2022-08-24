@@ -15,14 +15,14 @@ const poWorkExperience = () => {
           </div>
           <div className="h6 my-auto">2016.3 - 2021.5</div>
         </div>
-        <hr className="my-3 text-white" />
+        <hr className="my-1 text-white" />
         {/* 세부항목 */}
         <div className="d-flex flex-column" style={{ fontSize: "17px" }}>
           {/* 실시간 위협상황 분석 및 지휘관 의사결정 지원 */}
           <hr className="my-3 text-white" />
           {/* 항공무장 살상효과 분석 및 추천 */}
           <div className="d-flex flex-column mb-5">
-            <div className="me-auto mb-2 h5 NotoBold">항공무장 살상효과 분석을 통한 항공무장 추천</div>
+            <div className="me-auto mb-2 h5 NotoBold">항공무장 피해효과 분석 및 항공무장 추천</div>
             <div className="me-auto mb-4" style={{ color: "grey", lineHeight: "20px" }}>
               분석팀장<span style={{ fontsize: "14px !important" }}> 2016.9. - 2019.12.</span>
             </div>
@@ -36,18 +36,15 @@ const poWorkExperience = () => {
             <div className="me-auto mt-2 h6 NotoBold">경험 및 성과</div>
             <ul>
               <li>분석 결과를 누구나 이해할 수 있도록 시각화 된 리포트 작성 및 유관부서와 커뮤니케이션</li>
-              <li>표적 모델링에 필요한 시간을 감소시켜 이전 프로세스 대비 분석시간을 40% 단축(기여도 70%)</li>
+              <li>표적 모델링에 필요한 시간을 감소시켜 이전 프로세스 대비 분석 시간 40% 단축(기여도 70%)</li>
               <li>프로세스 개선에 관한 업무 매뉴얼 작성 및 국방과학연구소 등 100여개 부서에 배포(기여도 100%)</li>
-              <li>
-                4인으로 구성된 팀의 팀장으로 1년간 근무하며 분석 방향 수립, 업무 우선순위 선정, 연간 계획 작성 등
-                운영/계획 분야 경험{" "}
-              </li>
+              <li>4인으로 구성된 팀을 리딩하며 분석 방향 수립, 업무 우선순위 선정 등 운영/계획 분야 경험(1년)</li>
             </ul>
           </div>
           <div className="d-flex flex-column ">
             <div className="me-auto mb-1 h5 NotoBold">실시간 위협상황 분석 및 지휘관 의사결정 지원</div>
             <div className="me-auto mb-4" style={{ color: "gray" }}>
-              데이터 분석가 <span style={{ fontsize: "14px !important" }}> 2019.12. - 2020.12.</span>
+              데이터 분석가 <span style={{ fontsize: "14px !important" }}> 2019.12. - 2021.5.</span>
             </div>
             <div className="me-auto mb-3">
               <div className="me-auto h6 NotoBold">업무 소개</div>
@@ -59,8 +56,7 @@ const poWorkExperience = () => {
                 실시간 수집 데이터를 바탕으로 위협상황을 분석하여 실시간 의사결정에 필요한 정보 지원
               </li>
               <li className="me-auto">
-                적 항공기 기동 패턴 분석 및 이동 경로 예측 등 지휘관이 실질적 액션을 할 수 있는(실질적 액션이 가능한
-                데이터 분석 수행) 인사이트 도출
+                적 항공기 기동 패턴 분석 및 경로 예측 등 지휘관이 실질적 액션을 할 수 있는 인사이트 도출
               </li>
               <li className="me-auto">
                 조종사, 항공관제사, 육해군 유관부서 등 다양한 직군의 구성원들과 협업해 문제해결 방안 도출{" "}
