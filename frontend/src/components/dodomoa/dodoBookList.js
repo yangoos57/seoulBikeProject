@@ -1,14 +1,20 @@
 import React from "react";
 
 function bookInfoBox(imgurl, title, author, lib, num) {
-  if (title.length > 30) {
-    title = title.substring(0, 25) + "...";
+  var a = 0;
+  var b = 0;
+  var c = 0;
+  window.innerWidth > 1441 ? (a = 30) : (a = 23);
+  window.innerWidth > 1441 ? (b = 12) : (b = 8);
+  window.innerWidth > 1441 ? (c = 15) : (c = 10);
+  if (title.length > a) {
+    title = title.substring(0, a) + "...";
   }
-  if (author.length > 10) {
-    author = author.substring(0, 10) + "...";
+  if (author.length > b) {
+    author = author.substring(0, b) + "...";
   }
-  if (lib.length > 10) {
-    lib = lib.substring(0, 10) + "...";
+  if (lib.length > c) {
+    lib = lib.substring(0, c) + "...";
   }
   return (
     <div className="flex-container justify-content-center py-2 bookListBox">
@@ -42,10 +48,10 @@ function bookInfoBox(imgurl, title, author, lib, num) {
 // Main Function
 const DoDoBookList = ({ item }) => {
   return (
-    <div className="flex-container mx-auto resultBox-dodo px-2 flex-column">
+    <div className="flex-container flex-column mx-auto resultBox-dodo px-2 ">
       {/* 검색건수 */}
       <div
-        className="d-flex ms-auto mt-3"
+        className="d-flex mt-3 ms-auto"
         style={{
           paddingRight: "5%",
           flexBasis: "5%",
@@ -54,19 +60,15 @@ const DoDoBookList = ({ item }) => {
         }}>
         총 {item.length}건 검색
       </div>
-      {/* 도서 정보 보여주는 칸 */}
-      <div className="flex-container bookList-dodo" style={{ overflow: "hidden" }}>
-        <div className="flex-column" style={{ overflow: "auto", width: "100%" }}>
-          {" "}
+      <div
+        className="flex-container"
+        style={{ overflow: "hidden", flexBasis: "90%", position: "relative", height: "auto" }}>
+        <div className="d-flex flex-column" style={{ position: "absolute", overflow: "scroll", height: "100%" }}>
           {item.map((v) => {
             return bookInfoBox(v.url, v.title, v.author, v.lib, v.num);
           })}
         </div>
       </div>
-      {/* 밑에 더 있다는 표시 */}
-      {/* <div className="mx-auto pt-1" style={{ flexBasis: "7%" }}>
-        <i className="fa-solid fa-play fa-rotate-90"></i>
-      </div> */}
     </div>
   );
 };

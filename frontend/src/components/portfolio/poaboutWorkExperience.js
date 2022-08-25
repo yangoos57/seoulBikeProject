@@ -48,13 +48,11 @@ const poWorkExperience = () => {
             </div>
             <div className="me-auto mb-3">
               <div className="me-auto h6 NotoBold">업무 소개</div>
-              <div className="me-auto">실시간 위협 대응 부서에서 근무하며 지휘관의 Data-driven 의사결정을 지원</div>
+              <div className="me-auto">실시간 위협 대응 부서에서 지휘관의 Data-driven 의사결정을 지원</div>
             </div>
             <div className="me-auto mt-2 h6 NotoBold">경험 및 성과</div>
             <ul>
-              <li className="me-auto">
-                실시간 수집 데이터를 바탕으로 위협상황을 분석하여 실시간 의사결정에 필요한 정보 지원
-              </li>
+              <li className="me-auto">실시간 수집 데이터를 바탕으로 위협상황을 분석하여 의사결정에 필요한 정보 지원</li>
               <li className="me-auto">
                 적 항공기 기동 패턴 분석 및 경로 예측 등 지휘관이 실질적 액션을 할 수 있는 인사이트 도출
               </li>

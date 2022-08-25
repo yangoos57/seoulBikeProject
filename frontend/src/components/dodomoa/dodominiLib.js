@@ -20,7 +20,7 @@ const DoDominiLib = ({ libs, checkedInputs, setCheckedInputs }) => {
       {/* 도도모아 로고 클릭 시 메인페이지로 이동 */}
       <Link to="/dodo" style={{ textDecoration: "none", flexBasis: "50%" }}>
         <div className="d-flex">
-          <img width="150px" src={miniLogo} alt="" />
+          <img className="minilogo-dodo" src={miniLogo} alt="" />
         </div>
       </Link>
       <div className="d-flex" style={{ flexBasis: "50%", cursor: "pointer" }}>

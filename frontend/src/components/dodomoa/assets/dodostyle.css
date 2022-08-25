@@ -172,8 +172,6 @@ input:focus::placeholder {
 .resultBox-dodo{
     background-color: var(--resultBox-dodo-color);
     border: 1px solid var(--gray-dodo-color);
-    width: 100%;
-    /* height: 95%; */
 }
 
 .book-info-dodo{
@@ -183,9 +181,6 @@ input:focus::placeholder {
     border-radius: 5px;
 }
 
-.bookList-dodo{
-    height: 460px;
-}
 .bookListBox{ 
     height: 160px
  }
@@ -200,13 +195,18 @@ input:focus::placeholder {
     font-family: "NEXON" ;
     flex-basis: 50% 
 }
-
-
+.minilogo-dodo{
+    width:150px
+}
+.noSearchInfo{
+    font-size: 16px;
+}
 
 
 @media (min-width : 1441px){
     .main-dodo{
         width: 576px;
+        height: 90%;
     }
     .search-dodo{
         font-size: 20px;
@@ -216,7 +216,7 @@ input:focus::placeholder {
         font-size: 25px;
     }
     .libName{
-        font-size: 25px !important;
+        font-size: 24px !important;
     }
     .libNameCover{
         margin-bottom: 15px ;
@@ -235,6 +235,18 @@ input:focus::placeholder {
         font-size: 17px;
     }
     .bookTitleInfo{
+        font-size: 20px;
+    }
+    .libBox-mini-dodo{
+        font-size: 25px;
+    }
+    .libBox-mini-dodo.libBox-dodo{
+        height: 100%;
+    }
+    .minilogo-dodo{
+        width:220px
+    }
+    .noSearchInfo{
         font-size: 20px;
     }
 }

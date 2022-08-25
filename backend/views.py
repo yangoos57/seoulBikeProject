@@ -15,7 +15,10 @@ def dodoMoa(request) -> dict:
     """
     libName = request.data.get("library")
     userWords = request.data.get("keyword")
-    result = createBookList(libName, userWords)
+    try:
+        result = createBookList(libName, userWords)
+    except:
+        result = pd.DataFrame(["null"], columns=["title"])
     return Response(result.to_dict("records"))
 
 

@@ -24,7 +24,13 @@ export default function BasicPopover({ name, checkedInputs, setCheckedInputs }) 
         variant="contained"
         onClick={handleClick}
         className="ms-auto libBox-mini-dodo"
-        sx={{ backgroundColor: "transparent", color: "#4F4E4E", fontFamily: "NEXON", p: 0 }}>
+        sx={{
+          backgroundColor: "transparent",
+          color: "#4F4E4E",
+          fontFamily: "NEXON",
+          p: 0,
+          fontSize: window.innerWidth > 1441 ? "25px" : "16px",
+        }}>
         {name}
       </Button>
       <Popover
@@ -39,8 +45,8 @@ export default function BasicPopover({ name, checkedInputs, setCheckedInputs }) 
         <Typography
           sx={{
             p: 0,
-            width: "350px",
-            height: "450px",
+            width: window.innerWidth > 1441 ? "400px" : "300px",
+            height: "100%",
             "& .MuiPopover-paper": { backgroundColor: "transparent" },
           }}>
           <DodolibLabel checkedInputs={checkedInputs} setCheckedInputs={setCheckedInputs} />

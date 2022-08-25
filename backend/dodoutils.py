@@ -113,6 +113,7 @@ def createBookList(libName: list, userWords):
     # userWords = '파이썬'
 
     ### 2. userwords 외에 추가적인 keyword 추출
+
     keywords = extractKeywords(userWords)
 
     # 3. 사용자가 선택한 조건 및 키워드로 검색 결과 추출

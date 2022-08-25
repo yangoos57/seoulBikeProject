@@ -9,8 +9,8 @@ const poProject = () => {
 
         <div className="d-flex justify-content-between">
           <div className="h6 my-auto ms-0" style={{ lineHeight: "30px" }}>
-            머신러닝 기반의 MVP 개발 역량을 쌓기위해 데이터 분석, 머신러닝 파이프라인 구축 경험과 웹 어플리케이션
-            개발부터 배포까지 전 과정을 경험했습니다.
+            프로젝트를 진행하며 데이터 분석, 머신러닝 파이프라인 구축, 웹 어플리케이션 개발부터 배포까지 전 과정을
+            경험했습니다.
           </div>
         </div>
         <hr className="my-4 text-white" />
@@ -58,7 +58,7 @@ const poProject = () => {
                   <li className="me-auto">Docker-Compose로 Django와 Mysql 연동 및 Azure로 배포</li>
                   <li className="me-auto">
                     {/* 프로젝트를 진행하며 텍스트 요약, 키워드 추출, 문서 분류에 있어서 NLP의 실용적 가치 파악 및 관심 증대 */}
-                    asdasd
+                    머신러닝 관련해서 쓰기
                   </li>
                 </ul>
               </div>
@@ -102,7 +102,7 @@ const poProject = () => {
                     3,000만 건의 따릉이 대여기록을 분석해 동네 여행에 적합한 따릉이 대여소 추천
                   </li>
                   <li className="me-auto">상관관계 분석, Kmeans, DBSCAN을 적용해 대여소 추천 시스템 구현</li>
-                  <li className="me-auto">프로젝트 결과물을 일상에서 활용하기 위해 웹 어플리케이션으로 구현</li>
+                  <li className="me-auto">프로젝트 결과물을 일상에서 활용하기 위해 웹 어플리케이션으로 제작</li>
                 </ul>{" "}
               </div>
             </div>
@@ -111,7 +111,7 @@ const poProject = () => {
               <div className="me-auto">
                 <ul>
                   <li className="me-auto">
-                    EDA를 통해 대여소 고도와 대여기록 간의 상관관계 파악, 이를 데이터 전처리에 활용
+                    EDA를 통해 대여소 고도와 대여기록 간의 상관관계 파악 및 데이터 전처리에 활용
                   </li>
                   <li className="me-auto">
                     중첩 추천된 대여소를 제거하고 사용자에게 다양한 방향의 목적지를 추천하기 위해 KMeans 활용

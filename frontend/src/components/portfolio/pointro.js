@@ -18,7 +18,7 @@ const poIntro = () => {
         <div className="d-flex">
           <div className="fw-bold ">Github</div>
           <div className="ms-2">
-            <a href="https://github.com/yangoos57" className="poLink">
+            <a href="https://github.com/yangoos57" target="_blank" rel="noopener noreferrer" className="poLink">
               github.com/yangoos57
             </a>
           </div>

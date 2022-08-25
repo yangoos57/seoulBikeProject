@@ -10,10 +10,10 @@ function DoDoResultPage() {
   const [item, setItem] = useState([
     {
       url: "",
-      title: "123123",
-      author: "12312313",
-      lib: "1231231",
-      num: "123123",
+      title: "null",
+      author: "",
+      lib: "",
+      num: "",
     },
   ]);
   const [keyword, setKeyword] = useState("");
@@ -40,20 +40,33 @@ function DoDoResultPage() {
   // searchedParams update 될때마다 실행
   useEffect(() => {
     axios.post("api/book", { keyword: searchParams.get("keyword"), library: val }).then((res) => {
+      console.log(res.data);
       setItem(res.data);
     });
   }, [searchParams]);
 
+  const noSearchResult = () => {
+    return (
+      <div className=" d-flex resultBox-dodo px-2 w-100" style={{ color: "var(--background-dodo-color)" }}>
+        <div className="d-flex m-auto flex-column ">
+          <div className="h3 m-auto my-4 ">검색 결과가 없습니다.</div>
+          <div className="m-auto noSearchInfo  mb-3">띄어쓰기 또는 쉼표로 키워드를 분류해주세요.</div>
+          <div className="m-auto noSearchInfo ">특수문자 또는 숫자 검색은 불가합니다.</div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="flex-container flex-column mx-auto" style={{ width: "80%", position: "relative" }}>
-      <div className="flex-container" style={{ height: "100px" }}>
+      <div className="d-flex" style={{ flexBasis: "10%" }}>
         <DoDominiLib libs={libInfo} checkedInputs={libInfo} setCheckedInputs={setLibInfo} />
       </div>
-      <div className="flex-container mx-auto" style={{ flexBasis: "10%" }}>
+      <div className="d-flex mx-auto" style={{ flexBasis: "10%", width: "100%" }}>
         <DodoSearch placeholder={searchParams.get("keyword")} setCheckedInputs={setKeyword} values={values} />
       </div>
-      <div className="flex-container mx-auto" style={{ flexBasis: "70%" }}>
-        <DoDoBookList item={item} />
+      <div className="flex-container mx-auto" style={{ flexBasis: "75%" }}>
+        {item[0].title === "null" ? noSearchResult() : <DoDoBookList item={item} />}
       </div>
     </div>
   );

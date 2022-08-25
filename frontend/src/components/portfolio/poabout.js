@@ -12,8 +12,8 @@ const poHome = () => {
         <hr className="my-3 text-white" />
         <div className="poSubTitle pb-2">ABOUT ME</div>
         <div className="mb-2" style={{ wordSpacing: "1px", letterSpacing: "1px" }}>
-          공군사관학교를 졸업하고 5년간 정보장교로 복무하며 데이터 분석 역량을 쌓았습니다. 전역 후 머신러닝 기반의 MVP
-          개발 역량을 기르기 위해 스스로 커리큘럼을 구상하여 필요한 내용을 학습하고 프로젝트를 진행했습니다.
+          공군사관학교를 졸업하고 5년간 정보장교로 복무하며 데이터 분석 역량을 쌓았습니다. 전역 후 머신러닝을 활용한
+          문제해결 능력 및 MVP 개발 역량을 갖추기 위해 스스로 커리큘럼을 구상하고 프로젝트를 진행했습니다.
           {/* kaggle 같은데서 데이터 분석 결과를 보면 그렇구나~ 하고 넘어간다. 내가 분석한 결과를 알아주지 못한다면 아쉬울 것 같았다.
           그래서 사람들이 직관적으로 이해할 수 있게 내가 생각한 기능을 직접 구현했다. 
           사람들도 확실히 직접 사용해봐야 아하 포인트가 생기고 이 프로그램을 개선할 방법에 대해서 조언해주더라.
@@ -29,9 +29,11 @@ const poHome = () => {
            */}
         </div>
 
-        <PoaboutWorkExpeirence />
         <hr className="my-3 text-white" />
         <PoaboutProject />
+        <hr className="my-3 text-white" />
+        <PoaboutWorkExpeirence />
+        <hr className="my-5 text-white" />
       </div>
     </PoMainFrame>
   );
