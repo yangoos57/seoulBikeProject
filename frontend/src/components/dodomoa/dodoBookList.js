@@ -48,25 +48,29 @@ function bookInfoBox(imgurl, title, author, lib, num) {
 // Main Function
 const DoDoBookList = ({ item }) => {
   return (
-    <div className="flex-container flex-column mx-auto resultBox-dodo px-2 ">
-      {/* 검색건수 */}
+    <div className="flex-container resultBox-dodo ">
       <div
-        className="d-flex mt-3 ms-auto"
-        style={{
-          paddingRight: "5%",
-          flexBasis: "5%",
-          color: "#FFF5EA",
-          fontWeight: "bolder",
-        }}>
-        총 {item.length}건 검색
-      </div>
-      <div
-        className="flex-container"
-        style={{ overflow: "hidden", flexBasis: "90%", position: "relative", height: "auto" }}>
-        <div className="d-flex flex-column" style={{ position: "absolute", overflow: "scroll", height: "100%" }}>
-          {item.map((v) => {
-            return bookInfoBox(v.url, v.title, v.author, v.lib, v.num);
-          })}
+        className="flex-container flex-column mx-auto px-2"
+        style={{ display: item[0].title.length === 0 ? "none" : "" }}>
+        {/* 검색건수 */}
+        <div
+          className="d-flex mt-3 ms-auto"
+          style={{
+            paddingRight: "5%",
+            flexBasis: "5%",
+            color: "#FFF5EA",
+            fontWeight: "bolder",
+          }}>
+          총 {item.length}건 검색
+        </div>
+        <div
+          className="flex-container"
+          style={{ overflow: "hidden", flexBasis: "90%", position: "relative", height: "auto" }}>
+          <div className="d-flex flex-column" style={{ position: "absolute", overflow: "scroll", height: "100%" }}>
+            {item.map((v) => {
+              return bookInfoBox(v.url, v.title, v.author, v.lib, v.num);
+            })}
+          </div>
         </div>
       </div>
     </div>

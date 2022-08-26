@@ -1,6 +1,6 @@
 import React from "react";
 // import ProjectTwoSlider from "./projecttwoslider";
-import { ReactComponent as WeaponeeringOne } from "./assets/weaponeering (1).svg";
+// import { ReactComponent as WeaponeeringOne } from "./assets/weaponeering (1).svg";
 const ProjectTwo = () => {
   return (
     <div className="d-flex flex-column">
@@ -12,9 +12,7 @@ const ProjectTwo = () => {
           2017.08 - 2018.12
         </div>
       </div>
-      <div>
-        <WeaponeeringOne height={"420px"} width={"100%"} />
-      </div>
+      <div>{/* <WeaponeeringOne height={"420px"} width={"100%"} /> */}</div>
       <br />
       <br />
       <div>

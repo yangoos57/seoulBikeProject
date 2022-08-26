@@ -2,11 +2,10 @@
     --poblack-color : #252525;
     --posilver-color : #ffffff;
     --white-color : #F4F4F4;
-    --green-color : #4FC276;
-    --green-color-70 : #4FC276B3;
-    --green-color-30 : #4fc27530;
+    --identity-color : #512771;
+    --identity-color-70 : #512771B3;
+    --identity-color-30 : #51277130;
     --beige-color : #D8CCAD;
-    --light-green-color : #4FC276;
 }
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 
@@ -26,7 +25,7 @@
     letter-spacing: 1px;
 }
 .poWhole ::selection{
-    background-color: var(--green-color-30);
+    background-color: var(--identity-color-30);
 }
 .poWhole  ul {
     padding-left: 20px;
@@ -72,7 +71,7 @@
     font-family: "NEXON";
 }
 .poButton:hover{
-    color:var(--green-color);
+    color:var(--identity-color);
 
 }
 .poLink{
@@ -80,12 +79,12 @@
     text-decoration: none;
     margin: auto;
     color: var(--poblack-color);
-    /* color: var(--light-green-color); */
+    /* color: var(--light-identity-color); */
     width:100%;
     height:100%;
 }
 .poLink:hover{
-    color: var(--green-color);
+    color: var(--identity-color);
 }
 .poNavBar .poLink:hover{
     color: var(--poblack-color);
@@ -96,7 +95,7 @@
     background-color: transparent;
     /* color: var(--poblack-color); */
     color: var(--silver-color);
-    border: 5px solid var(--green-color);
+    border: 5px solid var(--identity-color);
 }
 .poBody{
     padding-top: 120px;
@@ -110,7 +109,7 @@
 }
 
 .poSubTitle{
-    text-decoration:  underline 3px var(--green-color);
+    text-decoration:  underline 3px var(--identity-color);
     text-underline-offset: 10px;
     margin : 10px 0;
     font-size: 28px;
@@ -141,7 +140,7 @@
     text-decoration: none;
     margin: auto;
     /* color: var(--silver-color); */
-    color: var(--light-green-color);
+    color: var(--light-identity-color);
     /* color : #ff9432; */
     width:100%;
     height:100%;
@@ -150,7 +149,7 @@
 
 }
 .leewayLink:hover{
-    color: var(--green-color);
+    color: var(--identity-color);
 }
 
 
@@ -179,8 +178,8 @@
 }
 
 /* Badge */
-.badgeGreen{
-    background-color: var(--green-color);
+.badgeColor{
+    background-color: var(--identity-color);
     /* color: var(--black-color) */
 }
 
@@ -193,14 +192,14 @@
 }
 
 .poUnderbar{
-    text-decoration:  underline 3px var(--green-color);
+    text-decoration:  underline 3px var(--identity-color);
     text-underline-offset: 10px;
 }
 .poGithubIcon{
     color: var(--black-color);
 }
 .poGithubIcon:hover{
-    color: var(--green-color);
+    color: var(--identity-color);
 }
 @media (max-width: 768px) {
     .poViewPort, .poNavBar{

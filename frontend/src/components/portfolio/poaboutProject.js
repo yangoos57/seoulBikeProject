@@ -66,14 +66,14 @@ const poProject = () => {
             <div className="me-auto mb-3">
               <div className="me-auto h6 NotoBold">사용 툴</div>
               <div>
-                <span class="badge badgeGreen">keyBert</span>&nbsp;
-                <span class="badge badgeGreen">Word2Vec</span>
+                <span class="badge badgeColor">keyBert</span>&nbsp;
+                <span class="badge badgeColor">Word2Vec</span>
                 &nbsp;
-                <span class="badge badgeGreen">React.js</span>&nbsp;
-                <span class="badge badgeGreen">Django</span>
+                <span class="badge badgeColor">React.js</span>&nbsp;
+                <span class="badge badgeColor">Django</span>
                 &nbsp;
-                <span class="badge badgeGreen">Docker-compose</span>&nbsp;
-                <span class="badge badgeGreen">Azure</span>
+                <span class="badge badgeColor">Docker-compose</span>&nbsp;
+                <span class="badge badgeColor">Azure</span>
                 &nbsp;
               </div>
             </div>
@@ -133,11 +133,11 @@ const poProject = () => {
             <div className="me-auto mb-3">
               <div className="me-auto mt-2 h6 NotoBold">사용 툴</div>
               <div>
-                <span class="badge badgeGreen">KMeans</span>&nbsp;<span class="badge badgeGreen">DBSCAN</span>&nbsp;
-                <span class="badge badgeGreen">React.js</span>&nbsp;<span class="badge badgeGreen">Leaflet.js</span>
+                <span class="badge badgeColor">KMeans</span>&nbsp;<span class="badge badgeColor">DBSCAN</span>&nbsp;
+                <span class="badge badgeColor">React.js</span>&nbsp;<span class="badge badgeColor">Leaflet.js</span>
                 &nbsp;
-                <span class="badge badgeGreen">Django</span>&nbsp;<span class="badge badgeGreen">Docker</span>&nbsp;
-                <span class="badge badgeGreen">Azure</span>&nbsp;
+                <span class="badge badgeColor">Django</span>&nbsp;<span class="badge badgeColor">Docker</span>&nbsp;
+                <span class="badge badgeColor">Azure</span>&nbsp;
               </div>
             </div>
           </div>

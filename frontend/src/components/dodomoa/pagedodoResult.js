@@ -10,7 +10,7 @@ function DoDoResultPage() {
   const [item, setItem] = useState([
     {
       url: "",
-      title: "null",
+      title: "",
       author: "",
       lib: "",
       num: "",

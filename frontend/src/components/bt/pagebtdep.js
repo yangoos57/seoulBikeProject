@@ -190,8 +190,8 @@ function BtDeparture() {
                         // icon={arrMarker() }
                         icon={arrMarker()}
                         eventHandlers={{
-                          click: (e) => {
-                            setStationInfo(e.target.options.data);
+                          click: () => {
+                            setStationInfo(val);
                           },
                         }}>
                         <Tooltip direction="right" offset={[5, 40]}>

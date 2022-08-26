@@ -2,7 +2,7 @@ import React from "react";
 
 const poWorkExperience = () => {
   return (
-    <div className="mt-5">
+    <div>
       <div className="poSubTitle d-flex flex-column">WORK EXPERIENCE</div>
       <div className="flex-column">
         {/* 공군 항목 */}
@@ -36,13 +36,14 @@ const poWorkExperience = () => {
             <div className="me-auto mt-2 h6 NotoBold">경험 및 성과</div>
             <ul>
               <li>분석 결과를 누구나 이해할 수 있도록 시각화 된 리포트 작성 및 유관부서와 커뮤니케이션</li>
+              <li>공군작전계획 및 조종사 임무계획 수립 시 주요 근거자료로 활용되는 무기효과 분석 결과자료 생산</li>
+              <li>4인으로 구성된 팀을 리딩하며 분석 방향 수립, 업무 우선순위 선정 등 운영/계획 분야 경험(1년)</li>
               <li>표적 모델링에 필요한 시간을 감소시켜 이전 프로세스 대비 분석 시간 40% 단축(기여도 70%)</li>
               <li>프로세스 개선에 관한 업무 매뉴얼 작성 및 국방과학연구소 등 100여개 부서에 배포(기여도 100%)</li>
-              <li>4인으로 구성된 팀을 리딩하며 분석 방향 수립, 업무 우선순위 선정 등 운영/계획 분야 경험(1년)</li>
             </ul>
           </div>
           <div className="d-flex flex-column ">
-            <div className="me-auto mb-1 h5 NotoBold">실시간 위협상황 분석 및 지휘관 의사결정 지원</div>
+            <div className="me-auto mb-1 h5 NotoBold">실시간 위협상황 분석 및 데이터 기반 의사결정 지원</div>
             <div className="me-auto mb-4" style={{ color: "gray" }}>
               데이터 분석가 <span style={{ fontsize: "14px !important" }}> 2019.12. - 2021.5.</span>
             </div>
@@ -52,17 +53,13 @@ const poWorkExperience = () => {
             </div>
             <div className="me-auto mt-2 h6 NotoBold">경험 및 성과</div>
             <ul>
-              <li className="me-auto">실시간 수집 데이터를 바탕으로 위협상황을 분석하여 의사결정에 필요한 정보 지원</li>
+              <li className="me-auto">실시간 수집 데이터를 바탕으로 위협상황을 분석하여 의사결정에 필요한 정보 생산</li>
               <li className="me-auto">
-                적 항공기 기동 패턴 분석 및 경로 예측 등 지휘관이 실질적 액션을 할 수 있는 인사이트 도출
+                북 미사일 발사 예측 및 주변국 전투기 침범 예측 등 지휘관이 선제적 대응을 할 수 있는 인사이트 도출
               </li>
               <li className="me-auto">
-                조종사, 항공관제사, 육해군 유관부서 등 다양한 직군의 구성원들과 협업해 문제해결 방안 도출{" "}
+                조종사, 항공관제사, 미 공군 정보팀 등 다양한 직군의 구성원들과 협업해 문제해결 방안 도출{" "}
               </li>
-              {/* <li className="me-auto">
-                한국방공식별구역 내 중•러 항공기 진입 시 실시간 수집된 데이터를 분석하여 지휘관에 제공함으로써 우리군의
-                성공적인 대응조치에 기여
-              </li> */}
             </ul>
           </div>
         </div>
