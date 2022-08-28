@@ -10,7 +10,7 @@ import BtTemplate from "./components/bt/pagebtdep";
 import BtArrival from "./components/bt/pagebtarrival";
 import BtDirection from "./components/bt/pagebtdirection";
 import BtTitle from "./components/bt/pagebttitle";
-import PoAbout from "./components/portfolio/pagepoabout";
+import PoAbout from "./components/portfolio/pagepo";
 import PoProject from "./components/portfolio/poproject";
 import BtWeather from "./components/bt/btweather";
 import DodoTitle from "./components/dodomoa/pagedodoTitle";

@@ -80,7 +80,7 @@ const poProject = () => {
           </div>
           {/* ----- */}
           {/* 실시간 위협상황 분석 및 지휘관 의사결정 지원 */}
-          <div className="d-flex flex-column mb-5">
+          <div className="d-flex flex-column">
             <div className="me-auto mb-1 h5 NotoBold">
               따릉이 대여기록 분석을 통한 집 인근 자전거 여행지 추천
               <a

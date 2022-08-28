@@ -1,37 +1,49 @@
 import React from "react";
-const poaboutMotivation = () => {
-  return (
-    <div className="flex-container flex-column">
-      <div className="flex-columns">
-        <div className="h1 my-3">반갑습니다. </div>
-        <div className="h2 my-3">
-          <span className="h2 me-2 fw-bold" style={{ color: "var(--identity-color)" }}>
-            마켓컬리
-          </span>
-          데이터사이언티스트에
-        </div>
-        <div className="h2 my-3">
-          지원한 <span className="h2 fw-bold poUnderbar">이양우</span>
-          입니다.
-        </div>
-      </div>
 
-      <div className="d-flex my-3 flex-column">
-        <div className="d-flex">
-          <div className="fw-bold ">Github</div>
-          <div className="ms-2">
-            <a href="https://github.com/yangoos57" target="_blank" rel="noopener noreferrer" className="poLink">
-              github.com/yangoos57
-            </a>
-          </div>
+const poWorkExperience = () => {
+  return (
+    <>
+      <div className="mb-5">
+        <div className="poSubTitle d-flex flex-column NotoBold pb-2">지원동기</div>
+        <div className="mb-3">
+          5년간 타부서와 협력을 중시하는 업무 환경 속에서 데이터 분석 업무를 진행했습니다. 지원하는 부서의 관점과 업무
+          방식을 이해하고 이를 바탕으로 데이터를 해석해 활용 가능한 결과물을 도출했습니다. 타부서와 교류가 많고 협력을
+          중시하는 문화가 갖춰진 조직에서 즐겁게 일 할 수 있고 성과를 낼 수 있다고 판단하여 이를 최우선 기준으로
+          고려하고 있습니다.
         </div>
-        <div className="d-flex">
-          <div className="fw-bold">Email</div>
-          <div className="ms-2">679oose@gmail.com</div>
+        <div className="mb-3">
+          마켓컬리 데이터팀이 타부서와 협력을 중시하는 문화를 갖추고 있다고 판단한 이유는 데이터팀이 비즈니스에 기여하는
+          바가 상당하기 때문입니다. 기업의 성장에 따른 물동량이 증가함에도 예측 시스템을 통해 7년간 1%의 신선제품
+          폐기율을 유지하고 있는 점, 출하 예측 시스템을 통해 고객에게 최상급 품질의 농식품을 제공함으로써 고객 만족도를
+          향상시키고 있는 점이 그러합니다.{" "}
+        </div>
+        <div className="mb-3">
+          데이터팀이 이뤄낸 성과들은 타부서와 깊게 협력하지 않는 이상 해결하기 어려운 문제입니다. 지속적인 성과를 내기
+          위해서는 타부서와 지속적으로 협력을 이끌어내야 합니다. 따라서 데이터 팀의 성과는 타 부서와의 적극적인 협력에서
+          비롯된다고 생각하였고 즐겁게 일할 수 있는 업무 문화가 구축된 팀이라 생각하여 지원했습니다.
         </div>
       </div>
-    </div>
+      <div>
+        <div className="poSubTitle d-flex flex-column NotoBold pb-2">기여하고 싶은 목표</div>
+        <div className="mb-3">
+          데이터사이언스팀의 농산물 수요 예측 모델을 개선 및 발전시킴으로서 고객에게 최상의 품질을 제공한다는 기업
+          목표에 기여하고 싶습니다.
+        </div>
+        <div className="mb-3">
+          농산품 수요 예측 모델 발전에 기여하고자 하는 이유는 해당 모델이 마켓컬리와 고객 간 신뢰 구축에 기여하고 있기
+          때문입니다. 마켓컬리는 데멍이를 통해 판매자가 수확 계획을 수립하는데 필요한 데이터를 제공함으로써 최상급
+          품질의 농산품이 고객에게 전달 될 수 있도록 지원하고 있습니다. 이러한 성과는 마켓컬리가 최상급 품질의
+          농산품만을 제공한다는 이미지를 형성하는데 기여하고 있습니다.
+        </div>
+        <div className="mb-3">
+          예측 모델을 개선하고 발전시키기 위해 현재 활용중인 데이터를 점검하고 새로 수집 할 데이터를 찾겠습니다. 이를
+          위해 기업 내 부서와 협업, 판매농가 방문, 관련 도서를 통한 정보 확보 등 제가 담당하는 분야의 전문성을
+          쌓아가겠습니다. 이 외에도 고객에게 신선한 저품을 제공하기 위해 다양한 방법을 고민해 기업 목표에
+          기여하겠습니다.
+        </div>
+      </div>
+    </>
   );
 };
 
-export default poaboutMotivation;
+export default poWorkExperience;
