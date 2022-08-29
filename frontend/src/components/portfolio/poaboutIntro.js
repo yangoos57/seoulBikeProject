@@ -16,7 +16,7 @@ const poaboutIntro = () => {
         </div>
       </div>
 
-      <div className="d-flex my-3 flex-column">
+      <div className="d-flex mt-3 flex-column">
         <div className="d-flex">
           <div className="fw-bold ">Github</div>
           <div className="ms-2">
