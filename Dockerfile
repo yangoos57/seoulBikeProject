@@ -25,7 +25,7 @@ RUN pip install -r /tmp/requirements.txt
 # matplotlib font 설치 & wget 설치 
 RUN apt-get update && apt-get install -y wget && apt-get install -y fonts-nanum*
 
-RUN cp /usr/share/fonts/truetype/nanum/Nanum* /usr/local/lib/python3.9/site-packages/matplotlib/mpl-data/fonts/ttf/ && rm -rf ~/.cache/matplotlib/*
+# RUN cp /usr/share/fonts/truetype/nanum/Nanum* /usr/local/lib/python3.9/site-packages/matplotlib/mpl-data/fonts/ttf/ && rm -rf ~/.cache/matplotlib/*
 
 ## docker-compose 할때 사용하기
 ENV DOCKERIZE_VERSION v0.6.1

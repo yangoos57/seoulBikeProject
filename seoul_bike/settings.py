@@ -110,26 +110,28 @@ WSGI_APPLICATION = "seoul_bike.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.mysql",
-#         "NAME": "dash",
-#         "USER": "leeway",
-#         "PASSWORD": "1234",
-#         "HOST": "mysql_service",
-#         "PORT": "3306",
-#     }
-# }
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "dash_test",
-        "USER": "root",
-        "PASSWORD": "",
-        "HOST": "localhost",
-        "PORT": "3306",
+if os.environ.get("DJANGO_ALLOWED_HOSTS"):
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": "dash_test",
+            "USER": "leeway",
+            "PASSWORD": "1234",
+            "HOST": "mysql_service",
+            "PORT": "3306",
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": "dash_test",
+            "USER": "root",
+            "PASSWORD": "",
+            "HOST": "localhost",
+            "PORT": "3306",
+        }
+    }
 # DATABASES = {
 #     "default": {
 #         "ENGINE": "django.db.backends.sqlite3",

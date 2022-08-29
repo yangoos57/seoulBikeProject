@@ -3,13 +3,13 @@ version : '3'
 services :
   mysql:
     image: mysql:8
-    container_name: mysql_service
+    container_name: localhost
     command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci --default-authentication-plugin=mysql_native_password
     volumes:
       - ./mysql-dump:/docker-entrypoint-initdb.d
     environment: 
       MYSQL_ROOT_PASSWORD: "1234"
-      MYSQL_DATABASE: "dash"
+      MYSQL_DATABASE: "dash_test"
       MYSQL_USER: "leeway"
       MYSQL_PASSWORD: "1234"
     ports:
