@@ -31,7 +31,7 @@ station = pd.read_csv(
     index_col=0,
 )
 
-seoul_bike = pd.read_parquet("parquet/220607_bike_record.parquet.gzip")
+seoul_bike = pd.read_parquet("parquet/220730_bike_record.parquet.gzip")
 
 btstation = pd.read_csv(
     "backend/assets/bikeTour/bkstation_info(backup).csv", encoding="CP949", index_col=0
