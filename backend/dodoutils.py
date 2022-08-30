@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from gensim.models import KeyedVectors
 import re
+import os
 
 
 # 문장 들어오면 단어로 잘라주는 메소드
@@ -120,10 +121,18 @@ def createBookList(libName: list, userWords):
 
     ## Group By를 더 빨리해서 검색해야하는 ISBN 개수를 줄였는데 위에있는 쿼리보다 보다 속도가 느림.
     # 16.7 ms ± 868 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)
-
-    conn = pymysql.connect(
-        host="localhost", port=int(3306), user="root", passwd="", db="dash_test"
-    )
+    if os.environ.get("DJANGO_ALLOWED_HOSTS"):
+        # Docker에서 활용
+        print(os.environ.get("DJANGO_ALLOWED_HOSTS"))
+        conn = pymysql.connect(
+            host="mysql_service", port=int(3306), user="leeway", passwd="1234", db="dash_test"
+        )
+    else : 
+        # local에서 활용
+        print('else로 빠짐')
+        conn = pymysql.connect(
+            host="localhost", port=int(3306), user="root", passwd="", db="dash_test"
+        )
     cursor = conn.cursor(pymysql.cursors.DictCursor)
 
     cursor.execute(
