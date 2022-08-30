@@ -10,6 +10,7 @@ const poHome = () => {
   return (
     <PoMainFrame>
       <div className="poabout">
+        <PoaboutMotivation />
         <PoIntro />
         <hr className="my-4 text-white" />
         <Poabout />

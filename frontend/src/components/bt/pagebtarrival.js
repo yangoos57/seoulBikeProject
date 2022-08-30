@@ -103,7 +103,6 @@ function BkArrival() {
 
   const location = useLocation();
   const depParams = location.state;
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -254,8 +253,8 @@ function BkArrival() {
                         <Marker
                           data={val} // options.data에서 나오는 값
                           key={val["value"]}
-                          position={val["coor"]}
-                          // position={JSON.parse(val["coor"])} // 좌표가 '[123,123]'과 같은 string일때 사용
+                          // position={val["coor"]}
+                          position={JSON.parse(val["coor"])} // 좌표가 '[123,123]'과 같은 string일때 사용
                           // icon={arrMarker() }
                           icon={
                             (val["value"] === markerHoveredIndex) | (val["value"] === markerClicked)

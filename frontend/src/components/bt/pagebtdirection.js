@@ -94,7 +94,7 @@ const BtDirection = () => {
             pathOptions={{ color: "var(--black-color)", opacity: 0.9, weight: 4 }} //
             positions={direction}
           />
-          <Marker position={arr["coor"]} icon={arrIcon()} />
+          <Marker position={JSON.parse(arr["coor"])} icon={arrIcon()} />
         </BkMapData>
       </div>
     );

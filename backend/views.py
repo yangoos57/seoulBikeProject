@@ -36,6 +36,9 @@ seoul_bike = pd.read_parquet("parquet/220730_bike_record.parquet.gzip")
 btstation = pd.read_csv(
     "backend/assets/bikeTour/bkstation_info(backup).csv", encoding="CP949", index_col=0
 )
+station_record = pd.read_csv(
+    "backend/assets/bikeTour/station_record.csv", encoding="CP949", index_col=0
+)
 
 print("!! 로드 완료 !!")
 
@@ -85,8 +88,8 @@ def btdirection(request) -> dict:
     print(dep["coor"])
     arr = request.data.get("arr")
     print(arr["coor"])
-    bt = bikeRecommandation(btstation, seoul_bike, station)
-    data = bt.route_coor(dep["coor"], arr["coor"])
+    
+    data = route_coor(dep["coor"], arr["coor"])
     # print(data)
     return Response(data)
 
@@ -107,6 +110,15 @@ class bt_leaflet_map(views.APIView):
     def post(self, request):
         # queryset
         st_id = request.data.get("value")
-        bt = bikeRecommandation(btstation, seoul_bike, station)
-        data, minmax = bt.extractStations(st_id)
+        
+        data = station_record[station_record['st_id1'] == st_id]
+         
+        minmax = dict(
+            mintime=data["time"].min(),
+            maxtime=data["time"].max(),
+            minrecord=data["record"].min(),
+            maxrecord=data["record"].max(),
+            mindist=data["dist"].min(),
+            maxdist=data["dist"].max(),
+        )
         return Response({"data": data.to_dict("records"), "minmax": minmax})

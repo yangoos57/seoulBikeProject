@@ -90,6 +90,65 @@ def btweather():
     result = val["response"]["body"]["items"]["item"]
     return result
 
+def route_coor(
+        dep_st: list,
+        arr_st: list,
+    ) -> List:
+        """
+        - tmap API를 활용해 자전거 경로를 추출한다.
+        """
+
+        if type(dep_st) == str:
+            dep_st = ast.literal_eval(dep_st)
+        if type(arr_st) == str:
+            arr_st = ast.literal_eval(arr_st)
+
+        for i in range(3):
+            url = "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1"
+
+            payload = {
+                "angle": 0,
+                "speed": 0,
+                "reqCoordType": "WGS84GEO",
+                "searchOption": "0",
+                "resCoordType": "WGS84GEO",
+                "sort": "index",
+                "startX": dep_st[1],
+                "startY": dep_st[0],
+                "endX": arr_st[1],
+                "endY": arr_st[0],
+                "startName": "출발",
+                "endName": "도착",
+            }
+            headers = {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "appKey": "l7xxfdc75c1509a74ecdba02bf5e024ee9d5",
+            }
+
+            response = requests.post(url, json=payload, headers=headers).text
+
+            api_data = json.loads(response).get("features")
+            if api_data != None:
+                time.sleep(0.3)
+                break
+            print("!!!!!!!!!!!!!", api_data, f"{i+1} 회 시도중")
+
+        coor_raw_data = [
+            api_data[i].get("geometry").get("coordinates")
+            for i in range(0, len(api_data))
+        ]
+
+        finish_data = []
+        for data in coor_raw_data:
+            # data = api_data[1].get('geometry').get('coordinates')
+            if type(data[0]) == list:
+                for i in data:
+                    finish_data.append(i)
+            else:
+                pass
+        # 끝
+        return pd.DataFrame(finish_data)[[1, 0]].values  ## 위도 경도 위치 바꾸기
 
 class bikeRecommandation:
     def __init__(
