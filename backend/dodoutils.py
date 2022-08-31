@@ -123,13 +123,11 @@ def createBookList(libName: list, userWords):
     # 16.7 ms ± 868 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)
     if os.environ.get("DJANGO_ALLOWED_HOSTS"):
         # Docker에서 활용
-        print(os.environ.get("DJANGO_ALLOWED_HOSTS"))
         conn = pymysql.connect(
             host="mysql_service", port=int(3306), user="leeway", passwd="1234", db="dash_test"
         )
     else : 
         # local에서 활용
-        print('else로 빠짐')
         conn = pymysql.connect(
             host="localhost", port=int(3306), user="root", passwd="", db="dash_test"
         )

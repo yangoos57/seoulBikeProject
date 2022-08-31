@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import DodoMainFrame from "./dodoMainFrame";
-import DodoSearch from "./dodoSearch";
-import DoDominiLib from "./dodominiLib";
-import DoDoBookList from "./dodoBookList";
+import DodoMainFrame from "./modules/dodoMainFrame";
+import DodoSearch from "./modules/dodoSearch";
+import DoDominiLib from "./modules/dodominiLib";
+import DoDoBookList from "./modules/dodoBookList";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 
@@ -58,7 +58,7 @@ function DoDoResultPage() {
   };
 
   return (
-    <div className="flex-container flex-column mx-auto" style={{ width: "80%", position: "relative" }}>
+    <div className="flex-container flex-column mx-auto fade-in-box-dodo" style={{ width: "80%", position: "relative" }}>
       <div className="d-flex" style={{ flexBasis: "10%" }}>
         <DoDominiLib libs={libInfo} checkedInputs={libInfo} setCheckedInputs={setLibInfo} />
       </div>

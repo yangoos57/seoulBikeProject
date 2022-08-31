@@ -1,18 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Marker, Tooltip, useMap } from "react-leaflet";
-import BkTitleName from "./bttitlename";
-import L from "leaflet";
-import BkMapData from "./btmapdata";
 import "./assets/btstyle.css";
-import BkSelect from "./btselect";
 import { useLocation, useNavigate } from "react-router-dom";
-import BkInfoBox from "./btinfobox";
+import MarkerClusterGroup from "react-leaflet-cluster";
+import { Marker, Tooltip, useMap } from "react-leaflet";
+import L from "leaflet";
+import axios from "axios";
+import arrmarkerclick from "./assets/icons/arrmarkerclick.svg";
 import bikegreen from "./assets/icons/bikegreen.svg";
 import bikewhite from "./assets/icons/bikewhite.svg";
-import axios from "axios";
-import MarkerClusterGroup from "react-leaflet-cluster";
-import arrmarkerclick from "./assets/icons/arrmarkerclick.svg";
-import BkWeather from "./btweather";
+import BkTitleName from "./modules/bttitlename";
+import BkMapData from "./modules/btmapdata";
+import BkSelect from "./modules/btselect";
+import BkInfoBox from "./modules/btinfobox";
+import BkWeather from "./modules/btweather";
 
 function ChangeView({ center, zoom }) {
   const map = useMap();
@@ -113,7 +113,7 @@ function BtDeparture() {
   return (
     <>
       <div className="btWhole d-flex ">
-        <div className="btMain m-auto ">
+        <div className="btMain m-auto">
           <div className="bg-white flex-column flex-container">
             <div className="flex-container flex-column" style={{ flexBasis: "30%" }}>
               <div
@@ -147,7 +147,7 @@ function BtDeparture() {
             </div>
 
             {/* 지도부분 */}
-            <div className="flex-container" style={{ flexBasis: "70%", position: "relative" }}>
+            <div className="flex-container btfade-in-box" style={{ flexBasis: "70%", position: "relative" }}>
               {stationInfo !== undefined && (
                 <BkInfoBox
                   setIsClicked={setIsClicked}

@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Marker, Polyline, useMap } from "react-leaflet";
-import { useLocation } from "react-router-dom";
-import BkMainFrame from "./btmainframe";
-import BkMapData from "./btmapdata";
-import BkSelect from "./btselect";
+import L from "leaflet";
+import axios from "axios";
 import bikegreen from "./assets/icons/bikegreen.svg";
 import arricon from "./assets/icons/arricon.svg";
-import L from "leaflet";
-import { useNavigate } from "react-router-dom";
-import BkDirctionInfo from "./btdirectioninfo";
-import axios from "axios";
+import BkMainFrame from "./modules/btmainframe";
+import BkMapData from "./modules/btmapdata";
+import BkSelect from "./modules/btselect";
+import BkDirctionInfo from "./modules/btdirectioninfo";
 
 function ChangeView({ center, zoom }) {
   const map = useMap();
@@ -81,7 +80,7 @@ const BtDirection = () => {
   //child2s (main함수 2)
   function child2() {
     return (
-      <div className="w-100 h-100">
+      <div className="w-100 h-100 btfade-in-box">
         <BkDirctionInfo dep={dep} arr={arr} />
         <BkMapData>
           <ChangeView

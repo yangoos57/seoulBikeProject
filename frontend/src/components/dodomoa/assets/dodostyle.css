@@ -201,6 +201,29 @@ input:focus::placeholder {
 .noSearchInfo{
     font-size: 16px;
 }
+.fade-out-box-dodo {
+    animation: fadeout 1.2s;
+    animation-fill-mode: forwards;
+  }
+@keyframes fadeout {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}  
+.fade-in-box-dodo {
+    animation: fadein 0.5s;
+  }
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
 
 
 @media (min-width : 1441px){

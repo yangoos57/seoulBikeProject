@@ -1,16 +1,15 @@
 import React from "react";
-import PoMainFrame from "./pomainframe";
-import PoaboutWorkExpeirence from "./poaboutWorkExperience";
-import PoaboutProject from "./poaboutProject";
-import PoIntro from "./poaboutIntro";
-import PoaboutEducation from "./poaboutEducation";
-import PoaboutMotivation from "./poaboutMotivation";
-import Poabout from "./poabout";
+import PoMainFrame from "./modules/pomainframe";
+import PoaboutWorkExpeirence from "./modules/poaboutWorkExperience";
+import PoaboutProject from "./modules/poaboutProject";
+import PoIntro from "./modules/poaboutIntro";
+import PoaboutEducation from "./modules/poaboutEducation";
+import PoaboutMotivation from "./modules/poaboutMotivation";
+import Poabout from "./modules/poabout";
 const poHome = () => {
   return (
     <PoMainFrame>
       <div className="poabout">
-        <PoaboutMotivation />
         <PoIntro />
         <hr className="my-4 text-white" />
         <Poabout />
