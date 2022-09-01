@@ -10,7 +10,6 @@ import BtTemplate from "./components/bt/pagebtdep";
 import BtArrival from "./components/bt/pagebtarr";
 import BtDirection from "./components/bt/pagebtdirection";
 import BtTitle from "./components/bt/pagebttitle";
-import PoAbout from "./components/portfolio/pagepo";
 import DodoTitle from "./components/dodomoa/pagedodotitle";
 import DodoMain from "./components/dodomoa/pagedodomain";
 import DoDoResult from "./components/dodomoa/pagedodoresult";
@@ -21,7 +20,6 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<PoAbout />}></Route>
         <Route path="/bikeTourTitle" element={<BtTitle />}></Route>
         <Route path="/bikeTour/departure" element={<BtTemplate />}></Route>
         <Route path="/bikeTour/arrival" element={<BtArrival />}></Route>
