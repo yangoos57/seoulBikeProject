@@ -135,7 +135,7 @@ def route_coor(
                 "detailPosFlag": "2",
                 "resCoordType": "WGS84GEO",
                 "sort": "index",
-                "searchOption": 12
+                # "searchOption": 12
             }
             headers = {
                 "accept": "application/json",
