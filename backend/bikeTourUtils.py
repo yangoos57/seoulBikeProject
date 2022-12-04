@@ -111,26 +111,36 @@ def route_coor(
             arr_st = ast.literal_eval(arr_st)
 
         for i in range(3):
-            url = "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1"
+
+            url = "https://apis.openapi.sk.com/tmap/routes?version=1&callback=function"
 
             payload = {
-                "angle": 0,
-                "speed": 0,
-                "reqCoordType": "WGS84GEO",
-                "searchOption": "0",
-                "resCoordType": "WGS84GEO",
-                "sort": "index",
-                "startX": dep_st[1],
-                "startY": dep_st[0],
+                "tollgateFareOption": 16,
+                "roadType": 32,
+                "directionOption": 1,
                 "endX": arr_st[1],
                 "endY": arr_st[0],
+                "endRpFlag": "G",
+                "reqCoordType": "WGS84GEO",
+                "startX": dep_st[1],
+                "startY": dep_st[0],
+                "gpsTime": "20191125153000",
+                "speed": 10,
+                "uncetaintyP": 1,
+                "uncetaintyA": 1,
+                "uncetaintyAP": 1,
+                "carType": 0,
                 "startName": "출발",
                 "endName": "도착",
+                "detailPosFlag": "2",
+                "resCoordType": "WGS84GEO",
+                "sort": "index",
+                "searchOption": 12
             }
             headers = {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-                "appKey": "l7xxfdc75c1509a74ecdba02bf5e024ee9d5",
+                "accept": "application/json",
+                "content-type": "application/json",
+                "appKey": "l7xx846db5f3bc1e48d29b7275a745d501c8"
             }
 
             response = requests.post(url, json=payload, headers=headers).text
