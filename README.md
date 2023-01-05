@@ -30,15 +30,17 @@
 
 ## 프로젝트 소개 <a name="introduction"></a>
 
-- 따릉이를 타고 집 주변을 여행하는 취미가 있습니다. 새로운 여행지를 찾기 위해 3,000만 건의 따릉이 대여기록을 분석하였습니다. feature engineering을 통해 300만건의 데이터를 전처리 하였으며 `자전거로 이동이 편리한 대여소`를 찾기 위해 clustering 모델을 활용해 EDA를 진행했습니다.
+<div>
+    <img width=850px src='ReadMeImg/screenshot.png'>
+</div>
 
-- 분석 결과를 시각화하고 편리하게 활용할 수 있도록 웹어플리케이션으로 제작했습니다. Django와 React 기반으로 제작했으며, Azure에 Docker 기반으로 배포했습니다. 추천 대여소를 지도에 시각화하기 위해 Leaflet.js를 활용했습니다.
+따릉이를 타고 집 주변을 여행하는 취미가 있습니다. 새로운 여행지를 찾기 위해 3,000만 건의 따릉이 대여기록을 분석하였습니다. feature engineering을 통해 300만건의 데이터를 전처리 하였으며 `자전거로 이동이 편리한 대여소`를 찾기 위해 clustering 모델을 활용해 EDA를 진행했습니다.
+
+분석 결과를 시각화하고 편리하게 활용할 수 있도록 웹어플리케이션으로 제작했습니다. Django와 React 기반으로 제작했으며, Azure에 Docker 기반으로 배포했습니다. 추천 대여소를 지도에 시각화하기 위해 Leaflet.js를 활용했습니다.
 
 <br/>
 
 ## 앱 사용하기 <a name="apps"></a>
-
-아이콘을 클릭하시면 따릉이로 동네투어를 사용하실 수 있습니다.
 
 <a href="http://yangoos.me/bikeTourTitle"><img src="ReadMeImg/seoulIcon.svg"></a>
 
@@ -47,7 +49,7 @@
 ## 사용법 소개 <a name="tutorial"></a>
 
 <div>
-    <img width=850px src='ReadMeImg/screenshot.png'>
+    <img width=850px src='ReadMeImg/demo.gif'>
 </div>
 
 <h4>1. 출발 대여소를 검색하세요.</h4>
